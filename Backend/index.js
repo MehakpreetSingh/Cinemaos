@@ -5,7 +5,7 @@ const mongoose = require('mongoose') ;
 const port = process.env.PORT || 5000;
 const app = express() ;
 const uri = "mongodb+srv://mehakbrar811:mehak%40811@cluster1.g6rue.mongodb.net/?retryWrites=true&w=majority";
-const Movie = require('./Models/Movie');
+const path = require('path') ;
 
 
 // const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
@@ -19,6 +19,11 @@ mongoose.connect(uri , {useNewurlParser: true}) ;
 const connection = mongoose.connection ;
 connection.once('open' , () => {
     console.log("DataBASE CONNECTED");
+})
+
+app.use(express.static('./Frontend/build')) ;
+app.get("*", (req,res) => {
+    res.sendFile(path.resolve(__dirname , "Frontend" , "build" , "index.html")) ;
 })
 
 app.use(express.json()) ;

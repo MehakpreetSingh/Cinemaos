@@ -8,27 +8,25 @@ const HeroMovie = () => {
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
     const port = process.env.PORT || 5000 ;
-    const host =  `http://localhost:${port}/` ;
+    const host =  `https://cinemaos-app.herokuapp.com:${port}/` ;
+    const dbData = async() => {
+        const url = `${host}movies/getmovie/${id}` ;
+        const response = await fetch(url , {
+            method : "GET" ,
+            header : {
+                'Content-Type': 'application/json' 
+            },
+        });
+        const data = await response.json();
+        setDbinfo(data);
+    }
     useEffect(() => {
-        const dbData = async() => {
-            const url = `${host}movies/getmovie` ;
-            const response = await fetch(url , {
-                method : "POST" ,
-                header : {
-                    'Content-Type': 'application/json' 
-                },
-                body : JSON.stringify({tmbd_id : id})
-            });
-            const data = await response.json();
-            console.log(data);
-            setDbinfo(data);
-        }
+        
         const getMovieData = async () => {
             const url = `https://api.themoviedb.org/3/movie/${id}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
             const response = await fetch(url);
             const data = await response.json();
-            setInfo(data);
-            console.log(data);
+            setInfo(data) ;
             setLoading(false);
         }
         getMovieData();

@@ -6,7 +6,7 @@ import MovieCard2 from './MovieCard2';
 
 const Home = () => {
     const port = process.env.PORT || 5000 ;
-    const host =  `http://localhost:${port}/` ;
+    const host =  `https://cinemaos-app.herokuapp.com:${port}/`  ;
     const [movies , setMovies] = useState([]);
     useEffect(() => {
         const getData= async() => {
@@ -20,7 +20,7 @@ const Home = () => {
             const data = await response.json() ;
             
             setMovies(data) ; 
-            console.log(movies);
+       
         }
         getData() ;
     }, [])

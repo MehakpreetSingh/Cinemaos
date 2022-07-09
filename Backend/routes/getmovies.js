@@ -11,10 +11,11 @@ router.get("/allposts" , async (req,res) => {
     }
 })
 
-router.post("/getmovie" , async(req,res) => {
-    const {tmdb_id} = req.body ;
+router.get("/getmovie/:id" , async(req,res) => {
+    console.log(req.params.id)
     try {
-        const getpost = await Movie.findOne({tmdb_id : tmdb_id}) ;
+        const getpost = await Movie.findOne({tmdb_id : req.params.id}) ;
+        console.log(getpost)
         res.status(200).json(getpost) ;
     } catch (error) {
         res.status(409).json({message : error.message});
