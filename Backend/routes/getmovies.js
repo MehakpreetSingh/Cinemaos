@@ -12,10 +12,8 @@ router.get("/allposts" , async (req,res) => {
 })
 
 router.get("/getmovie/:id" , async(req,res) => {
-    console.log(req.params.id)
     try {
-        const getpost = await Movie.findOne({tmdb_id : req.params.id}) ;
-        console.log(getpost)
+        const getpost = await Movie.findOne({tmdb_id : req.params.id}) 
         res.status(200).json(getpost) ;
     } catch (error) {
         res.status(409).json({message : error.message});

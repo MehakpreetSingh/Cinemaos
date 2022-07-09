@@ -21,11 +21,6 @@ connection.once('open' , () => {
     console.log("DataBASE CONNECTED");
 })
 
-app.use(express.static('./Frontend/build')) ;
-app.get("*", (req,res) => {
-    res.sendFile(path.resolve(__dirname , "Frontend" , "build" , "index.html")) ;
-})
-
 app.use(express.json()) ;
 app.use(cors()) ;
 app.use("/movies" , require('./routes/getmovies') ) ;
