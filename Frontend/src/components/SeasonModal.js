@@ -4,8 +4,7 @@ import close from '../close.png'
 import { Link } from "react-router-dom";
 
 const SeasonModal = (props) => {
-    const port = process.env.PORT || 5000 ;
-    const host = `http://localhost:${port}/` ;
+    const host =  `https://cinemaos-backend.herokuapp.com/` ;
     const [seasonData, setSeasonData] = useState({})
     const [loading, setLoading] = useState(true)
     useEffect(() => {

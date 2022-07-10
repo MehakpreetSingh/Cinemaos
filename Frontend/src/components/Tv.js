@@ -5,8 +5,7 @@ import MovieCard from './MovieCard';
 import MovieCard2 from './MovieCard2';
 
 const Tv = () => {
-  const port = process.env.PORT || 5000 ;
-  const host =  `http://localhost:${port}/`  ;
+    const host =  `https://cinemaos-backend.herokuapp.com/` ;
   const [movies , setMovies] = useState([]);
   const [loading , setLoading] = useState(true);
   useEffect(() => {

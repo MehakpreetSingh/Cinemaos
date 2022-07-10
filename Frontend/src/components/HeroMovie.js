@@ -7,8 +7,7 @@ const HeroMovie = () => {
     const [dbinfo , setDbinfo] = useState({}) ;
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
-    const port = process.env.PORT || 5000 ;
-    const host =  `http://localhost:${port}/` ;
+    const host =  `https://cinemaos-backend.herokuapp.com/` ;
     const dbData = async() => {
         const url = `${host}movies/getmovie/${id}` ;
         const response = await fetch(url , {
