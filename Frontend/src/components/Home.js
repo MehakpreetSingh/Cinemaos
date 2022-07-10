@@ -8,6 +8,7 @@ const Home = () => {
     const port = process.env.PORT || 5000 ;
     const host =  `http://localhost:${port}/`  ;
     const [movies , setMovies] = useState([]);
+    const [loading , setLoading] = useState(true);
     useEffect(() => {
         const getData= async() => {
             const url = `${host}movies/allposts` ;
@@ -23,6 +24,7 @@ const Home = () => {
        
         }
         getData() ;
+        setLoading(false) ;
     }, [])
     
   return (
@@ -32,13 +34,15 @@ const Home = () => {
     </div> */}
     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         {movies?.map((element , index) => {
-            return (
-                <div className='' key={index}>
-                    {/* <MovieCard movieData = {element} /> */}
-                    <MovieCard2 movieData={element}/>
-                </div>
-
-            )
+            if(loading === false) {
+                return (
+                    <div className='' key={index}>
+                        {/* <MovieCard movieData = {element} /> */}
+                        <MovieCard2 movieData={element}/>
+                    </div>
+                )
+            }
+            
         } ) }
     </div>
     </div>

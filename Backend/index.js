@@ -24,6 +24,8 @@ connection.once('open' , () => {
 app.use(express.json()) ;
 app.use(cors()) ;
 app.use("/movies" , require('./routes/getmovies') ) ;
+app.use("/tvshows" , require('./routes/getTvShows') ) ;
+app.use("/series" , require('./routes/getSeries') ) ;
 
 app.listen(port , () => {
     console.log(`https://localhost:${port}`)

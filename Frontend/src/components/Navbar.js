@@ -7,9 +7,9 @@ import mlogo from '../mlogo.png'
 import { Link } from 'react-router-dom'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
+  { name: 'Home', href: '/', current: true },
+  { name: 'Movies', href: '/', current: false },
+  { name: 'TvShows', href: '/tv', current: false },
   { name: 'Calendar', href: '#', current: false },
 ]
 
@@ -52,9 +52,9 @@ export default function Example() {
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
                           item.current ? 'bg-gray-300 text-black' : 'text-gray-800 hover:bg-gray-300 hover:text-black',
                           'px-3 py-2 rounded-md text-sm font-medium'
@@ -62,7 +62,7 @@ export default function Example() {
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
