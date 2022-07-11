@@ -24,7 +24,7 @@ const TrendCard = (props) => {
                 
                 <div className="py-3  sm:max-w-sm sm:mx-auto">
                         <Link to={ (props.movieData.media_type === "movie") ?
-                                  `/movie/${props.movieData.id}` : `/series/${props.movieData.id}`
+                                  `/movie/${props.movieData.id}` : `/tv/${props.movieData.id}`
                             } className="h-48 relative overflow-visible w-1/2 hover:scale-[1.1] transition-transform duration-150">
                             <img className="rounded-3xl shadow-lg" src={`https://image.tmdb.org/t/p/original${props.movieData.poster_path}`} alt=""/>
                             <h1 className="bg-yellow-400 text-sm absolute -bottom-3 left-4 font-bold rounded-full inline-block p-2">{props.movieData?.vote_average.toFixed(1)}</h1>
