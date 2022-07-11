@@ -45,7 +45,7 @@ const SearchTab = () => {
                                                 </Link>
                                                 <div className="flex flex-col w-1/2 space-y-4">
                                                     <div className="flex justify-between items-start">
-                                                        <Link to={`/tv/${element.id}`} className="text-3xl font-bold  hover:text-yellow-600">{element.name || element.original_title}</Link>
+                                                        <Link to={element.media_type === "movie" ? `/movie/${element.id}` : `/tv/${element.id}`} className="text-3xl font-bold  hover:text-yellow-600">{element.name || element.original_title}</Link>
                                                         <div className="bg-yellow-400 font-bold rounded-xl p-2">{element.vote_average}</div>
                                                     </div>
                                                     <div>
