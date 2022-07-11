@@ -37,16 +37,16 @@ const HeroTv = () => {
             setTimeout(() => {
                 x.classList.remove(`w-[${(i) * 25}%]`);
                 x.classList.add(`w-[${(i + 1) * 25}%]`);
-            }, 80);
+            },100);
         }
         x.classList.remove("w-[100%]");
 
         setTimeout(() => {
             setLoading(false);
-        }, 250);
+        }, 350);
         setTimeout(() => {
             x.classList.add("w-0")
-        }, 300);
+        }, 400);
     }, [])
     const handleModalClick = (n) => {
         var x = document.getElementsByClassName("seasonmodalClick")[n];

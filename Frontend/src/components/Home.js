@@ -17,7 +17,7 @@ const Home = () => {
     const [movies, setMovies] = useState([]);
     const [tvshows, setTvShows] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [searchquery, setSearchQuery] = useState(true);
+    const [searchquery, setSearchQuery] = useState("");
     useEffect(() => {
         const gettmdbData = async () => {
             const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=748d8f1491929887f482d9767de12ea8`;

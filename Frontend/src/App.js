@@ -7,6 +7,7 @@ import Tv from './components/Tv';
 import HeroTv from './components/HeroTv';
 import WatchTv from './components/WatchTv';
 import WatchMovie from './components/WatchMovie';
+import SearchTab from './components/SearchTab';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route exact path="/tv" element={<Tv/>}/>
           <Route exact path="/tv/:id" element={<HeroTv/>}/>
           <Route exact path="/tv/:id/:S/:E" element={<WatchTv/>}/>
-          <Route exact path="/search/:query" element={<Tv/>}/>
+          <Route exact path="/search/:query" element={<SearchTab/>}/>
         </Routes>
       </Router>
       
