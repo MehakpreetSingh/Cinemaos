@@ -1,16 +1,15 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import logo from '../cinemaos.png'
 import mlogo from '../mlogo.png'
-import { Link } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 
 const navigation = [
   { name: 'Home', href: '/', current: true },
-  { name: 'Movies', href: '/', current: false },
+  { name: 'Movies', href: '/movie', current: false },
   { name: 'TvShows', href: '/tv', current: false },
-  { name: 'Calendar', href: '#', current: false },
 ]
 
 function classNames(...classes) {
@@ -18,6 +17,9 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  const location = useLocation();
+  useEffect(()=>{
+  },[])
   return (
     <>
     <Disclosure as="nav" className="fixed w-full z-[9999] bg-white border-b-2">
@@ -56,10 +58,10 @@ export default function Example() {
                         key={item.name}
                         to={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-300 text-black' : 'text-gray-800 hover:bg-gray-300 hover:text-black',
+                          location.pathname === item.href ? 'bg-gray-300 text-black' : 'text-gray-800 hover:bg-gray-300 hover:text-black',
                           'px-3 py-2 rounded-md text-sm font-medium'
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        
                       >
                         {item.name}
                       </Link>

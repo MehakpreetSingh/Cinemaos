@@ -1,10 +1,12 @@
 import Home from './components/Home';
+import Movie from './components/Movie';
 import Navbar from './components/Navbar'
 import {BrowserRouter as Router , Routes, Route} from 'react-router-dom' ;
 import HeroMovie from './components/HeroMovie';
 import Tv from './components/Tv';
 import HeroTv from './components/HeroTv';
 import WatchTv from './components/WatchTv';
+import WatchMovie from './components/WatchMovie';
 
 function App() {
   return (
@@ -12,11 +14,14 @@ function App() {
       <Router>
       <Navbar/>
         <Routes>
-          <Route path="/" element={<Home/>}/> 
-          <Route path="/movie/:id" element={<HeroMovie/>}/>
-          <Route path="/tv" element={<Tv/>}/>
-          <Route path="/series/:id" element={<HeroTv/>}/>
-          <Route path="/series/:id/:S/:E" element={<WatchTv/>}/>
+          <Route exact path="/" element={<Home/>}/> 
+          <Route exact path="/movie" element={<Movie/>}/> 
+          <Route exact path="/movie/:id" element={<HeroMovie/>}/>
+          <Route exact path="/movie/watch/:id" element={<WatchMovie/>}/>
+          <Route exact path="/tv" element={<Tv/>}/>
+          <Route exact path="/tv/:id" element={<HeroTv/>}/>
+          <Route exact path="/tv/:id/:S/:E" element={<WatchTv/>}/>
+          <Route exact path="/search/:query" element={<Tv/>}/>
         </Routes>
       </Router>
       

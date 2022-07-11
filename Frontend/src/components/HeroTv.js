@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import play from '../play.png'
 import SeasonModal from './SeasonModal';
 
@@ -21,31 +21,49 @@ const HeroTv = () => {
     //     const data = await response.json();
     //     setDbinfo(data);
     // }
-    const [open , setOpen] = useState(false) ;
+    const [open, setOpen] = useState(false);
     useEffect(() => {
-        
+
         const getMovieData = async () => {
             const url = `https://api.themoviedb.org/3/tv/${id}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
             const response = await fetch(url);
             const data = await response.json();
             setInfo(data);
-            setLoading(false);
         }
         getMovieData();
         // dbData() ;
+        var x = document.getElementById("loading-bar");
+        for (let i = 0; i < 4; i++) {
+            setTimeout(() => {
+                x.classList.remove(`w-[${(i) * 25}%]`);
+                x.classList.add(`w-[${(i + 1) * 25}%]`);
+            }, 80);
+        }
+        x.classList.remove("w-[100%]");
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 250);
+        setTimeout(() => {
+            x.classList.add("w-0")
+        }, 300);
     }, [])
     const handleModalClick = (n) => {
-        var x = document.getElementsByClassName("seasonmodalClick")[n] ;
-        if(open) {
-            x.classList.add("hidden") ;
+        var x = document.getElementsByClassName("seasonmodalClick")[n];
+        if (open) {
+            x.classList.add("hidden");
             setOpen(!open);
-        }else {
-            x.classList.remove("hidden") ;
+        } else {
+            x.classList.remove("hidden");
             setOpen(!open);
         }
     }
     return (
         <>
+            <div className='h-[2px] w-full z-[99999999] absolute top-[63px]'>
+                <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
+                </div>
+            </div>
             {!loading && <div className='relative h-[560px]'>
                 <div className='absolute mt-10 overflow-hidden py-5 h-[500px] w-full '>
                     <img className='opacity-30 object-cover w-full h-[500px] object-center' src={`https://image.tmdb.org/t/p/original${info.backdrop_path}`} alt="" />
@@ -84,15 +102,15 @@ const HeroTv = () => {
                     {info?.seasons?.map((element, index) => {
                         return (
                             <div key={index}>
-                                <div onClick={()=>handleModalClick(index)} className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-5xl  hover:bg-gray-100">
-                                    <img className="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={`https://image.tmdb.org/t/p/original${element.poster_path}`} alt=""/>
-                                        <div className="flex flex-col justify-between p-4 leading-normal">
-                                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{element.name}</h5>
-                                            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{element.overview || info.overview}</p>
-                                        </div>
+                                <div onClick={() => handleModalClick(index)} className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-5xl  hover:bg-gray-100">
+                                    <img className="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={`https://image.tmdb.org/t/p/original${element.poster_path}`} alt="" />
+                                    <div className="flex flex-col justify-between p-4 leading-normal">
+                                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{element.name}</h5>
+                                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{element.overview || info.overview}</p>
+                                    </div>
                                 </div>
                                 <div id="seasonmodalClick" className='seasonmodalClick hidden fixed overflow-y-scroll z-[99999] top-0 bottom-0 right-0 left-0'>
-                                    <SeasonModal modalindex = {index} handleModalClick={handleModalClick} id={id} element = {element} /> 
+                                    <SeasonModal modalindex={index} handleModalClick={handleModalClick} id={id} element={element} />
                                 </div>
                             </div>
                         )

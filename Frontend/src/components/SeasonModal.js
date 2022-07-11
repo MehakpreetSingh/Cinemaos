@@ -12,7 +12,6 @@ const SeasonModal = (props) => {
             const url = `https://api.themoviedb.org/3/tv/${props.id}/season/${props.element.season_number}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
             const response = await fetch(url);
             const data = await response.json();
-            console.log(data)
             setSeasonData(data);
         }
         getSeasonData();
@@ -30,7 +29,7 @@ const SeasonModal = (props) => {
                     <div className='m-10'>
                         <img className='h-52 rounded-md object-cover' src={`https://image.tmdb.org/t/p/original${props.element.poster_path}`} alt="" />
                     </div>
-                    <div className='content my-12 w-2/3'>
+                    <div className='content my-12 md:w-2/3'>
                         <h1 className='text-black text-3xl font-bold'>{`${props.element.name}`}<span className='font-medium'>{`(${props.element.air_date?.substring(0, 4)})`}</span></h1>
                         <div className='flex items-center space-x-10'>
                             <p>{props.element.air_date}</p>
@@ -48,7 +47,7 @@ const SeasonModal = (props) => {
                                 return (
 
                                     <div className="" key={index}>
-                                        <Link to={`/series/${props.id}/${element.season_number}/${element.episode_number}`} className="mx-auto flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row w-[95%] hover:bg-gray-100 ">
+                                        <Link to={`/tv/${props.id}/${element.season_number}/${element.episode_number}`} className="mx-auto flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row w-[95%] hover:bg-gray-100 ">
                             
                                                 <img className="object-cover mx-2 w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={`https://image.tmdb.org/t/p/original${element.still_path}`} alt="" />
                                                 <a href=""></a>
