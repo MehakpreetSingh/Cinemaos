@@ -41,12 +41,12 @@ export default function Example() {
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <Link to='/' className="flex-shrink-0 flex items-center">
                   <img
-                    className="block lg:hidden h-8 w-auto"
+                    className="block scale-110 lg:hidden h-8 w-auto"
                     src={mlogo}
                     alt="Workflow"
                   />
                   <img
-                    className="hidden lg:block h-8 w-auto"
+                    className="hidden ml-2 scale-150 lg:block h-8 w-auto"
                     src={logo}
                     alt="Workflow"
                   />
@@ -145,7 +145,7 @@ export default function Example() {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-300 text-gray-800' : 'text-gray-800 hover:bg-gray-300 hover:text-gray-800',
+                    location.pathname === item.href ? 'bg-gray-300 text-gray-800' : 'text-gray-800 hover:bg-gray-300 hover:text-gray-800',
                     'block px-3 py-2 rounded-md text-base font-medium'
                   )}
                   aria-current={item.current ? 'page' : undefined}

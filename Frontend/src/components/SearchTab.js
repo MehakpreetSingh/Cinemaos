@@ -3,29 +3,62 @@ import { useState } from 'react';
 import { useParams , Link } from 'react-router-dom';
 import MovieCard2 from './MovieCard2';
 import 'swiper/css';
+import InfiniteScroll from "react-infinite-scroll-component";
+import Spinner from './Spinner';
 
 const SearchTab = () => {
     const { query } = useParams();
     const [movies, setMovies] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalpages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(true);
     const getData = async () => {
         const url = `https://api.themoviedb.org/3/search/multi?api_key=748d8f1491929887f482d9767de12ea8&language=en-US&query=${query}&page=1&include_adult=false`;
         const response = await fetch(url);
         const data = await response.json();
         setMovies(data.results);
+        setTotalPages(data.total_pages);
+        setPage(page + 1) ;
         console.log(data.results)
     }
     useEffect(()=> {
-        setLoading(false) ;
         getData() ;
+        var x = document.getElementById("loading-bar");
+        for (let i = 0; i < 4; i++) {
+            setTimeout(() => {
+                x.classList.remove(`w-[${(i) * 25}%]`);
+                x.classList.add(`w-[${(i + 1) * 25}%]`);
+            }, 50);
+        }
+        x.classList.remove("w-[100%]");
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 200);
+        setTimeout(() => {
+            x.classList.add("w-0")
+        }, 200);
     },[])
+    const fetchMoreData = async () => {
+        const url = `https://api.themoviedb.org/3/search/multi?api_key=748d8f1491929887f482d9767de12ea8&language=en-US&query=${query}&page=${page}&include_adult=false`;
+        let response = await fetch(url);
+        let data = await response.json();
+        setMovies(movies.concat(data.results));
+        setPage(page + 1);
+        console.log(data.results)
+    };
     return (
-        <div>
             <>
-                {/* <div className='h-[2px] w-full z-[99999999] absolute top-[63px]'>
+                <div className='h-[2px] w-full z-[99999999] absolute top-[63px]'>
                     <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
                     </div>
-                </div> */}
+                </div>
+                <InfiniteScroll
+                dataLength={movies?.length}
+                next={fetchMoreData}
+                hasMore={page !== totalpages}
+                loader={<Spinner />}
+            >
                 <div className='bg-[#ffffff] absolute mt-[70px] pb-12'>
                     {/* <div className='flex justify-center items-center m-4 '>
         <ReactPlayer pip={true} controls={true} url='https://d1e65r3doj6e53.cloudfront.net/The Batman (2022) WEBDL-1080p 8bit h264 AAC 2.0 -CMRG.mp4' />
@@ -65,8 +98,8 @@ const SearchTab = () => {
                         })}
                     </div>}
                 </div>
+                </InfiniteScroll>
             </>
-        </div>
     )
 }
 

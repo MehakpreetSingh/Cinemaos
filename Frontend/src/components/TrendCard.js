@@ -14,7 +14,7 @@ const TrendCard = (props) => {
         // getMovieData();
         setTimeout(() => {
             setLoading(false);
-        }, 20);
+        }, 50);
         
     }, [])
 
