@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { useParams } from 'react-router-dom';
+import ComingSoon from './ComingSoon';
+import Spinner from './Spinner';
 
 const WatchMovie = () => {
     const [dbinfo, setDbinfo] = useState({});
+    const [loading ,setLoading] = useState(true) ;
     const { id} = useParams();
     useEffect(() => {
         
@@ -20,11 +23,21 @@ const WatchMovie = () => {
         setDbinfo(data);
     }
     dbData() ;
+    setTimeout(() => {
+        setLoading(false) ;
+    }, 600);
     }, [])
     return (
+        <>
+    {!loading && 
         <div className='h-screen flex justify-center items-center'>
-            <ReactPlayer url={`${dbinfo?.url}`} controls={true} />
-        </div>
+            {
+                !(dbinfo?.url) ? <ComingSoon/>:<ReactPlayer url={`${dbinfo?.url}`} controls={true} />
+            }
+            
+            
+        </div>}
+        </>
     )
 }
 

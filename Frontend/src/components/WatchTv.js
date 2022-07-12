@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { useParams } from 'react-router-dom';
+import ComingSoon from './ComingSoon';
 
 const WatchTv = () => {
     const [dbData, setDbData] = useState({});
@@ -8,7 +9,7 @@ const WatchTv = () => {
     const [episodeData, setEpisodeData] = useState({});
     const { id, S, E } = useParams();
     useEffect(() => {
-        const host =  `https://cinemaos-backend.herokuapp.com/` ;
+        const host = `https://cinemaos-backend.herokuapp.com/`;
         const getEpisodeAPIData = async () => {
             const url = `https://api.themoviedb.org/3/tv/${id}/season/${S}/episode/${E}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`
             const response = await fetch(url);
@@ -35,24 +36,32 @@ const WatchTv = () => {
         }
         getEpisodeAPIData();
         getEpisodeData();
+        setTimeout(() => {
+            setLoading(false);
+        },600);
     }, [])
     return (
-        <div className='h-screen flex justify-center items-center'>
-            <div className='hidden md:inline-block'>
-                <div class="max-w-sm bg-white border-t border-l border-b ">
-                    <a href="#">
-                        <img class="" src={`https://image.tmdb.org/t/p/original${episodeData?.still_path}`} alt="" />
-                    </a>
-                    <div class="p-5">
+        <>
+            {!loading && <div className='h-screen flex justify-center items-center'>
+                <div className='hidden md:inline-block'>
+                    <div class="max-w-sm bg-white border-t border-l border-b ">
                         <a href="#">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{episodeData?.name}</h5>
+                            <img class="" src={`https://image.tmdb.org/t/p/original${episodeData?.still_path}`} alt="" />
                         </a>
-                        <p class="mb-3 font-normal text-gray-700 h-[52px] overflow-hidden">{episodeData?.overview}</p>
+                        <div class="p-5">
+                            <a href="#">
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{episodeData?.name}</h5>
+                            </a>
+                            <p class="mb-3 font-normal text-gray-700 h-[52px] overflow-hidden">{episodeData?.overview}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <ReactPlayer url={`${dbData?.url}`} controls={true} />
-        </div>
+                {
+                    !(dbData?.url) ? <ComingSoon /> : <ReactPlayer url={`${dbData?.url}`} controls={true} />
+                }
+
+            </div>}
+        </>
     )
 }
 
