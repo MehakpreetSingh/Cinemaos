@@ -4,7 +4,6 @@ import close from '../close.png'
 import { Link } from "react-router-dom";
 
 const SeasonModal = (props) => {
-    const host =  `https://cinemaos-backend.herokuapp.com/` ;
     const [seasonData, setSeasonData] = useState({})
     const [loading, setLoading] = useState(true)
     useEffect(() => {
@@ -16,10 +15,11 @@ const SeasonModal = (props) => {
         }
         getSeasonData();
         setLoading(false);
-    }, [])
+    }, [props])
 
     return (
-        <div className='p-1.5 d:p-12  bg-transparent'>
+        <>
+        {!loading && <div className='p-1.5 d:p-12  bg-transparent'>
             
             <div className='rounded-xl relative border shadow-sm bg-white'>
             <div onClick={()=>props.handleModalClick(props.modalindex)} className="cursor-pointer absolute top-4 right-4">
@@ -43,14 +43,14 @@ const SeasonModal = (props) => {
                     <h1 className='my-1 mx-10 text-xl font-medium'>Episodes <span className='font-normal'>{props.element.episode_count}</span> </h1>
                     <div className=' grid grid-cols-1 gap-4'>
                         {seasonData?.episodes?.map((element, index) => {
-                            if (loading === false) {
+                            
                                 return (
 
                                     <div className="" key={index}>
                                         <Link to={`/tv/${props.id}/${element.season_number}/${element.episode_number}`} className="mx-auto flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row w-[95%] hover:bg-gray-100 ">
                             
                                                 <img className="object-cover mx-2 w-auto h-40 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={`https://image.tmdb.org/t/p/original${element.still_path}`} alt="" />
-                                                <a href=""></a>
+                                                
                                             
                                             <div className="flex flex-col justify-between p-4 leading-normal">
                                                 <h5 className="mb-2 text-lg md:text-2xl font-bold tracking-tight text-gray-900 "><span>{element.episode_number}.</span>{element?.name}</h5>
@@ -59,13 +59,13 @@ const SeasonModal = (props) => {
                                         </Link>
                                     </div>
                                 )
-                            }
 
                         })}
                     </div>
                 </div>
             </div>
-        </div>
+        </div>}
+        </>
     )
 }
 

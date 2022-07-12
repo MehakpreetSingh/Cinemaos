@@ -10,12 +10,10 @@ import 'swiper/css/scrollbar';
 import TrendCard from './TrendCard';
 import home from '../bg-home.png'
 import { Link, useNavigate } from 'react-router-dom';
-import InfiniteScroll from "react-infinite-scroll-component";
-import Spinner from './Spinner';
+
 
 const Home = () => {
     const navigate = useNavigate();
-    const host = `https://cinemaos-backend.herokuapp.com/`;;
     const [movies, setMovies] = useState([]);
     const [tvshows, setTvShows] = useState([]);
     const [page, setPage] = useState(1);
@@ -72,7 +70,7 @@ const Home = () => {
         setTimeout(() => {
             x.classList.add("w-0")
         }, 400);
-
+       // eslint-disable-next-line
     }, [])
     const fetchMoreData = async () => {
         const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=748d8f1491929887f482d9767de12ea8&page=${page}`;
@@ -95,11 +93,11 @@ const Home = () => {
 
     return (
         <>
-            <div className='h-[2px] w-full z-[99999999] absolute top-[63px]'>
+            <div className='h-[2px]  w-full z-[99999999] absolute top-[63px]'>
                 <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
                 </div>
             </div>
-            <img className='absolute z-[999] w-full h-96 object-cover  top-16' src={home} alt="" />
+            <img className='absolute z-[999] transition-all duration-500 w-full h-96 object-cover  top-16' src={home} alt="" />
             <form onSubmit={handleSubmit} className='absolute z-[999] mt-[350px] w-full  '>
                 <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
                 <div className="relative mx-4 md:w-4/6 md:mx-auto">
@@ -113,7 +111,7 @@ const Home = () => {
                 </div>
             </form>
 
-            {!loading && <div className='bg-[#ffffff] absolute px-4 mt-[420px] pb-12 w-[100%]'>
+            {!loading && <div className='bg-[#ffffff]  absolute px-4 mt-[420px] pb-12 w-[100%]'>
                 <h1 className='mt-10 mx-4 text-black font-medium md:text-xl'>Trending Movies</h1>
                 <div className='mx-2'>
                     <Swiper
@@ -153,12 +151,13 @@ const Home = () => {
                             if (loading === false) {
                                 return (
                                     <SwiperSlide key={index}>
-                                        <div className='' key={index}>
+                                        <div className='transition-all duration-500' key={index}>
                                             <TrendCard movieData={element} />
                                         </div>
                                     </SwiperSlide>
                                 )
                             }
+                            return (<div></div>);
 
                         })}
 
@@ -208,12 +207,13 @@ const Home = () => {
                             if (loading === false) {
                                 return (
                                     <SwiperSlide key={index}>
-                                        <div className='' key={index}>
+                                        <div className='transition-all duration-500' key={index}>
                                             <TrendCard movieData={element} />
                                         </div>
                                     </SwiperSlide>
                                 )
                             }
+                            return (<div></div>);
 
                         })}
 

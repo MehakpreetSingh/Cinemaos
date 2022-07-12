@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useParams , Link } from 'react-router-dom';
-import MovieCard2 from './MovieCard2';
+
 import 'swiper/css';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from './Spinner';
@@ -12,16 +12,17 @@ const SearchTab = () => {
     const [page, setPage] = useState(1);
     const [totalpages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(true);
-    const getData = async () => {
-        const url = `https://api.themoviedb.org/3/search/multi?api_key=748d8f1491929887f482d9767de12ea8&language=en-US&query=${query}&page=1&include_adult=false`;
-        const response = await fetch(url);
-        const data = await response.json();
-        setMovies(data.results);
-        setTotalPages(data.total_pages);
-        setPage(page + 1) ;
-        console.log(data.results)
-    }
+    
     useEffect(()=> {
+        const getData = async () => {
+            const url = `https://api.themoviedb.org/3/search/multi?api_key=748d8f1491929887f482d9767de12ea8&language=en-US&query=${query}&page=1&include_adult=false`;
+            const response = await fetch(url);
+            const data = await response.json();
+            setMovies(data.results);
+            setTotalPages(data.total_pages);
+            setPage(page + 1) ;
+            console.log(data.results)
+        }
         getData() ;
         var x = document.getElementById("loading-bar");
         for (let i = 0; i < 4; i++) {
@@ -38,7 +39,9 @@ const SearchTab = () => {
         setTimeout(() => {
             x.classList.add("w-0")
         }, 200);
-    },[])
+        // eslint-disable-next-line
+    },[query])
+    // eslint-disable-next-line
     const fetchMoreData = async () => {
         const url = `https://api.themoviedb.org/3/search/multi?api_key=748d8f1491929887f482d9767de12ea8&language=en-US&query=${query}&page=${page}&include_adult=false`;
         let response = await fetch(url);

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 
 const TrendCard = (props) => {
-    const [info, setInfo] = useState({});
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         // const getMovieData = async () => {
@@ -20,14 +19,14 @@ const TrendCard = (props) => {
 
     return (
         <div>
-            {!loading && <div className=" flex flex-col justify-center">
+            {!loading && <div className=" flex flex-col transition-all duration-500 justify-center">
                 
-                <div className="py-3  sm:max-w-sm sm:mx-auto">
+                <div className="py-3 transition-all duration-500  sm:max-w-sm sm:mx-auto">
                         <Link to={ (props.movieData.media_type === "movie") ?
                                   `/movie/${props.movieData.id}` : `/tv/${props.movieData.id}`
                             } className="h-48 relative overflow-visible w-1/2 hover:scale-[1.1] transition-transform duration-150">
-                            <img className="rounded-3xl shadow-lg" src={`https://image.tmdb.org/t/p/original${props.movieData.poster_path}`} alt=""/>
-                            <h1 className="bg-yellow-400 text-sm absolute -bottom-3 left-4 font-bold rounded-full inline-block p-2">{props.movieData?.vote_average.toFixed(1)}</h1>
+                            <img className="rounded-3xl transition-all duration-500 shadow-lg" src={`https://image.tmdb.org/t/p/original${props.movieData.poster_path}`} alt=""/>
+                            <h1 className="bg-yellow-400 transition-all duration-500 text-sm absolute -bottom-3 left-4 font-bold rounded-full inline-block p-2">{props.movieData?.vote_average.toFixed(1)}</h1>
                         </Link>
                         
                     {/* <div className="bg-white shadow-lg border-gray-100 max-h-80	 border sm:rounded-3xl p-8 flex space-x-8">

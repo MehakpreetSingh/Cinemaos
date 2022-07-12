@@ -38,20 +38,20 @@ const WatchTv = () => {
         getEpisodeData();
         setTimeout(() => {
             setLoading(false);
-        },800);
-    }, [])
+        }, 800);
+    }, [E, S, id])
     return (
         <>
             {!loading && <div className='h-screen flex justify-center items-center'>
                 <div className='hidden md:inline-block'>
                     <div class="max-w-sm bg-white border-t border-l border-b ">
-                        <a href="#">
-                            <img class="" src={`https://image.tmdb.org/t/p/original${episodeData?.still_path}`} alt="" />
-                        </a>
+
+                        <img class="" src={`https://image.tmdb.org/t/p/original${episodeData?.still_path}`} alt="" />
+
                         <div class="p-5">
-                            <a href="#">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{episodeData?.name}</h5>
-                            </a>
+
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{episodeData?.name}</h5>
+
                             <p class="mb-3 font-normal text-gray-700 h-[52px] overflow-hidden">{episodeData?.overview}</p>
                         </div>
                     </div>

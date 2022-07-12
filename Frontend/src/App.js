@@ -22,7 +22,7 @@ function App() {
           <Route exact path="/tv" element={<Tv/>}/>
           <Route exact path="/tv/:id" element={<HeroTv/>}/>
           <Route exact path="/tv/:id/:S/:E" element={<WatchTv/>}/>
-          <Route exact path="/search/:query" element={<SearchTab/>}/>
+          <Route exact path="/search/:query" key="search" element={<SearchTab/>}/>
         </Routes>
       </Router>
       

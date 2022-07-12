@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { useParams } from 'react-router-dom';
 import ComingSoon from './ComingSoon';
-import Spinner from './Spinner';
 
 const WatchMovie = () => {
     const [dbinfo, setDbinfo] = useState({});
@@ -26,7 +25,7 @@ const WatchMovie = () => {
     setTimeout(() => {
         setLoading(false) ;
     }, 800);
-    }, [])
+    }, [id])
     return (
         <>
     {!loading && 

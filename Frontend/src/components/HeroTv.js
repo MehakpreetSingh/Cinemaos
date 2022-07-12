@@ -5,7 +5,6 @@ import SeasonModal from './SeasonModal';
 
 const HeroTv = () => {
     const [info, setInfo] = useState({});
-    const [dbinfo, setDbinfo] = useState({});
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
     // const port = process.env.PORT || 5000 ;
@@ -47,6 +46,7 @@ const HeroTv = () => {
         setTimeout(() => {
             x.classList.add("w-0")
         }, 400);
+        // eslint-disable-next-line
     }, [])
     const handleModalClick = (n) => {
         var x = document.getElementsByClassName("seasonmodalClick")[n];
@@ -83,7 +83,7 @@ const HeroTv = () => {
                             <h1 className='rounded-full bg-yellow-400 pt-2 h-10 w-10 text-center align-middle'>{info.vote_average}</h1>
                             <div className='space-x-1 flex items-center hover:opacity-70'>
                                 <img className='h-6' src={play} alt="" />
-                                <a className='text-gray-800' href="">Play Trailer</a>
+                                <a className='text-gray-800' href="?">Play Trailer</a>
                             </div>
                         </div>
                         <h1 className='text-gray-600 italic'>{info.tagline}</h1>
