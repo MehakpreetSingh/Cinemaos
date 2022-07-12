@@ -51,7 +51,7 @@ const WatchTv = () => {
                     </div>
                 </div>
             </div>
-            <ReactPlayer url={`${dbData.url}`} controls={true} />
+            <ReactPlayer url={`${dbData?.url}`} controls={true} />
         </div>
     )
 }
