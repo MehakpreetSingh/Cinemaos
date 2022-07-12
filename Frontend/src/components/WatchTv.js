@@ -38,7 +38,7 @@ const WatchTv = () => {
         getEpisodeData();
         setTimeout(() => {
             setLoading(false);
-        },600);
+        },800);
     }, [])
     return (
         <>

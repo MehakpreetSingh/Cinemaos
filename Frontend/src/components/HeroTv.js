@@ -64,13 +64,13 @@ const HeroTv = () => {
                 <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
                 </div>
             </div>
-            {!loading && <div className='relative h-[560px]'>
-                <div className='absolute mt-10 overflow-hidden py-5 h-[500px] w-full '>
-                    <img className='opacity-30 object-cover w-full h-[500px] object-center' src={`https://image.tmdb.org/t/p/original${info.backdrop_path}`} alt="" />
+            {!loading && <div className='relative h-64 md:h-[560px]'>
+                <div className='absolute mt-10 md:overflow-hidden h-64 py-5 md:h-[500px] w-full '>
+                    <img className='md:opacity-30 opacity-50 object-cover w-full h-64 md:h-[500px] object-center' src={`https://image.tmdb.org/t/p/original${info.backdrop_path}`} alt="" />
                 </div>
                 <div className="py-5 backdrop-div mt-10 absolute flex flex-col sm:flex-row" >
                     <div className='poster-img m-10 '>
-                        <img className='rounded-lg h-96 object-cover' src={`https://image.tmdb.org/t/p/original${info.poster_path}`} alt="" />
+                        <img className='rounded-lg h-40 md:h-96 object-cover' src={`https://image.tmdb.org/t/p/original${info.poster_path}`} alt="" />
                     </div>
                     <div className='content my-10 md:block hidden w-2/3'>
                         <h1 className='text-black text-3xl font-bold'>{`${info.original_name}`}<span className='font-medium'>{`(${info.first_air_date?.substring(0, 4)})`}</span></h1>
@@ -96,17 +96,17 @@ const HeroTv = () => {
                 </div>
 
             </div>}
-            <div id="seasons-div" className='seasons-div flex flex-col justify-center items-center'>
-                <h1 className='text-black text-2xl mb-4 border-y shadow w-5/6 text-center'>Total Seasons {info.number_of_seasons}</h1>
+            {!loading && <div id="seasons-div" className='seasons-div my-16 md:my-0 flex flex-col justify-center items-center'>
+                <h1 className='text-black text-2xl mb-4 border-y shadow w-5/6 text-center'>Total Seasons | {info.number_of_seasons}</h1>
                 <div className='grid gap-2 grid-cols-1'>
                     {info?.seasons?.map((element, index) => {
                         return (
                             <div key={index}>
-                                <div onClick={() => handleModalClick(index)} className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-5xl  hover:bg-gray-100">
-                                    <img className="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={`https://image.tmdb.org/t/p/original${element.poster_path}`} alt="" />
+                                <div onClick={() => handleModalClick(index)} className="px-2 md:px-0 flex  items-center bg-white rounded-lg border shadow-md flex-row md:max-w-5xl  hover:bg-gray-100">
+                                    <img className="object-cover w-auto h-40 rounded-t-lg md:h-auto md:w-32 md:rounded-none md:rounded-l-lg" src={`https://image.tmdb.org/t/p/original${element.poster_path}`} alt="" />
                                     <div className="flex flex-col justify-between p-4 leading-normal">
-                                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{element.name}</h5>
-                                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{element.overview || info.overview}</p>
+                                        <h5 className="mb-2 text-lg md:text-2xl font-bold tracking-tight text-gray-900 ">{element.name}</h5>
+                                        <p className="mb-3 text-base md:text-lg font-normal text-gray-700 dark:text-gray-400">{element.overview || info.overview}</p>
                                     </div>
                                 </div>
                                 <div id="seasonmodalClick" className='seasonmodalClick hidden fixed overflow-y-scroll z-[99999] top-0 bottom-0 right-0 left-0'>
@@ -116,7 +116,7 @@ const HeroTv = () => {
                         )
                     })}
                 </div>
-            </div>
+            </div>}
         </>
     )
 }

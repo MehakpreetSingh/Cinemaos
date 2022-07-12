@@ -25,7 +25,7 @@ const WatchMovie = () => {
     dbData() ;
     setTimeout(() => {
         setLoading(false) ;
-    }, 600);
+    }, 800);
     }, [])
     return (
         <>

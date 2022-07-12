@@ -19,7 +19,7 @@ const SeasonModal = (props) => {
     }, [])
 
     return (
-        <div className='p-12  bg-transparent'>
+        <div className='p-1.5 d:p-12  bg-transparent'>
             
             <div className='rounded-xl relative border shadow-sm bg-white'>
             <div onClick={()=>props.handleModalClick(props.modalindex)} className="cursor-pointer absolute top-4 right-4">
@@ -29,7 +29,7 @@ const SeasonModal = (props) => {
                     <div className='m-10'>
                         <img className='h-52 rounded-md object-cover' src={`https://image.tmdb.org/t/p/original${props.element.poster_path}`} alt="" />
                     </div>
-                    <div className='content my-12 md:w-2/3'>
+                    <div className='content my-12 w-full md:w-2/3'>
                         <h1 className='text-black text-3xl font-bold'>{`${props.element.name}`}<span className='font-medium'>{`(${props.element.air_date?.substring(0, 4)})`}</span></h1>
                         <div className='flex items-center space-x-10'>
                             <p>{props.element.air_date}</p>
@@ -49,12 +49,12 @@ const SeasonModal = (props) => {
                                     <div className="" key={index}>
                                         <Link to={`/tv/${props.id}/${element.season_number}/${element.episode_number}`} className="mx-auto flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row w-[95%] hover:bg-gray-100 ">
                             
-                                                <img className="object-cover mx-2 w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={`https://image.tmdb.org/t/p/original${element.still_path}`} alt="" />
+                                                <img className="object-cover mx-2 w-auto h-40 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={`https://image.tmdb.org/t/p/original${element.still_path}`} alt="" />
                                                 <a href=""></a>
                                             
                                             <div className="flex flex-col justify-between p-4 leading-normal">
-                                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 "><span>{element.episode_number}.</span>{element?.name}</h5>
-                                                <p className="mb-3 font-normal text-gray-700 dark:text-gray-600">{element?.overview}</p>
+                                                <h5 className="mb-2 text-lg md:text-2xl font-bold tracking-tight text-gray-900 "><span>{element.episode_number}.</span>{element?.name}</h5>
+                                                <p className="mb-3 text-sm md:text-lg font-normal text-gray-700 dark:text-gray-600">{element?.overview}</p>
                                             </div>
                                         </Link>
                                     </div>
