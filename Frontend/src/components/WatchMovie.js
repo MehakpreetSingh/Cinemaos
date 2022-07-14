@@ -31,7 +31,7 @@ const WatchMovie = () => {
     {!loading && 
         <div className='h-screen flex justify-center items-center'>
             {
-                !(dbinfo?.url) ? <ComingSoon/>:<ReactPlayer url={`${dbinfo?.url}`} controls={true} />
+            <ReactPlayer url={`${dbinfo?.url}`} controls={true} />
             }
             
             
