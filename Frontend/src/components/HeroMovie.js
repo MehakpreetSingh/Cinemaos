@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import play from '../play.png'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar, A11y, EffectFade ,Mousewheel , Keyboard  } from 'swiper';
+import { FreeMode } from 'swiper';
+import 'swiper/css/free-mode';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/scrollbar';
 
 const HeroMovie = () => {
     const [info, setInfo] = useState({});
-    const [dbinfo, setDbinfo] = useState({});
+    const [cast, setCast] = useState([]);
     const [loading, setLoading] = useState(true);
-    const {id} = useParams() ;
+    const { id } = useParams();
     useEffect(() => {
+
 
         const getMovieData = async () => {
             const url = `https://api.themoviedb.org/3/movie/${id}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
             const response = await fetch(url);
             const data = await response.json();
             setInfo(data);
+            const url2 = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
+            const response2 = await fetch(url2);
+            const data2 = await response2.json();
+            setCast(data2.cast)
 
         }
         getMovieData();
@@ -67,6 +79,58 @@ const HeroMovie = () => {
                         <Link to={`/movie/watch/${info.id}`} className="mt-3 text-white bg-[#FF9119] hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40 mr-2 mb-2">
                             Watch Now
                         </Link>
+                    </div>
+                </div>
+                <div className='absolute mt-[920px] md:mt-[560px] w-[94%] overflow-hidden mx-10 font-sans font-medium'>
+                    <h1>Movie Cast</h1>
+                    <div className=''>
+                    <Swiper
+                        freeMode={true}
+                        grabCursor={true}
+                        modules={[FreeMode, Navigation, Pagination,Mousewheel , Scrollbar, A11y, EffectFade , Keyboard ]}
+                        keyboard={true}
+                        navigation
+                        height={400}
+                        draggable={true}
+                        pagination={{ clickable: true }}
+                        className="mySwiper px-2"
+                        breakpoints={{
+                            320: {
+                                slidesPerView: 2,
+                                spaceBetween: 20
+                            },
+                            480: {
+                                slidesPerView: 4,
+                                spaceBetween: 30
+                            },
+                            768: {
+                                slidesPerView: 6,
+                                spaceBetween: 40
+                            },
+
+                        }}
+                    >
+                        {
+                            cast.map((element, index) => {
+                                if(index < 15) {
+                                    return (
+                                        <SwiperSlide key={index}>
+                                        <div class="max-w-[160px] rounded overflow-hidden shadow-lg">
+                                            <img class="w-full " src={`https://image.tmdb.org/t/p/original${element.profile_path}`} alt="Sunset in the mountains" />
+                                            <div class="px-2 md:px-6 py-4">
+                                                <div class="font-bold text-sm">{element.original_name}</div>
+                                                <p class="text-gray-700 text-[10px]">
+                                                   {element.character}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        </SwiperSlide>
+                                    )
+                                }
+                                
+                            })
+                        }
+                    </Swiper>
                     </div>
                 </div>
             </div>}
