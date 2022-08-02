@@ -106,7 +106,7 @@ const Home = () => {
                     </div>
                     <input type="search" id="default-search" className="block p-1.5 pl-10 md:p-3 md:pl-10 w-full text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:shadow-lg outline-none" onChange={(e) => { setSearchQuery(e.target.value) }} placeholder="Search Movies & TV Shows" required />
                     <Link to={`search/${searchquery}`}>
-                    <button disabled={searchquery.length ===0}  type="submit" onClick={handleSubmit} className="text-white absolute md:right-1.5 md:bottom-[7px] bottom-[7px] right-[5px] bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg md:text-sm text-[13px] px-2 py-[2px] md:px-4 md:py-2 ">Search</button></Link>
+                    <button disabled={searchquery.length ===0}  type="submit" onClick={handleSubmit} className="text-white absolute md:right-[7px] md:bottom-[7px] bottom-[7px] right-[7px] bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg md:text-sm text-[13px] px-2 py-[2px] md:px-4 md:py-2 ">Search</button></Link>
                     
                 </div>
             </form>
