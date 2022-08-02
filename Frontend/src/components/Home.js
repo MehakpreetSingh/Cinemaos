@@ -104,7 +104,7 @@ const Home = () => {
                     <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                         <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
-                    <input type="search" id="default-search" className="block p-1.5 pl-10 md:p-3 md:pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:shadow-lg outline-none" onChange={(e) => { setSearchQuery(e.target.value) }} placeholder="Search Movies & TV Shows" required />
+                    <input type="search" id="default-search" className="block p-1.5 pl-10 md:p-3 md:pl-10 w-full text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:shadow-lg outline-none" onChange={(e) => { setSearchQuery(e.target.value) }} placeholder="Search Movies & TV Shows" required />
                     <Link to={`search/${searchquery}`}>
                     <button disabled={searchquery.length ===0}  type="submit" onClick={handleSubmit} className="text-white absolute md:right-1.5 md:bottom-1.5 bottom-[5px] right-[5px] bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg md:text-sm text-[13px] px-2 py-[2px] md:px-4 md:py-2 ">Search</button></Link>
                     
