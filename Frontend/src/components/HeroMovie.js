@@ -81,7 +81,7 @@ const HeroMovie = () => {
                         </Link>
                     </div>
                 </div>
-                <div className='absolute mt-[900px] md:mt-[560px] w-[94%] overflow-hidden mx-4 md:mx-10 font-sans font-medium'>
+                <div className='absolute mt-[980px] md:mt-[560px] w-[94%] overflow-hidden mx-4 md:mx-10 font-sans font-medium'>
                     <h1>Movie Cast</h1>
                     <div className='mt-2'>
                     <Swiper
