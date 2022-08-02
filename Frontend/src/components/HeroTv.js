@@ -2,10 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import play from '../play.png'
 import SeasonModal from './SeasonModal';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar, A11y, EffectFade ,Mousewheel , Keyboard  } from 'swiper';
+import { FreeMode } from 'swiper';
+import 'swiper/css/free-mode';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/scrollbar';
 
 const HeroTv = () => {
     const [info, setInfo] = useState({});
     const [loading, setLoading] = useState(true);
+    const [cast, setCast] = useState([]);
     const { id } = useParams();
     // const port = process.env.PORT || 5000 ;
     // const host =  `http://localhost:${port}/` ;
@@ -28,6 +36,10 @@ const HeroTv = () => {
             const response = await fetch(url);
             const data = await response.json();
             setInfo(data);
+            const url2 = `https://api.themoviedb.org/3/tv/${id}/credits?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
+            const response2 = await fetch(url2);
+            const data2 = await response2.json();
+            setCast(data2.cast)
         }
         getMovieData();
         // dbData() ;
@@ -96,7 +108,59 @@ const HeroTv = () => {
                 </div>
 
             </div>}
-            {!loading && <div id="seasons-div" className='seasons-div my-16 md:my-0 flex flex-col justify-center items-center'>
+            <div className=' my-16 md:my-0 w-[94%] overflow-hidden mx-4 md:mx-10 font-sans font-medium'>
+                    <h1>Series Cast</h1>
+                    <div className='mt-2'>
+                    <Swiper
+                        freeMode={true}
+                        grabCursor={true}
+                        modules={[FreeMode, Navigation, Pagination,Mousewheel , Scrollbar, A11y, EffectFade , Keyboard ]}
+                        keyboard={true}
+                        navigation
+                        height={400}
+                        draggable={true}
+                        pagination={{ clickable: true }}
+                        className="mySwiper px-2"
+                        breakpoints={{
+                            320: {
+                                slidesPerView: 2,
+                                spaceBetween: 20
+                            },
+                            480: {
+                                slidesPerView: 4,
+                                spaceBetween: 30
+                            },
+                            768: {
+                                slidesPerView: 6,
+                                spaceBetween: 40
+                            },
+
+                        }}
+                    >
+                        {
+                            cast.map((element, index) => {
+                                if(index < 15) {
+                                    return (
+                                        <SwiperSlide key={index}>
+                                        <div class="max-w-[160px] rounded overflow-hidden shadow-lg">
+                                            <img class="w-full " src={`https://image.tmdb.org/t/p/original${element.profile_path}`} alt="Sunset in the mountains" />
+                                            <div class="px-2 md:px-6 py-4">
+                                                <div class="font-bold text-sm">{element.original_name}</div>
+                                                <p class="text-gray-700 text-[10px]">
+                                                   {element.character}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        </SwiperSlide>
+                                    )
+                                }
+                                
+                            })
+                        }
+                    </Swiper>
+                    </div>
+                </div>
+            {!loading && <div id="seasons-div" className='seasons-div md:my-4 flex flex-col justify-center items-center'>
                 <h1 className='text-black text-2xl mb-4 border-y shadow w-5/6 text-center'>Total Seasons | {info.number_of_seasons}</h1>
                 <div className='grid gap-2 grid-cols-1'>
                     {info?.seasons?.map((element, index) => {
