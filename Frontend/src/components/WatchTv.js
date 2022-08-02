@@ -34,23 +34,23 @@ const WatchTv = () => {
             }
             setLoading(false);
         }
-        getEpisodeAPIData();
         getEpisodeData();
+        getEpisodeAPIData();
         var x = document.getElementById("loading-bar");
         for (let i = 0; i < 4; i++) {
             setTimeout(() => {
                 x.classList.remove(`w-[${(i) * 25}%]`);
                 x.classList.add(`w-[${(i + 1) * 25}%]`);
-            }, 100);
+            }, 300);
         }
         x.classList.remove("w-[100%]");
 
         setTimeout(() => {
             setLoading(false);
-        }, 350);
+        }, 1150);
         setTimeout(() => {
             x.classList.add("w-0")
-        }, 400);
+        }, 1200);
     }, [])
     return (
         <>

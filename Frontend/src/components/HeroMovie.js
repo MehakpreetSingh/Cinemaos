@@ -105,7 +105,7 @@ const HeroMovie = () => {
                             },
                             768: {
                                 slidesPerView: 6,
-                                spaceBetween: 40
+                                spaceBetween: 30
                             },
 
                         }}
@@ -115,7 +115,7 @@ const HeroMovie = () => {
                                 if(index < 15) {
                                     return (
                                         <SwiperSlide key={index}>
-                                        <div class="max-w-[160px] rounded overflow-hidden shadow-lg">
+                                        <div class="max-w-[160px] h-[320px] rounded overflow-hidden shadow-lg">
                                             <img class="w-full " src={`https://image.tmdb.org/t/p/original${element.profile_path}`} alt="Sunset in the mountains" />
                                             <div class="px-2 md:px-6 py-4">
                                                 <div class="font-bold text-sm">{element.original_name}</div>
