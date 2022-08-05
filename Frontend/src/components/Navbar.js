@@ -44,6 +44,9 @@ export default function Example() {
     handleCLick();
    
   }
+  const handleClick = () => {
+    localStorage.setItem("token" , "") ;
+  }
   useEffect(() => {
   }, [])
   return (
@@ -130,12 +133,13 @@ export default function Example() {
                       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           {({ active }) => (
-                            <a
-                              href="?"
+                            <Link to="user">
+                            <h1
                               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               Your Profile
-                            </a>
+                            </h1>
+                            </Link>
                           )}
                         </Menu.Item>
                         <Menu.Item>
@@ -150,12 +154,13 @@ export default function Example() {
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <a
-                              href="?"
+                            <Link to="/login" onClick={handleClick}>
+                            <h1
                               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               Sign out
-                            </a>
+                            </h1>
+                            </Link>
                           )}
                         </Menu.Item>
                       </Menu.Items>

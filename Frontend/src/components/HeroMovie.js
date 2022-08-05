@@ -9,6 +9,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
 
+
 const HeroMovie = () => {
     const [info, setInfo] = useState({});
     const [cast, setCast] = useState([]);
@@ -29,6 +30,16 @@ const HeroMovie = () => {
 
         }
         getMovieData();
+        // const getColor = async() => {
+        //     const uri = `https://image.tmdb.org/t/p/original${info.poster_path}`
+        //     const result = await ImageColors.getColors(uri, {
+        //         fallback: '#228B22',
+        //         cache: true,
+        //         key: 'unique_key',
+        //       })
+
+        // }
+          
         var x = document.getElementById("loading-bar");
         for (let i = 0; i < 4; i++) {
             setTimeout(() => {
@@ -45,6 +56,7 @@ const HeroMovie = () => {
             x.classList.add("w-0")
         }, 300);
     }, [])
+    
     return (
         <>
             <div className='h-[2px] w-full z-[99999999] absolute top-[63px]'>
@@ -81,7 +93,7 @@ const HeroMovie = () => {
                         </Link>
                     </div>
                 </div>
-                <div className='absolute mt-[980px] md:mt-[560px] w-[94%] overflow-hidden mx-4 md:mx-10 font-sans font-medium'>
+                <div className='absolute mt-[995px] md:mt-[560px] w-[94%] overflow-hidden mx-4 md:mx-10 font-sans font-medium'>
                     <h1>Movie Cast</h1>
                     <div className='mt-2'>
                     <Swiper

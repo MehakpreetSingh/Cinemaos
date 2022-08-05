@@ -23,6 +23,9 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
     const [searchquery, setSearchQuery] = useState("");
     useEffect(() => {
+        if(localStorage.getItem('token') == false) {
+            navigate("/signup");
+        }
         const gettmdbData = async () => {
             const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=748d8f1491929887f482d9767de12ea8`;
             const response = await fetch(url);

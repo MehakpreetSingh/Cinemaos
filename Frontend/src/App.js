@@ -8,6 +8,9 @@ import HeroTv from './components/HeroTv';
 import WatchTv from './components/WatchTv';
 import WatchMovie from './components/WatchMovie';
 import SearchTab from './components/SearchTab';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
+import Userview from './components/Userview';
 
 function App() {
   return (
@@ -16,6 +19,9 @@ function App() {
       <Navbar/>
         <Routes>
           <Route exact path="/" element={<Home/>}/> 
+          <Route exact path="/login" element={<SignIn/>}/> 
+          <Route exact path="/signup" element={<SignUp/>}/>
+          <Route exact path="/user" element={<Userview/>}/>
           <Route exact path="/movie/" element={<Movie/>}/> 
           <Route exact path="/movie/:id" element={<HeroMovie/>}/>
           <Route exact path="/movie/watch/:id" element={<WatchMovie/>}/>
