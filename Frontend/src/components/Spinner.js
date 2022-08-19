@@ -1,4 +1,5 @@
 import React from 'react'
+import 'tw-elements';
 
 const Spinner = () => {
     return (
