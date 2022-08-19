@@ -71,7 +71,7 @@ const HeroMovie = () => {
                     <div className='poster-img m-10 '>
                         <img className='rounded-lg h-96 object-cover' src={`https://image.tmdb.org/t/p/original${info.poster_path}`} alt="" />
                     </div>
-                    <div className='content my-10 mx-4 shadow-lg rounded-lg sm:rounded-none sm:shadow-none sm:mx-0 sm:w-2/3'>
+                    <div className='content my-10 mx-3 px-2 shadow-lg rounded-lg sm:rounded-none sm:shadow-none sm:mx-0 sm:w-2/3'>
                         <h1 className='text-black text-3xl font-bold'>{`${info.original_title}`}<span className='font-medium'>{`(${info.release_date?.substring(0, 4)})`}</span></h1>
                         <div className='flex items-center space-x-10'>
                             <p>{info.release_date}</p>
@@ -93,7 +93,7 @@ const HeroMovie = () => {
                         </Link>
                     </div>
                 </div>
-                <div className='absolute mt-[995px] md:mt-[560px] w-[94%] overflow-hidden mx-4 md:mx-10 font-sans font-medium'>
+                <div className='absolute mt-[980px] md:mt-[560px] w-[94%] overflow-hidden mx-4 md:mx-10 font-sans font-medium'>
                     <h1>Movie Cast</h1>
                     <div className='mt-2'>
                     <Swiper
