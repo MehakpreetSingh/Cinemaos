@@ -78,14 +78,14 @@ const Tv = () => {
   </div> */}
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                     {movies?.map((element, index) => {
-                        
+                        if (loading === false) {
                             return (
                                 <div className='' key={index}>
                                     {/* <MovieCard movieData = {element} /> */}
                                     <MovieCard movieData={element} />
                                 </div>
                             )
-
+                        }
 
                     })}
                 </div>
