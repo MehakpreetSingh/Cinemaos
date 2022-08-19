@@ -69,12 +69,14 @@ const WatchTv = () => {
                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{episodeData?.name}</h5>
 
                             <p class="mb-3 font-normal text-gray-700 h-[52px] overflow-hidden">{episodeData?.overview}</p>
+                        <a className='hidden md:inline-block px-4 py-2 m-1 bg-amber-500 text-white rounded-lg' href={`${dbData?.url}`} download>Download</a>
                         </div>
                     </div>
                 </div>
-                {
+                
                  <ReactPlayer url={`${dbData?.url}`} controls={true} />
-                }
+                
+                <a className='md:hidden px-4 py-2 m-1 bg-amber-500 text-white rounded-lg' href={`${dbData?.url}`} download>Download</a>
 
             </div>}
         </>

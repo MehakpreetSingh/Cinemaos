@@ -45,10 +45,10 @@ const WatchMovie = () => {
                 </div>
             </div>
     {!loading && 
-        <div className='h-screen flex justify-center items-center'>
-            {
+        <div className='h-screen flex justify-center items-center flex-col'>
+            
             <ReactPlayer url={`${dbinfo?.url}`} controls={true} />
-            }
+            <a className='px-4 py-2 m-4 bg-amber-500 text-white rounded-lg' href={`${dbinfo?.url}`} download>Download</a>
             
             
         </div>}
