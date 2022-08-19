@@ -15,7 +15,7 @@ const Userview = () => {
 
       <div className="p-4 md:p-12 text-center lg:text-left">
           
-          <div className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center" style={{backgroundImage : "url(https://source.unsplash.com/MP0IUfwrn0A)"}}></div>
+          <div className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center" style={{backgroundImage : "url(https://images.unsplash.com/photo-1627672360124-4ed09583e14c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80)"}}></div>
           
           <h1 className="text-3xl font-bold pt-8 lg:pt-0">Mehakpreet Singh</h1>
           <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-gray-500 opacity-25"></div>
@@ -47,7 +47,7 @@ const Userview = () => {
  
   <div className="w-full lg:w-2/5">
       
-      <img src="https://source.unsplash.com/MP0IUfwrn0A" className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"/>
+      <img src="https://images.unsplash.com/photo-1627672360124-4ed09583e14c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"/>
    
       
   </div>

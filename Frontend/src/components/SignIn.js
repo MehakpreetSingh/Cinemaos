@@ -3,15 +3,20 @@ import cinemaos from '../cinemaos.png'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Disclosure } from '@headlessui/react'
+import Spinner from './Spinner'
 
 const SignIn = () => {
     const navigate = useNavigate();
     const [logincreds, setLoginCreds] = useState({email: "" , password : ""})
+    const [loading , setLoading] = useState(false) ;
     const onChange = (e) => {
         setLoginCreds({...logincreds , [e.target.name]: e.target.value})
     }
     const handleSubmit = async(e) => {
         e.preventDefault() ;
+        setLoading(true) ;
+        var checkbox = document.getElementById("remember-me") ;
         // FormData.set('email' , logincreds.email) ;
         // FormData.set('password' , logincreds.password) ;
         const response = await fetch(`https://cinemaos-backend.herokuapp.com/auth/login`, {
@@ -24,17 +29,24 @@ const SignIn = () => {
           const json = await response.json() ;
           
           if(json.success===true) {
-            localStorage.setItem('token' , json.authtoken) ;
+            if(checkbox.checked===true) {
+                localStorage.setItem('token' , json.authtoken) ;
+            }
+            else {
+                sessionStorage.setItem('token' , json.authtoken) ;
+            }
             navigate("/");
             console.log(json) ;
           }
           else {
             alert("Invalid Credentials"); 
           }
+          setLoading(false) ;
     }
     return (
         <div>
-            <div className="absolute mt-[30px] w-full min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            {loading && <div className='absolute mt-[30px] w-full min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'><Spinner/></div>}
+            {!loading && <div className="absolute mt-[30px] w-full min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
                     <div>
                         <img className="mx-auto h-12 w-auto scale-150" src={cinemaos} alt="Workflow" />
@@ -79,7 +91,7 @@ const SignIn = () => {
                         </div>
                     </form>
                 </div>
-            </div>
+            </div>}
         </div>
     )
 }

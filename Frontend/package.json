@@ -23,6 +23,7 @@
     "react-scripts": "5.0.1",
     "react-youtube": "^9.0.3",
     "swiper": "^8.3.0",
+    "tw-elements": "^1.0.0-alpha12",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

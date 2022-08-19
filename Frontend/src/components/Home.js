@@ -23,9 +23,6 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
     const [searchquery, setSearchQuery] = useState("");
     useEffect(() => {
-        if(localStorage.getItem('token') == false) {
-            navigate("/signup");
-        }
         const gettmdbData = async () => {
             const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=748d8f1491929887f482d9767de12ea8`;
             const response = await fetch(url);
@@ -42,20 +39,8 @@ const Home = () => {
             setTotalTvPages(data.total_pages)
             setTvPage(tvpage + 1)
         }
-        // const getData= async() => {
-        //     const url = `${host}movies/allposts` ;
-        //     const response = await fetch(url , {
-        //         method: 'GET', 
-        //         headers: {
-        //             'Content-Type': 'application/json' ,
-        //         },
-        //     });
-        //     const data = await response.json() ;
-
-        //     setMovies(data) ; 
-
-        // }
-        gettmdbData();
+        if(localStorage.getItem('token')) {
+            gettmdbData();
         gettmdbtvData();
         // getData() ;
         var x = document.getElementById("loading-bar");
@@ -73,6 +58,46 @@ const Home = () => {
         setTimeout(() => {
             x.classList.add("w-0")
         }, 400);
+        }
+        
+        else if(sessionStorage.getItem('token')) {
+            gettmdbData();
+        gettmdbtvData();
+        // getData() ;
+        var x = document.getElementById("loading-bar");
+        for (let i = 0; i < 4; i++) {
+            setTimeout(() => {
+                x.classList.remove(`w-[${(i) * 25}%]`);
+                x.classList.add(`w-[${(i + 1) * 25}%]`);
+            }, 100);
+        }
+        x.classList.remove("w-[100%]");
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 350);
+        setTimeout(() => {
+            x.classList.add("w-0")
+        }, 400);
+        }
+        else {
+            navigate("/login");
+        }
+        
+        // const getData= async() => {
+        //     const url = `${host}movies/allposts` ;
+        //     const response = await fetch(url , {
+        //         method: 'GET', 
+        //         headers: {
+        //             'Content-Type': 'application/json' ,
+        //         },
+        //     });
+        //     const data = await response.json() ;
+
+        //     setMovies(data) ; 
+
+        // }
+        
        // eslint-disable-next-line
     }, [])
     const fetchMoreData = async () => {
