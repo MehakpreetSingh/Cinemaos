@@ -69,11 +69,11 @@ const Movie = (props) => {
             <InfiniteScroll
                 dataLength={movies?.length}
                 next={fetchMoreData}
-                hasMore={page !== totalpages}
+                hasMore={page <= totalpages}
                 loader={<Spinner />}
             >
                 <div className='bg-[#ffffff] absolute mt-[70px] pb-12'>
-                    {!loading && <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         {movies?.map((element, index) => {
                             return (
                                 <div className='' key={index}>
@@ -82,7 +82,7 @@ const Movie = (props) => {
                                 </div>
                             )
                         })}
-                    </div>}
+                    </div>
                 </div>
             </InfiniteScroll>
         </>
