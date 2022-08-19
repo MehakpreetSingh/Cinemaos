@@ -29,7 +29,7 @@ const Movie = (props) => {
         // }
         // getData() ;
         const getPopularmovies = async () => {
-            const url = `https://api.themoviedb.org/3/movie/${props.category || "popular"}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US&page=1`;
+            const url = `https://api.themoviedb.org/3/movie/${props.category || 'popular'}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US&page=1`;
             const response = await fetch(url);
             const data = await response.json();
             setMovies(data.results)
