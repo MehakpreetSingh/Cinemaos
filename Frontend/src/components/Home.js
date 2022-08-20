@@ -192,10 +192,10 @@ const Home = () => {
                     </Swiper>
                 </div>
                 <div className='w-full flex justify-end'>
-                <button disabled className="m-4 place-content-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg md:text-sm px-3 text-[12px] py-1 md:px-5 md:py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <Link to="/movie/trending" className="m-4 place-content-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg md:text-sm px-3 text-[12px] py-1 md:px-5 md:py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Show More
                     <svg className="w-3 h-3 md:w-5 md:h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
-                </button>
+                </Link>
                 </div>
                 
                 <h1 className='mt-10 mx-4 text-black font-medium md:text-xl'>Trending TV Shows</h1>
@@ -249,10 +249,10 @@ const Home = () => {
                     </Swiper>
                 </div>
                 <div className='w-full flex justify-end'>
-                <button disabled className="m-4 place-content-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg md:text-sm px-3 text-[12px] py-1 md:px-5 md:py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <Link to="/tv/trending" className="m-4 place-content-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg md:text-sm px-3 text-[12px] py-1 md:px-5 md:py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Show More
                     <svg className="w-3 h-3 md:w-5 md:h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
-                </button>
+                </Link>
                 </div>
             </div>}
         </>

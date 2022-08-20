@@ -6,13 +6,15 @@ import MovieCard2 from './MovieCard2';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from './Spinner';
 
-const Tv = () => {
+const Tv = (props) => {
     const host = `https://cinemaos-backend.herokuapp.com/`;
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [totalpages, setTotalPages] = useState(0);
+    const [url, setUrl] = useState(`https://api.themoviedb.org/3/tv/popular?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`) ;
     useEffect(() => {
+        
         // const getData = async () => {
         //     const url = `${host}series/allseries`;
         //     const response = await fetch(url, {
@@ -28,8 +30,12 @@ const Tv = () => {
         // }
         // getData();
         const getPopulartv = async() => {
-            const url = `https://api.themoviedb.org/3/tv/popular?api_key=748d8f1491929887f482d9767de12ea8&language=en-US&page=1` ;
-            const response = await fetch(url) ;
+            
+            let url2 = url;
+            if(props.category === "trending") {
+                url2 = `https://api.themoviedb.org/3/trending/tv/week?api_key=748d8f1491929887f482d9767de12ea8`
+            }
+            const response = await fetch(url2) ;
             const data = await response.json() ;
             setMovies(data.results);
             setTotalPages(data.total_pages);
@@ -53,8 +59,11 @@ const Tv = () => {
         }, 450);
     }, [])
     const fetchMoreData = async () => {
-        const url = `https://api.themoviedb.org/3/tv/popular?api_key=748d8f1491929887f482d9767de12ea8&language=en-US&page=${page}`;
-        let response = await fetch(url);
+        let url2 = url.concat(`&page=${page}`);
+        if(props.category === "trending") {
+            url2 = `https://api.themoviedb.org/3/trending/tv/week?api_key=748d8f1491929887f482d9767de12ea8&page=${page}`
+         }
+        let response = await fetch(url2);
         let data = await response.json();
         setMovies(movies.concat(data.results));
         setPage(page + 1);
