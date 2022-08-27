@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { useParams } from 'react-router-dom';
-import Plyr from "plyr-react"
-import '../../node_modules/plyr-react/plyr.css'
-import src from 'daisyui';
+
 
 const WatchMovie = () => {
     const [dbinfo, setDbinfo] = useState({});
@@ -105,9 +103,10 @@ const WatchMovie = () => {
                 </div>
             </div>
             {!loading &&
-                <div className='h-screen flex justify-center items-center flex-col w-full'>
-
-                    <ReactPlayer url={`${dbinfo?.url}`} controls={true} playbackRate={1} />
+                <div className='h-screen flex justify-center items-center flex-col'>
+                    
+                    <ReactPlayer url={`${dbinfo?.url}`} controls={true} />
+                
                     <a className='px-4 py-2 m-4 bg-amber-500 text-white rounded-lg' href={`${dbinfo?.url}`} download>Download</a>
                     {/* <div className='w-[75%] mt-10'>
                     {MyPlyrVideo(dbinfo?.url)}
