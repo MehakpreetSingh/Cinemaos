@@ -73,14 +73,14 @@ const WatchTv = () => {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col justify-center items-center'>
+                {/* <div className='flex flex-col justify-center items-center'>
                     
-                        <ReactPlayer url={`${dbData?.url}`} controls={true} />
                     
                         <a className='px-4 py-2 m-4 bg-amber-500 text-white rounded-lg' href={`${dbData?.url}`} download>Download</a>
                     
-                </div>
+                </div> */}
 
+                        <ReactPlayer   url={`${dbData?.url}`} controls={true} />
             </div>}
         </>
     )
