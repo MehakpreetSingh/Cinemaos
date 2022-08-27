@@ -96,7 +96,7 @@ const HeroTv = () => {
                         <div className='flex items-center space-x-4'>
                             <h1 className='rounded-full bg-yellow-400 pt-2 h-10 w-10 text-center align-middle'>{info.vote_average}</h1>
                             <div className='space-x-1 flex items-center hover:opacity-70'>
-                                <LazyLoadImage effect='blur' className='h-6' src={play} alt="" />
+                                <img className='h-6' src={play} alt="" />
                                 <a className='text-gray-800' href="?">Play Trailer</a>
                             </div>
                         </div>

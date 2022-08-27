@@ -79,7 +79,7 @@ const SearchTab = () => {
                                         <div className="py-3 sm:max-w-xl sm:mx-auto">
                                             <div className="bg-white shadow-lg border-gray-100 max-h-80	 border sm:rounded-3xl p-8 flex space-x-8">
                                                 <Link to={element.media_type === "movie" ? `/movie/${element.id}` : `/tv/${element.id}`} className="h-48 overflow-visible w-1/2 hover:scale-[1.1] transition-transform duration-150">
-                                                    <LazyLoadImage effect="blur" className="rounded-3xl shadow-lg" src={`https://image.tmdb.org/t/p/original${element.poster_path}`} alt="" />
+                                                    <img className="rounded-3xl shadow-lg" src={`https://image.tmdb.org/t/p/w500${element.poster_path}`} alt="" />
                                                 </Link>
                                                 <div className="flex flex-col w-1/2 space-y-4">
                                                     <div className="flex justify-between items-start">
