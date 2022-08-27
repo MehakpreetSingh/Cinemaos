@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import React from 'react'
 import close from '../close.png'
 import { Link } from "react-router-dom";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const SeasonModal = (props) => {
     const [seasonData, setSeasonData] = useState({})
@@ -23,11 +25,12 @@ const SeasonModal = (props) => {
             
             <div className='rounded-xl relative border shadow-sm bg-white'>
             <div onClick={()=>props.handleModalClick(props.modalindex)} className="cursor-pointer absolute top-4 right-4">
-                <img src={close} alt="" />
+                <LazyLoadImage src={close} alt="" />
             </div>
-                <div className='rounded-xl border px-4 bg-white flex flex-col md:flex-row items-center '>
-                    <div className='m-10'>
-                        <img className='h-52 rounded-md object-cover' src={`https://image.tmdb.org/t/p/original${props.element.poster_path}`} alt="" />
+                <div className='rounded-xl border px-4  bg-white flex flex-col md:flex-row items-center '>
+                        <LazyLoadImage className="absolute opacity-40 h-full w-full object-cover -z-10 top-0 bottom-0 left-0 right-0" src={`https://image.tmdb.org/t/p/original${props.backdrop_path}`} alt="" />
+                    <div className='m-10 '>
+                        <LazyLoadImage effect="blur" className='h-52 rounded-md object-cover' src={`https://image.tmdb.org/t/p/original${props.element.poster_path}`} alt="" />
                     </div>
                     <div className='content my-12 w-full md:w-2/3'>
                         <h1 className='text-black text-3xl font-bold'>{`${props.element.name}`}<span className='font-medium'>{`(${props.element.air_date?.substring(0, 4)})`}</span></h1>
@@ -49,7 +52,7 @@ const SeasonModal = (props) => {
                                     <div className="" key={index}>
                                         <Link to={`/tv/${props.id}/${element.season_number}/${element.episode_number}`} className="mx-auto flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row w-[95%] hover:bg-gray-100 ">
                             
-                                                <img className="object-cover mx-2 w-auto h-40 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={`https://image.tmdb.org/t/p/original${element.still_path}`} alt="" />
+                                                <LazyLoadImage effect="blur" className="object-cover mx-2 w-auto h-40 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={`https://image.tmdb.org/t/p/original${element.still_path}`} alt="" />
                                                 
                                             
                                             <div className="flex flex-col justify-between p-4 leading-normal">
