@@ -122,7 +122,7 @@ const Home = () => {
     return (
         <>
             <div className='h-[2px]  w-full z-[99999999] absolute top-[63px]'>
-                <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
+                <div id="loading-bar" className='transition-all w-[0%] h-full bg-red-800'>
                 </div>
             </div>
             <img className='absolute z-[999] transition-all duration-500 w-full h-96 object-cover  top-16' src={home} alt="" />

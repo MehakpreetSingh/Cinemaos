@@ -66,11 +66,11 @@ const HeroMovie = () => {
             </div>
             {!loading && <div>
                 <div className='absolute mt-10 overflow-hidden py-5 h-[500px] w-full '>
-                    <LazyLoadImage  className='opacity-30 object-cover w-full h-[500px] object-center' src={`https://image.tmdb.org/t/p/original${info.backdrop_path}`} alt="" />
+                    <img  className='opacity-30 object-cover w-full h-[500px] object-center' src={`https://image.tmdb.org/t/p/w1280${info.backdrop_path}`} alt="" />
                 </div>
                 <div className="py-5 backdrop-div mt-10 absolute flex flex-col sm:flex-row" >
                     <div className='poster-img m-10 '>
-                        <LazyLoadImage effect='blur' className='rounded-lg h-96 object-cover' src={`https://image.tmdb.org/t/p/original${info.poster_path}`} alt="" />
+                        <img className='rounded-lg h-96 object-cover' src={`https://image.tmdb.org/t/p/w500${info.poster_path}`} alt="" />
                     </div>
                     <div className='content my-10 mx-3 px-2 shadow-lg rounded-lg sm:rounded-none sm:shadow-none sm:mx-0 sm:w-2/3'>
                         <h1 className='text-black text-3xl font-bold'>{`${info.original_title}`}<span className='font-medium'>{`(${info.release_date?.substring(0, 4)})`}</span></h1>
@@ -82,7 +82,7 @@ const HeroMovie = () => {
                         <div className='flex items-center space-x-4'>
                             <h1 className='rounded-full bg-yellow-400 pt-2 h-10 w-10 text-center align-middle'>{info.vote_average}</h1>
                             <div className='space-x-1 flex items-center hover:opacity-70'>
-                                <LazyLoadImage effect='blur' className='h-6' src={play} alt="" />
+                                <img className='h-6' src={play} alt="" />
                                 <a className='text-gray-800' href="">Play Trailer</a>
                             </div>
                         </div>

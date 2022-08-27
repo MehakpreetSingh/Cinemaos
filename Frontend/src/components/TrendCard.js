@@ -28,7 +28,7 @@ const TrendCard = (props) => {
                         <Link to={ (props.movieData.media_type === "movie") ?
                                   `/movie/${props.movieData.id}` : `/tv/${props.movieData.id}`
                             } className="h-48 relative overflow-visible w-1/2 hover:scale-[1.1] transition-transform duration-150">
-                            <LazyLoadImage effect="blur" alt="image" className="rounded-3xl block bg-transparent w-full transition-all duration-500 shadow-lg" src={`https://image.tmdb.org/t/p/original${props.movieData.poster_path}`}/>
+                            <img alt="image" className="rounded-3xl block bg-transparent w-full transition-all duration-500 shadow-lg" src={`https://image.tmdb.org/t/p/w185${props.movieData.poster_path}`}/>
                             
                         </Link>
                         
