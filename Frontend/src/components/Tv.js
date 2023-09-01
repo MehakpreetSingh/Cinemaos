@@ -7,7 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from './Spinner';
 
 const Tv = (props) => {
-    const host = `https://cinemaos-backend.herokuapp.com/`;
+    const host = `https://cinemaos-backend.onrender.com/`;
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);

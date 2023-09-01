@@ -19,7 +19,7 @@ const SignIn = () => {
         var checkbox = document.getElementById("remember-me") ;
         // FormData.set('email' , logincreds.email) ;
         // FormData.set('password' , logincreds.password) ;
-        const response = await fetch(`https://cinemaos-backend.herokuapp.com/auth/login`, {
+        const response = await fetch(`https://cinemaos-backend.onrender.com/auth/login`, {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json' ,

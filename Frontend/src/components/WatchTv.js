@@ -9,7 +9,7 @@ const WatchTv = () => {
     const [episodeData, setEpisodeData] = useState({});
     const { id, S, E } = useParams();
     useEffect(() => {
-        const host = `https://cinemaos-backend.herokuapp.com/`;
+        const host = `https://cinemaos-backend.onrender.com/`;
         const getEpisodeAPIData = async () => {
             const url = `https://api.themoviedb.org/3/tv/${id}/season/${S}/episode/${E}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`
             const response = await fetch(url);

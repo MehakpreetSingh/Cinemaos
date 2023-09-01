@@ -12,7 +12,7 @@ const SignUp = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch(`https://cinemaos-backend.herokuapp.com/auth/signup`, {
+        const response = await fetch(`https://cinemaos-backend.onrender.com/auth/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

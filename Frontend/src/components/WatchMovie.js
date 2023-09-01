@@ -10,7 +10,7 @@ const WatchMovie = () => {
 
     useEffect(() => {
 
-        const host = `https://cinemaos-backend.herokuapp.com/`;
+        const host = `https://cinemaos-backend.onrender.com/`;
         const dbData = async () => {
             const url = `${host}movies/getmovie/${id}`;
             const response = await fetch(url, {
