@@ -89,9 +89,9 @@ const HeroMovie = () => {
                         <h1 className='text-gray-600 italic'>{info.tagline}</h1>
                         <h1 className='textblack text-xl font-medium'>Overview</h1>
                         <p>{info.overview}</p>
-                        <Link to={`/movie/watch/${info.id}`} className="mt-3 text-white bg-[#FF9119] hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40 mr-2 mb-2">
+                        <a href={`https://vidsrc.pro/embed/movie/${info.id}`} className="mt-3 text-white bg-[#FF9119] hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40 mr-2 mb-2">
                             Watch Now
-                        </Link>
+                        </a>
                     </div>
                 </div>
                 <div className='absolute mt-[980px] md:mt-[560px] w-[94%] overflow-hidden mx-4 md:mx-10 font-sans font-medium'>

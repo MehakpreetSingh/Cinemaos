@@ -50,16 +50,16 @@ const SeasonModal = (props) => {
                                 return (
 
                                     <div className="" key={index}>
-                                        <Link to={`/tv/${props.id}/${element.season_number}/${element.episode_number}`} className="mx-auto flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row w-[95%] hover:bg-gray-100 ">
-                            
-                                                <LazyLoadImage effect="blur" className="object-cover mx-2 w-auto h-40 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={`https://image.tmdb.org/t/p/original${element.still_path}`} alt="" />
-                                                
+                                        <a href={`https://vidsrc.pro/embed/tv/${props.id}/${element.season_number}/${element.episode_number}`} className="mx-auto flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row w-[95%] hover:bg-gray-100 ">
+                                           
+                                            <LazyLoadImage effect="blur" className="object-cover mx-2 w-auto h-40 rounded-t-lg md:h-auto md:w-[60%] md:rounded-none md:rounded-l-lg" src={`https://image.tmdb.org/t/p/original${element.still_path}`} alt="" />
                                             
-                                            <div className="flex flex-col justify-between p-4 leading-normal">
+                                                                                           
+                                            <div className="flex flex-col justify-between  p-4 leading-normal">
                                                 <h5 className="mb-2 text-lg md:text-2xl font-bold tracking-tight text-gray-900 "><span>{element.episode_number}.</span>{element?.name}</h5>
                                                 <p className="mb-3 text-sm md:text-lg font-normal text-gray-700 dark:text-gray-600">{element?.overview}</p>
                                             </div>
-                                        </Link>
+                                        </a>
                                     </div>
                                 )
 
