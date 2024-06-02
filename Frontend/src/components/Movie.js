@@ -57,6 +57,7 @@ const Movie = (props) => {
         }, 450);
     }, [])
     const fetchMoreData = async () => {
+        console.log("More printed")
         let url2 = url.concat(`&page=${page}`);
         if(props.category === "trending") {
             url2 = `https://api.themoviedb.org/3/trending/movie/week?api_key=748d8f1491929887f482d9767de12ea8&page=${page}`
@@ -68,8 +69,8 @@ const Movie = (props) => {
     };
 
     return (
-        <>
-            <div className='h-[2px] w-full z-[99999999] absolute top-[63px]'>
+        <div className=' relative h-screen ' style={{scrollbarWidth: "none" }}>
+            <div className='h-[2px] w-full z-[99999999] absolute'>
                 <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
                 </div>
             </div>
@@ -77,22 +78,18 @@ const Movie = (props) => {
                 dataLength={movies?.length}
                 next={fetchMoreData}
                 hasMore={page <= totalpages}
-                loader={<Spinner />}
             >
-                <div className='bg-[#ffffff] absolute mt-[70px] pb-12'>
-                    {!loading && <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                <div className='bg-[#000000] absolute mt-[100px] w-full px-4 mx-auto pb-12'>
+                    {!loading && <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4'>
                         {movies?.map((element, index) => {
                             return (
-                                <div className='' key={index}>
-                                    {/* <MovieCard movieData = {element} /> */}
-                                    <MovieCard2 movieData={element} />
-                                </div>
+                                    <MovieCard2 key={index} movieData={element} />
                             )
                         })}
                     </div>}
                 </div>
             </InfiniteScroll>
-        </>
+        </div>
     )
 }
 

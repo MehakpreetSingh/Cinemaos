@@ -11,26 +11,30 @@ import SearchTab from './components/SearchTab';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Userview from './components/Userview';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import SeasonModal from './components/SeasonModal';
 function App() {
   const usePar = useParams() ;
   return (
-    <div className="App">     
+    <div className="App bg-black ">     
       <Router>
       <Navbar/>
         <Routes>
-          <Route exact path="/" element={<Home/>}/> 
-          <Route exact path="/login" element={<SignIn/>}/> 
+          <Route exact path="/home" element={<Home/>}/> 
+          <Route exact path="/" element={
+            <SignIn/>}/> 
           <Route exact path="/signup" element={<SignUp/>}/>
-          <Route exact path="/user" element={<Userview/>}/>
-          <Route exact path="/movie/" element={<Movie key="popular" category="popular"/>}/> 
-          <Route exact path="/movie/trending" element={<Movie key="trending" category="trending"/>}/> 
-          <Route exact path="/movie/:id" element={<HeroMovie/>}/>
-          <Route exact path="/movie/watch/:id" element={<WatchMovie/>}/>
-          <Route exact path="/tv" element={<Tv key="popular" category="popular"/>}/>
-          <Route exact path="/tv/trending" element={<Tv key="trending" category="trending"/>}/>
-          <Route exact path="/tv/:id" element={<HeroTv/>}/>
-          <Route exact path="/tv/:id/:S/:E" element={<WatchTv/>}/>
-          <Route exact path="/search/:query" key="search" element={<SearchTab/>}/>
+          <Route exact path="/user" element={<ProtectedRoute><Userview/></ProtectedRoute>}/>
+          <Route exact path="/movie/" element={<ProtectedRoute><Movie key="popular" category="popular"/></ProtectedRoute>}/> 
+          <Route exact path="/movie/trending" element={<ProtectedRoute><Movie key="trending" category="trending"/></ProtectedRoute>}/> 
+          <Route exact path="/movie/:id" element={<ProtectedRoute><HeroMovie/></ProtectedRoute>}/>
+          <Route exact path="/movie/watch/:id" element={<ProtectedRoute><WatchMovie/></ProtectedRoute>}/>
+          <Route exact path="/tv" element={<ProtectedRoute><Tv key="popular" category="popular"/></ProtectedRoute>}/>
+          <Route exact path="/tv/trending" element={<ProtectedRoute><Tv key="trending" category="trending"/></ProtectedRoute>}/>
+          <Route exact path="/tv/:id" element={<ProtectedRoute><HeroTv/></ProtectedRoute>}/>
+          <Route exact path="/tv/:id/:S/:E" element={<ProtectedRoute><SeasonModal key={`${useParams().id}-${useParams().S}-${useParams().E}`}/></ProtectedRoute>}/>
+          {/* <Route exact path="/tv/:id/:S/:E" element={<ProtectedRoute><WatchTv/></ProtectedRoute>}/> */}
+          <Route exact path="/search/:query" key="search" element={<ProtectedRoute><SearchTab/></ProtectedRoute>}/>
         </Routes>
       </Router>
       

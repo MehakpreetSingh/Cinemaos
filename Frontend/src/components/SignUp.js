@@ -1,31 +1,62 @@
 import React from 'react'
-import cinemaos from '../cinemaos.png'
+import cinemaos from '../image.png'
 import {Link} from 'react-router-dom'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { auth ,db } from '../Firebase/firebase'; 
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from 'firebase/firestore'; 
 
 const SignUp = () => {
     const navigate = useNavigate() ;
+    const [error, setError] = useState(null); // Track errors
     const [signupcreds, setSignupCreds] = useState({ name: "", email: "", password: "", cpassword: "" })
     const onChange = (e) => {
         setSignupCreds({ ...signupcreds, [e.target.name]: e.target.value })
     }
     const handleSubmit = async (e) => {
+        // e.preventDefault();
+        // const response = await fetch(`https://cinemaos-backend.onrender.com/auth/signup`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ name: signupcreds.name, email: signupcreds.email, password: signupcreds.password })
+        // })
+        // const json = await response.json() ;
+        // if(json.success){
+        //     navigate("/login");
+        //   }
+        //   else {
+        //     alert("Invalid Credentials")
+        //   }
         e.preventDefault();
-        const response = await fetch(`https://cinemaos-backend.onrender.com/auth/signup`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name: signupcreds.name, email: signupcreds.email, password: signupcreds.password })
-        })
-        const json = await response.json() ;
-        if(json.success){
-            navigate("/login");
-          }
-          else {
-            alert("Invalid Credentials")
-          }
+        setError(null); // Clear previous errors
+
+        try {
+        // Firebase sign-up logic
+            const userCredential = await createUserWithEmailAndPassword(
+                auth, 
+                signupcreds.email, 
+                signupcreds.password
+            );
+
+        // User created successfully
+            const user = userCredential.user;
+            console.log("User created:", user);
+            await setDoc(doc(db, "users", user.uid), {
+                continueWatching: [],
+                wishlist: [],
+              });
+      // (Optional) Send name to your backend for user profile
+      // ... your code to interact with your backend API
+
+            navigate("/home"); // Redirect after successful sign-up
+        } catch (error) {
+        // Handle errors (invalid credentials, etc.)
+            console.error("Error creating user:", error.message);
+            setError(error.message); 
+        }
     }
     return (
         <div>
@@ -33,7 +64,7 @@ const SignUp = () => {
                 <div className="max-w-md w-full space-y-8">
                     <div>
                         <img className="mx-auto h-12 w-auto scale-150" src={cinemaos} alt="Workflow" />
-                        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your account</h2>
+                        <h2 className="mt-6 text-center text-3xl text-white font-extrabold ">Create your account</h2>
                     </div>
                     <form className="mt-8 space-y-6"  onSubmit={handleSubmit} method="POST">
                         <input type="hidden" name="remember" value="true" />
@@ -65,7 +96,7 @@ const SignUp = () => {
                                 Sign Up
                             </button>
                             <div className='m-2 text-center '>
-                                <Link to="/login">or <span className='text-blue-500 hover:underline hover:text-blue-700'>Sign In</span> </Link>
+                                <Link to="/" className='text-white'>or <span className='text-blue-500 hover:underline hover:text-blue-700'>Sign In</span> </Link>
                             </div>
                         </div>
                     </form>

@@ -28,7 +28,7 @@ const TrendCard = (props) => {
                         <Link to={ (props.movieData.media_type === "movie") ?
                                   `/movie/${props.movieData.id}` : `/tv/${props.movieData.id}`
                             } className="h-48 relative overflow-visible w-1/2 hover:scale-[1.1] transition-transform duration-150">
-                            <img alt="image" className="rounded-3xl block bg-transparent w-full transition-all duration-500 shadow-lg" src={`https://image.tmdb.org/t/p/w500${props.movieData.poster_path}`}/>
+                            <img alt="image" className="rounded-3xl block bg-transparent w-full transition-all h-full duration-500 shadow-lg" src={`https://image.tmdb.org/t/p/w500${props.movieData.poster_path}`}/>
                             
                         </Link>
                         
@@ -48,7 +48,7 @@ const TrendCard = (props) => {
                     </div> */}
                     
                 </div>
-                <h1 className="bg-yellow-400 transition-all duration-500 text-sm absolute bottom-0 left-4 font-bold rounded-full inline-block p-2">{props.movieData?.vote_average.toFixed(1)}</h1>
+                <h1 className="bg-blue-700 text-white transition-all duration-500 text-sm absolute bottom-0 left-4 font-bold rounded-full inline-block p-2">{props.movieData?.vote_average.toFixed(1)}</h1>
 
             </div>}
         </div>

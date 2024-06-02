@@ -1,53 +1,59 @@
-import React , {useEffect , useState} from 'react'
-import {Link} from "react-router-dom"
+import React, { useEffect, useState } from 'react'
+import { Link } from "react-router-dom"
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const MovieCard = (props) => {
-    const[info , setInfo] = useState({}) ;
+    const [info, setInfo] = useState({});
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-    //   const getMovieData=async()=> {
-    //     const url = `https://api.themoviedb.org/3/tv/${props.movieData.id}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US` ;
-    //     const response = await fetch(url);
-    //     const data = await response.json() ;
-    //     setInfo(data) ;
-    //   }
-    //   getMovieData();
-    setInfo(props.movieData) ;
-      setTimeout(() => {
-        setLoading(false) ;
-    }, 20);
+        //   const getMovieData=async()=> {
+        //     const url = `https://api.themoviedb.org/3/tv/${props.movieData.id}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US` ;
+        //     const response = await fetch(url);
+        //     const data = await response.json() ;
+        //     setInfo(data) ;
+        //   }
+        //   getMovieData();
+        setInfo(props.movieData);
+        setTimeout(() => {
+            setLoading(false);
+        }, 20);
     }, [])
-    
-  return (
-    <div>
-            {!loading && <div className=" py-6 flex flex-col justify-center sm:py-12">
 
-                <div className="py-3 sm:max-w-xl sm:mx-auto">
-                    <div className="bg-white shadow-lg border-gray-100 max-h-80	 border sm:rounded-3xl p-8 flex space-x-8">
-                        <Link to={`/tv/${props.movieData.id}`} className="h-48 overflow-visible w-1/2 hover:scale-[1.1] transition-transform duration-150">
-                            <img effect="blur" className="rounded-3xl shadow-lg" src={`https://image.tmdb.org/t/p/w500${info.poster_path}`} alt=""/>
-                        </Link>
-                        <div className="flex flex-col w-1/2 space-y-4">
-                            <div className="flex justify-between items-start">
-                                <Link to={`/tv/${props.movieData.id}`} className="text-3xl font-bold  hover:text-yellow-600">{info.name}</Link>
-                                <div className="bg-yellow-400 font-bold rounded-xl p-2">{info.vote_average}</div>
-                            </div>
-                            <div>
-                                <div className="text-sm text-gray-400">Tv Series</div>
-                                <div className="text-sm text-gray-800">{info.first_air_date}</div>
-                            </div>
-                            <p className=" text-gray-400 max-h-40 overflow-y-hidden">{info.overview}</p>
-
-                        </div>
-
-                    </div>
+    return (
+        <>
+            {!loading &&<Link class="relative flex p-[.5rem] mb-2 flex-col group gap-2 w-full rounded-lg flex-shrink-0 " to={`/${props.movieData.media_type||"tv"}/${props.movieData.id}`}>
+                <div class="w-full relative aspect-[1/1.5] rounded-lg overflow-hidden bg-[var(--light)] transition-all duration-300 ease-in">
+                   <span class=" lazy-load-image-background blur lazy-load-image-loaded h-full w-full transition-all duration-300 ease-in"  >
+                    <LazyLoadImage
+                        src={`https://image.tmdb.org/t/p/w342/${props.movieData?.poster_path}`}
+                        className="w-full h-full object-cover object-center group-hover:scale-[1.05] transition-all ease-in duration-300"
+                        effect="blur"
+                    />
+                    
+                    </span>
+                   <div class="absolute top-1 right-0 gap-1 bg-[#00000098] py-1 px-[5px] rounded-l-md flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="gold" stroke="gold" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star">
+                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                      </svg>
+                      <span class="!text-xs text-white font-light">{props.movieData?.vote_average?.toFixed(1)} </span>
+                   </div>
+                   <div class="absolute opacity-0 xl:group-hover:opacity-100 flex top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-20 smoothie">
+                      <span class=" p-[.6rem] hover:brightness-90 bg-[#00c1db] rounded-full flex items-center justify-center smoothie">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="#000000d5" stroke="#000000d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                         </svg>
+                      </span>
+                   </div>
+                   <div class="flex opacity-1 lg:group-hover:opacity-100 p-[.35rem] pb-2 tracking-wide flex-col gap-1 justify-end w-full h-full bg-gradient-to-t z-10 from-[#000000d0] absolute top-0 bottom-0 left-0 right-0 smoothie">
+                      <div class="flex md:items-center justify-center gap-1 flex-wrasp text-xs 2xl:text-sm text-[#d8d8d8] font-normal tracking-wide "><span>{props.movieData.first_air_date?.substring(0,4)||props.movieData.release_date?.substring(0,4)}</span>•<span class="whitespace-nowrap"><span class="uppercase">{props.movieData.media_type || "TV"}</span></span>•<span>HD</span></div>
+                      <div class="line-clamp-2 text-center text-white text-sm font-medium !leading-tight ">{props.movieData.original_name}</div>
+                   </div>
                 </div>
-
-            </div>}
-        </div>
-  )
+             </Link>
+             }
+        </>
+    )
 }
 
 export default MovieCard

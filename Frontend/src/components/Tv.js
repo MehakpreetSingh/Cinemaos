@@ -70,8 +70,8 @@ const Tv = (props) => {
     };
 
     return (
-        <>
-            <div className='h-[2px] w-full z-[99999999] absolute top-[63px]'>
+        <div className='relative h-screen' style={{ scrollbarWidth: "none" }}>
+            <div className='h-[2px] w-full z-[99999999] absolute'>
                 <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
                 </div>
             </div>
@@ -79,13 +79,12 @@ const Tv = (props) => {
                 dataLength={movies?.length}
                 next={fetchMoreData}
                 hasMore={page <= totalpages}
-                loader={<Spinner />}
             >
-            <div className='bg-[#ffffff] absolute mt-[70px]'>
+            <div className='bg-[#000000] absolute mt-[100px] w-full mx-auto'>
                 {/* <div className='flex justify-center items-center m-4 '>
       <ReactPlayer pip={true} controls={true} url='https://d1e65r3doj6e53.cloudfront.net/The Batman (2022) WEBDL-1080p 8bit h264 AAC 2.0 -CMRG.mp4' />
   </div> */}
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                <div className='grid grid-cols-2 sm:grid-cols-4 px-4 md:grid-cols-6 gap-4'>
                     {movies?.map((element, index) => {
                         if (loading === false) {
                             return (
@@ -100,7 +99,7 @@ const Tv = (props) => {
                 </div>
             </div>
             </InfiniteScroll>
-        </>
+        </div>
     )
 }
 
