@@ -19,6 +19,9 @@ import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { doc, updateDoc, getDoc,  } from 'firebase/firestore';
+import { db } from '../Firebase/firebase';
+
 
 const HeroTv = () => {
   const [info, setInfo] = useState({});
@@ -77,6 +80,58 @@ const HeroTv = () => {
     }, 400);
     // eslint-disable-next-line
   }, []);
+  const addToWishlist = async (movieData1) => {
+    try {
+      let user = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user'));
+      const userRef = doc(db, "users", user.uid);
+      const userSnapshot = await getDoc(userRef);
+      const movieData = {
+        backdrop_path: movieData1.backdrop_path,
+        id: movieData1.id,
+        media_type: "tv",
+        title: movieData1.original_name
+      }
+      var progress = 0;
+      if (userSnapshot.exists()) {
+        const userData = userSnapshot.data();
+        let wishlist = userData.wishlist || [];
+
+        // Check if continueWatching is an array (defensive programming)
+        if (!Array.isArray(wishlist)) {
+          wishlist = []; // Reset to empty array if it's not an array
+        }
+
+        const existingIndex = wishlist.findIndex(
+          (movie) => movie.id === movieData.id
+        );
+
+        if (existingIndex >= 0) {
+          // Update existing movie data (including progress and timestamp)
+          wishlist[existingIndex] = {
+            ...movieData,
+            progress,
+            timestamp: new Date(),
+          };
+        } else {
+          // Add new movie data (with initial progress and timestamp)
+          wishlist.push({
+            ...movieData,
+            progress,
+            timestamp: new Date(),
+          });
+        }
+
+        await updateDoc(userRef, { wishlist });
+        console.log("Movie added to Continue Watching");
+      } else {
+        console.error("No user document found for this user ID:", user.uid);
+        // Handle the case where the user document doesn't exist yet
+      }
+
+    } catch (error) {
+      console.error('Error adding to continue watching: ', error);
+    }
+  };
   const handleModalClick = (n) => {
     var x = document.getElementsByClassName("seasonmodalClick")[n];
     if (open) {
@@ -209,9 +264,9 @@ const HeroTv = () => {
                       </svg>{" "}
                       Play Now
                     </a>
-                    <a
-                      className="ring-white gap-1 backdrop-blur group flex-shrink-0 text-sm md:text-base ring-1 p-2 rounded-md overflow-hidden hover:bg-white/10 justify-center items-center flex w-1/2 md:px-5 md:w-[12rem] !whitespace-nowrap"
-                      href="/info/movie/653346"
+                    <div
+                      className="ring-white hover:cursor-pointer gap-1 backdrop-blur group flex-shrink-0 text-sm md:text-base ring-1 p-2 rounded-md overflow-hidden hover:bg-white/10 justify-center items-center flex w-1/2 md:px-5 md:w-[12rem] !whitespace-nowrap"
+                      onClick={()=>addToWishlist(info)}
                     >
                       <span className="gap-1 flex text-white justify-center items-center smoothie !duration-500 origin-center">
                         <svg
@@ -230,7 +285,7 @@ const HeroTv = () => {
                         </svg>
                         Add To List
                       </span>
-                    </a>
+                    </div>
                   </div>
                   {/* Cast (with scrolling and lazy loading) */}
                   <div

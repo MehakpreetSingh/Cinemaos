@@ -5,8 +5,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Disclosure } from "@headlessui/react";
 import Spinner from "./Spinner";
-import { auth } from "../Firebase/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth ,db } from '../Firebase/firebase'; 
+import {  GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { doc, setDoc ,getDoc } from 'firebase/firestore'; 
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -57,6 +59,42 @@ const SignIn = () => {
   //       }
   //       setLoading(false) ;
   // }
+  const handleLoginWithGoogle = async () => {
+    async function createUserDocument(user) {
+        try {
+          await setDoc(doc(db, "users", user.uid), {
+            continueWatching: [],
+            wishlist: [],
+          });
+          console.log("Document written with ID: ", user.uid);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+    }
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then(async (result) => {
+        // The signed-in user info.
+        setLoading(true)
+        const user = result.user;
+        const userSnapshot = await getDoc(doc(db, 'users', user.uid));
+
+        if(userSnapshot.exists()) {
+          sessionStorage.setItem("user", JSON.stringify(user));
+        } else {
+          await createUserDocument(user);
+          sessionStorage.setItem("user", JSON.stringify(user));
+        }
+        setLoading(false);
+        navigate("/home");
+
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        setError(error.message);
+        // ...
+      });
+}
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -201,17 +239,23 @@ const SignIn = () => {
                   </span>
                   Sign In
                 </button>
-                <div className="flex items-center pt-4 space-x-1">
+                
+              </div>
+            </form>
+            <div>
+            <div className="flex flex-col justify-center items-center gap-2">
+            <div  className="flex items-center pt-[-10px] justify-center  space-x-1">
                   <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
                   <p className="px-3 text-sm dark:text-gray-600">
                     Login with social accounts
                   </p>
                   <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
                 </div>
-                <div className="flex justify-center space-x-4">
+                <div className="flex z-50 justify-center items-center space-x-4">
                   <button
                     aria-label="Log in with Google"
-                    className="p-3 rounded-sm"
+                    className="px-3 rounded-sm"
+                    onClick={handleLoginWithGoogle}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -223,7 +267,7 @@ const SignIn = () => {
                   </button>
                   <button
                     aria-label="Log in with Twitter"
-                    className="p-3 rounded-sm"
+                    className="px-3 rounded-sm"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -235,7 +279,7 @@ const SignIn = () => {
                   </button>
                   <button
                     aria-label="Log in with GitHub"
-                    className="p-3 rounded-sm"
+                    className="px-3 rounded-sm"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -246,7 +290,8 @@ const SignIn = () => {
                     </svg>
                   </button>
                 </div>
-                <div className="m-2 text-center text-white ">
+                </div>
+                <div className="p-2 text-center text-white ">
                   <Link to="/signup">
                     or{" "}
                     <span className="text-blue-500 hover:underline hover:text-blue-700">
@@ -255,7 +300,6 @@ const SignIn = () => {
                   </Link>
                 </div>
               </div>
-            </form>
           </div>
         </div>
       )}

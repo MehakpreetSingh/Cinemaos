@@ -24,7 +24,12 @@ export default function Example() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [query, setQuery] = useState("");
   const handleScroll = () => {
-    setIsScrolled(!isScrolled);
+    if(open) {
+      setIsScrolled(true);
+    }
+    else {
+      setIsScrolled(!isScrolled);
+    }
     console.log("scrolled");
   };
   const handleCLick = () => {
@@ -36,13 +41,17 @@ export default function Example() {
       x.classList.add("hidden");
       z.classList.add("-translate-y-80");
       setOpen(!open);
-      setIsScrolled(!isScrolled);
+      if(!(window.scrollY > 0)) {
+        setIsScrolled(false);
+      }
     } else {
       y.classList.add("hidden");
       x.classList.remove("hidden");
       z.classList.remove("-translate-y-80");
       setOpen(!open);
-      setIsScrolled(!isScrolled);
+      if(!(window.scrollY > 0)) {
+        setIsScrolled(true);
+      }
     }
   };
   const handleSearchClick = (e) => {
@@ -56,7 +65,12 @@ export default function Example() {
   };
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+      if(open) {
+        setIsScrolled(true)
+      }
+      else {
+        setIsScrolled(window.scrollY > 0);
+      }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -233,7 +247,7 @@ export default function Example() {
       <form
         onSubmit={handleSearchClick}
         id="search-form"
-        className="flex absolute -translate-y-80 w-full place-content-center z-[9999] top-0  transition-all duration-5000 mt-[64px] items-center"
+        className="flex fixed -translate-y-80 w-full place-content-center z-[9999] top-0  transition-all duration-5000 mt-[64px] items-center"
       >
         <div className=" absolute top-full left-0 group w-full flex gap-3 items-center bg-black/60 p-3 py-4 smoothie">
           
