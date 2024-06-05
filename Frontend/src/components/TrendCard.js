@@ -17,21 +17,21 @@ const TrendCard = (props) => {
         setTimeout(() => {
             setLoading(false);
         }, 50);
-        
+
     }, [])
 
     return (
         <div>
             {!loading && <div className=" flex flex-col relative transition-all duration-500 justify-center items-center">
-                
+
                 <div className="py-3 transition-all duration-500 sm:max-w-sm sm:mx-auto">
-                        <Link to={ (props.movieData.media_type === "movie") ?
-                                  `/movie/${props.movieData.id}` : `/tv/${props.movieData.id}`
-                            } className="h-48 relative overflow-visible w-1/2 hover:scale-[1.1] transition-transform duration-150">
-                            <img alt="image" className="rounded-3xl block bg-transparent w-full transition-all h-full duration-500 shadow-lg" src={`https://image.tmdb.org/t/p/w500${props.movieData.poster_path}`}/>
-                            
-                        </Link>
-                        
+                    <Link to={(props.movieData.media_type === "movie") ?
+                        `/movie/${props.movieData.id}` : `/tv/${props.movieData.id}`
+                    } className="h-48 relative overflow-visible w-1/2 hover:scale-[1.1] transition-transform duration-150">
+                        <LazyLoadImage effect='blur' alt="image" className="rounded-3xl block bg-transparent w-full transition-all h-full duration-500 shadow-lg" src={`https://image.tmdb.org/t/p/w500${props.movieData.poster_path}`} />
+                    
+                    </Link>
+
                     {/* <div className="bg-white shadow-lg border-gray-100 max-h-80	 border sm:rounded-3xl p-8 flex space-x-8">
                         <div className="flex flex-col w-1/2 space-y-4">
                             <div className="flex justify-between items-start">
@@ -46,7 +46,7 @@ const TrendCard = (props) => {
 
                         </div>
                     </div> */}
-                    
+
                 </div>
                 <h1 className="bg-blue-700 text-white transition-all duration-500 text-sm absolute bottom-0 left-4 font-bold rounded-full inline-block p-2">{props.movieData?.vote_average.toFixed(1)}</h1>
 

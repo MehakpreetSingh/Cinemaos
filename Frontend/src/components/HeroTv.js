@@ -198,7 +198,7 @@ const HeroTv = () => {
                 <div className="w-full mx-auto md:w-full flex flex-col gap-7 tracking-wide">
                   <div className="flex flex-col gap-2 items-center md:items-start">
                     <div className="text-xl sm:text-2xl lg:text-3xl text-white uppercase line-clamp-3 leading-tight pb-1 text-center md:text-start font-bold">
-                      {info.original_name}
+                      {info.name || info.original_name}
                     </div>
                     <div className="flex gap-3 items-center">
                       <div className="text-slate-300 text-sm tracking-wider">

@@ -10,6 +10,8 @@ import 'swiper/css/scrollbar';
 import TrendCard from './TrendCard';
 import { Link, useNavigate } from 'react-router-dom';
 import TrendingMovies from './TrendingMovies';
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 
 const Home = () => {
@@ -34,7 +36,7 @@ const Home = () => {
         autoplay: true,
         autoplaySpeed: 5000,
     };
-    
+
     useEffect(() => {
         const gettmdbData = async () => {
             const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=748d8f1491929887f482d9767de12ea8`;
@@ -164,9 +166,29 @@ const Home = () => {
             >
                 {featuredMovies?.map((featuredMovie) => (
                     <SwiperSlide key={featuredMovie.id}>
-                        <div key={featuredMovie?.id} className="transition-all duration-200 bg-cover bg-center h-[60vh] md:h-[70vh] lg:h-screen " style={{ backgroundImage: `url(https://image.tmdb.org/t/p/w1280${featuredMovie?.backdrop_path})` }}>
+                        <div key={featuredMovie?.id} className="transition-all duration-200 bg-cover bg-center h-[60vh] md:h-[70vh] lg:h-screen " >
+                            <div className="w-full h-[60vh] md:h-[60vh] lg:h-screen">
+                                <span
+                                    className="lazy-load-image-background opacity lazy-load-image-loaded"
+                                    style={{
+                                        color: "transparent",
+                                        display: "inline-block",
+                                        height: "100%",
+                                        width: "100%",
+                                    }}
+                                >
+                                    <LazyLoadImage
+                                        src={`https://image.tmdb.org/t/p/w1280/${featuredMovie?.backdrop_path}`}
+                                        width="100%"
+                                        height="100%"
+                                        className="w-full h-full object-cover"
+                                        alt="Background"
+                                        effect="blur"
+                                    />
+                                </span>
+                            </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[rgba(0,0,0,0.30)] to-[rgba(0,0,0,0.78)]"></div>
-                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[rgba(0,0,0,0.40)] to-[rgba(0,0,0,0.83)]"></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[rgba(0,0,0,0.40)] to-[rgba(0,0,0,0.90)]"></div>
                             {/* <div className="absolute bottom-0 left-0 w-full h-full">
                                 <div className="bg-gradient-to-t from-black/50 to-transparent h-[100%]"></div>
                             </div> */}

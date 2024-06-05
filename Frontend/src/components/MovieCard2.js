@@ -25,14 +25,11 @@ const MovieCard2 = (props) => {
             {!loading && 
                 <Link class="relative flex p-[.5rem] mb-2 flex-col group gap-2 w-full rounded-lg flex-shrink-0" to={`/movie/${props.movieData.id}`}>
                 <div class="w-full relative aspect-[1/1.5] rounded-lg overflow-hidden bg-[var(--light)] transition-all duration-300 ease-in">
-                   <span class=" lazy-load-image-background blur lazy-load-image-loaded h-full w-full transition-all duration-300 ease-in"  >
                     <LazyLoadImage
                         src={`https://image.tmdb.org/t/p/w342/${props.movieData?.poster_path}`}
-                        className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-all ease-in duration-300"
+                        className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform ease-in duration-300"
                         effect="blur"
                     />
-                    
-                    </span>
                    <div class="absolute top-1 right-0 gap-1 bg-[#00000098] py-1 px-[5px] rounded-l-md flex items-center justify-center">
                       <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="gold" stroke="gold" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star">
                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>

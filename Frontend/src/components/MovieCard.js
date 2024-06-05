@@ -47,7 +47,7 @@ const MovieCard = (props) => {
                    </div>
                    <div class="flex opacity-1 lg:group-hover:opacity-100 p-[.35rem] pb-2 tracking-wide flex-col gap-1 justify-end w-full h-full bg-gradient-to-t z-10 from-[#000000d0] absolute top-0 bottom-0 left-0 right-0 smoothie">
                       <div class="flex md:items-center justify-center gap-1 flex-wrasp text-xs 2xl:text-sm text-[#d8d8d8] font-normal tracking-wide "><span>{props.movieData.first_air_date?.substring(0,4)||props.movieData.release_date?.substring(0,4)}</span>•<span class="whitespace-nowrap"><span class="uppercase">{props.movieData.media_type || "TV"}</span></span>•<span>HD</span></div>
-                      <div class="line-clamp-2 text-center text-white text-sm font-medium !leading-tight ">{props.movieData.original_name}</div>
+                      <div class="line-clamp-2 text-center text-white text-sm font-medium !leading-tight ">{props.movieData.name||props.movieData.original_name || props.movieData.title}</div>
                    </div>
                 </div>
              </Link>

@@ -74,27 +74,27 @@ const SignUp = () => {
             }
         }
         const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider)
-            .then(async (result) => {
-                // The signed-in user info.
-                setLoading(true);
-                const user = result.user;
-                const userSnapshot = await getDoc(doc(db, 'users', user.uid));
-
-                if (userSnapshot.exists()) {
-                    sessionStorage.setItem("user", JSON.stringify(user));
-                } else {
-                    await createUserDocument(user);
-                    sessionStorage.setItem("user", JSON.stringify(user));
-                }
-                setLoading(false);
-                navigate("/home");
-                // ...
-            }).catch((error) => {
-                // Handle Errors here.
-                setError(error.message);
-                // ...
-            });
+        try {
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential?.accessToken;
+            const user = result?.user;
+            setLoading(true);
+            const userSnapshot = await getDoc(doc(db, 'users', user.uid));
+      
+            if (userSnapshot.exists()) {
+              sessionStorage.setItem("user", JSON.stringify(user));
+            } else {
+              await createUserDocument(user);
+              sessionStorage.setItem("user", JSON.stringify(user));
+            }
+            setLoading(false);
+            navigate("/home");
+            console.log(user);
+          } catch (error) {
+            setError(error.message);
+          }
     }
     return (
         <div>

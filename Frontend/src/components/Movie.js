@@ -30,14 +30,14 @@ const Movie = (props) => {
         // getData() ;
         const getPopularmovies = async () => {
             let url2 = url;
-            if(props.category === "trending") {
+            if (props.category === "trending") {
                 url2 = `https://api.themoviedb.org/3/trending/movie/week?api_key=748d8f1491929887f482d9767de12ea8`
             }
             const response = await fetch(url2);
             const data = await response.json();
             setMovies(data.results)
             setTotalPages(data.total_pages);
-            setPage(page + 1) ;
+            setPage(page + 1);
         }
         getPopularmovies();
         var x = document.getElementById("loading-bar");
@@ -59,31 +59,32 @@ const Movie = (props) => {
     const fetchMoreData = async () => {
         console.log("More printed")
         let url2 = url.concat(`&page=${page}`);
-        if(props.category === "trending") {
+        if (props.category === "trending") {
             url2 = `https://api.themoviedb.org/3/trending/movie/week?api_key=748d8f1491929887f482d9767de12ea8&page=${page}`
         }
         let response = await fetch(url2);
         let data = await response.json();
         setMovies(movies.concat(data.results));
-        setPage(page + 1) ;
+        setPage(page + 1);
     };
 
     return (
-        <div className=' relative h-screen ' style={{scrollbarWidth: "none" }}>
+        <div className=' relative h-screen ' style={{ scrollbarWidth: "none" }}>
             <div className='h-[2px] w-full z-[99999999] absolute'>
                 <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
                 </div>
             </div>
+            
             <InfiniteScroll
                 dataLength={movies?.length}
                 next={fetchMoreData}
                 hasMore={page <= totalpages}
             >
-                <div className='bg-[#000000] absolute mt-[100px] w-full px-4 mx-auto pb-12'>
+                <div className='bg-[#000000] mt-[100px] absolute w-full px-4 mx-auto pb-12'>
                     {!loading && <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4'>
                         {movies?.map((element, index) => {
                             return (
-                                    <MovieCard2 key={index} movieData={element} />
+                                <MovieCard2 key={index} movieData={element} />
                             )
                         })}
                     </div>}

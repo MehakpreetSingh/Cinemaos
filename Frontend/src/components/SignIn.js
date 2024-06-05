@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { Disclosure } from "@headlessui/react";
 import Spinner from "./Spinner";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth ,db } from '../Firebase/firebase'; 
-import {  GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, setDoc ,getDoc } from 'firebase/firestore'; 
+import { auth, db } from '../Firebase/firebase';
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -61,40 +61,61 @@ const SignIn = () => {
   // }
   const handleLoginWithGoogle = async () => {
     async function createUserDocument(user) {
-        try {
-          await setDoc(doc(db, "users", user.uid), {
-            continueWatching: [],
-            wishlist: [],
-          });
-          console.log("Document written with ID: ", user.uid);
-        } catch (e) {
-          console.error("Error adding document: ", e);
-        }
+      try {
+        await setDoc(doc(db, "users", user.uid), {
+          continueWatching: [],
+          wishlist: [],
+        });
+        console.log("Document written with ID: ", user.uid);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
     }
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then(async (result) => {
-        // The signed-in user info.
-        setLoading(true)
-        const user = result.user;
-        const userSnapshot = await getDoc(doc(db, 'users', user.uid));
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      const user = result?.user;
+      setLoading(true);
+      const userSnapshot = await getDoc(doc(db, 'users', user.uid));
 
-        if(userSnapshot.exists()) {
-          sessionStorage.setItem("user", JSON.stringify(user));
-        } else {
-          await createUserDocument(user);
-          sessionStorage.setItem("user", JSON.stringify(user));
-        }
-        setLoading(false);
-        navigate("/home");
+      if (userSnapshot.exists()) {
+        sessionStorage.setItem("user", JSON.stringify(user));
+      } else {
+        await createUserDocument(user);
+        sessionStorage.setItem("user", JSON.stringify(user));
+      }
+      setLoading(false);
+      navigate("/home");
+      console.log(user);
+    } catch (error) {
+      setError(error.message);
+    }
+    // const provider = new GoogleAuthProvider();
+    // signInWithPopup(auth, provider)
+    //   .then(async (result) => {
+    //     // The signed-in user info.
+    //     setLoading(true)
+    //     const user = result.user;
+    //     const userSnapshot = await getDoc(doc(db, 'users', user.uid));
 
-        // ...
-      }).catch((error) => {
-        // Handle Errors here.
-        setError(error.message);
-        // ...
-      });
-}
+    //     if(userSnapshot.exists()) {
+    //       sessionStorage.setItem("user", JSON.stringify(user));
+    //     } else {
+    //       await createUserDocument(user);
+    //       sessionStorage.setItem("user", JSON.stringify(user));
+    //     }
+    //     setLoading(false)
+    //     navigate("/home");
+
+    //     // ...
+    //   }).catch((error) => {
+    //     // Handle Errors here.
+    //     setError(error.message);
+    //     // ...
+    //   });
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -239,12 +260,12 @@ const SignIn = () => {
                   </span>
                   Sign In
                 </button>
-                
+
               </div>
             </form>
             <div>
-            <div className="flex flex-col justify-center items-center gap-2">
-            <div  className="flex items-center pt-[-10px] justify-center  space-x-1">
+              <div className="flex flex-col justify-center items-center gap-2">
+                <div className="flex items-center pt-[-10px] justify-center  space-x-1">
                   <div className="flex-1 h-px sm:w-16 dark:bg-gray-300"></div>
                   <p className="px-3 text-sm dark:text-gray-600">
                     Login with social accounts
@@ -290,16 +311,16 @@ const SignIn = () => {
                     </svg>
                   </button>
                 </div>
-                </div>
-                <div className="p-2 text-center text-white ">
-                  <Link to="/signup">
-                    or{" "}
-                    <span className="text-blue-500 hover:underline hover:text-blue-700">
-                      Sign Up
-                    </span>{" "}
-                  </Link>
-                </div>
               </div>
+              <div className="p-2 text-center text-white ">
+                <Link to="/signup">
+                  or{" "}
+                  <span className="text-blue-500 hover:underline hover:text-blue-700">
+                    Sign Up
+                  </span>{" "}
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       )}

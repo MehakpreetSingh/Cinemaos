@@ -187,7 +187,7 @@ const WatchMovie = () => {
                     <div>
                         <div class="pt-16 lg:pb-8 xl:pb-14 w-full relative align-left overflow-hidden flex flex-wrap xl:flex-col">
                             <div class="w-full max-w-7xl mx-auto text-gray-300 p-2 sm:p-3 flex justify-between">
-                                <div class="!hidden sm:!flex gap-2 w-full"><a class="hover:underline underline-offset-2 !line-clamp-1" href="/">Home</a><span>/</span><a class="hover:underline capitalize underline-offset-2 !line-clamp-1" href="/explore?type=movie">movie</a><span>/</span><a class="text-[#00c1db] hover:underline underline-offset-2 !line-clamp-1 shrink-0" href="/info/movie/653346">{movieData?.title}</a></div>
+                                <div class="!hidden sm:!flex gap-2 w-full"><a class="hover:underline underline-offset-2 !line-clamp-1" href="/home">Home</a><span>/</span><a class="hover:underline capitalize underline-offset-2 !line-clamp-1" href={`/movie`}>movie</a><span>/</span><a class="text-[#00c1db] hover:underline underline-offset-2 !line-clamp-1 shrink-0" href={`/movie/${movieData?.id}`}>{movieData?.title}</a></div>
                             </div>
                             <div class="flex flex-col lg:flex-row w-full sm:px-2 flex-wrap">
                                 <div class="w-full max-w-7xl xl:rounded-lg relative aspect-[16/11] sm:!aspect-video bg-white/5 mx-auto shadow-xl overflow-hidden"><iframe src={`https://vidsrc.pro/embed/movie/${id}?&amp;theme=00c1db`} width="100%" allowfullscreen="" height="100%" id="video-player" referrerpolicy="origin" class="size-full object-contain object-center" __idm_id__="7979012"></iframe></div>
