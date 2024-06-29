@@ -79,8 +79,8 @@ export default function Example() {
     <>
       <Disclosure
         as="nav"
-        className={`fixed w-full z-40 transition-all duration-300 ${
-          isScrolled ? "bg-black/60" : "bg-transparent"
+        className={`fixed w-full z-50 transition-all duration-300 ${
+          isScrolled ? "bg-black" : "bg-transparent"
         }`}
       >
         {({ open }) => (
@@ -171,14 +171,14 @@ export default function Example() {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="origin-top-right text-white absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-black ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           {({ active }) => (
                             <Link to="user">
                               <h1
                                 className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
+                                  active ? "bg-gray-800" : "",
+                                  "block px-4 py-2 text-sm text-white"
                                 )}
                               >
                                 Your Profile
@@ -191,8 +191,8 @@ export default function Example() {
                             <a
                               href="?"
                               className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
+                                active ? "bg-gray-800" : "",
+                                "block px-4 py-2 text-sm text-white"
                               )}
                             >
                               Settings
@@ -204,8 +204,8 @@ export default function Example() {
                             <Link to="/" onClick={handleLogoutClick}>
                               <h1
                                 className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
+                                  active ? "bg-gray-800" : "",
+                                  "block px-4 py-2 text-sm text-white"
                                 )}
                               >
                                 Sign out

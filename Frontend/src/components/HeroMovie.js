@@ -20,6 +20,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { doc, updateDoc, getDoc, } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const HeroMovie = () => {
   const [info, setInfo] = useState(null);
@@ -161,8 +163,8 @@ const HeroMovie = () => {
           wishlist.push(movieData);
         }
 
+        toast.success(`Movie ${existingIndex !== -1 ? 'removed from' : 'added to'} wishlist`)
         await updateDoc(userRef, { wishlist });
-        console.log("Movie added to Wishlist");
       } else {
         console.error("No user document found for this user ID:", user.uid);
         // Handle the case where the user document doesn't exist yet
@@ -181,6 +183,7 @@ const HeroMovie = () => {
           className="transition-all w-[0%] h-[2px] bg-red-800"
         ></div>
       </div>
+      <ToastContainer />
     {info && <div>
       {!loading && (
         <div

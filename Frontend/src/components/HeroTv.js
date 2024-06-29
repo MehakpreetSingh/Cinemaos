@@ -28,6 +28,7 @@ const HeroTv = () => {
   const [loading, setLoading] = useState(true);
   const [cast, setCast] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
+  const [isWishlisted, setIsWishlisted] = useState(null)
   const { id } = useParams();
   // const port = process.env.PORT || 5000 ;
   // const host =  `http://localhost:${port}/` ;
@@ -44,25 +45,68 @@ const HeroTv = () => {
   // }
   const [open, setOpen] = useState(false);
   useEffect(() => {
+    const CheckWishlist = async (movieData1) => {
+      try {
+        let user = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user'));
+        if (!user || !user.uid) {
+          console.error("User is not logged in or user ID not found.");
+          return; // or handle the login/signup flow
+        }
+
+        const userRef = doc(db, "users", user.uid);
+
+        // Fetch the user's document to get the current wishlist data
+        const userSnapshot = await getDoc(userRef);
+
+        if (userSnapshot.exists()) {
+          const userData = userSnapshot.data();
+          let wishlist = userData.wishlist || [];
+  
+          if (!Array.isArray(wishlist)) {
+            wishlist = [];
+          }
+  
+          const existingIndex = wishlist.findIndex(
+            (movie) => movie.id === movieData1.id
+          );
+  
+          if (existingIndex !== -1) {
+            // Movie already in the wishlist - Do nothing or update the timestamp
+            setIsWishlisted(true);
+          } else {
+            // Add new movie data
+            setIsWishlisted(false);
+          }
+        } else {
+          console.error("No user document found for this user ID:", user.uid);
+          // Handle the case where the user document doesn't exist yet
+        }
+      } catch {
+
+      }
+    }
     const getMovieData = async () => {
       const url = `https://api.themoviedb.org/3/tv/${id}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
-      console.log(url);
+      
       const response = await fetch(url);
       const data = await response.json();
+      
       setInfo(data);
+      CheckWishlist(data);
       const url2 = `https://api.themoviedb.org/3/tv/${id}/credits?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
-      console.log(url2);
+    
       const response2 = await fetch(url2);
       const data2 = await response2.json();
       setCast(data2.cast);
       const url3 = `https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=748d8f1491929887f482d9767de12ea8&language=en-US&page=1'`
       const response3 = await fetch(url3);
       const data3 = await response3.json();
-      console.log(data3);
+      
       setSimilarMovies(data3.results);
     };
     getMovieData();
     // dbData() ;
+    
     var x = document.getElementById("loading-bar");
     for (let i = 0; i < 4; i++) {
       setTimeout(() => {
@@ -83,46 +127,47 @@ const HeroTv = () => {
   const addToWishlist = async (movieData1) => {
     try {
       let user = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user'));
-      const userRef = doc(db, "users", user.uid);
-      const userSnapshot = await getDoc(userRef);
-      const movieData = {
-        backdrop_path: movieData1.backdrop_path,
-        id: movieData1.id,
-        media_type: "tv",
-        title: movieData1.original_name
+      if (!user || !user.uid) {
+        console.error("User is not logged in or user ID not found.");
+        return; // or handle the login/signup flow
       }
-      var progress = 0;
+
+      const userRef = doc(db, "users", user.uid);
+
+      // Fetch the user's document to get the current wishlist data
+      const userSnapshot = await getDoc(userRef);
+
       if (userSnapshot.exists()) {
         const userData = userSnapshot.data();
         let wishlist = userData.wishlist || [];
 
-        // Check if continueWatching is an array (defensive programming)
         if (!Array.isArray(wishlist)) {
-          wishlist = []; // Reset to empty array if it's not an array
+          wishlist = [];
         }
 
         const existingIndex = wishlist.findIndex(
-          (movie) => movie.id === movieData.id
+          (movie) => movie.id === movieData1.id
         );
 
-        if (existingIndex >= 0) {
-          // Update existing movie data (including progress and timestamp)
-          wishlist[existingIndex] = {
-            ...movieData,
-            progress,
-            timestamp: new Date(),
-          };
+        const movieData = {
+          backdrop_path: movieData1.backdrop_path,
+          id: movieData1.id,
+          media_type: "tv",
+          title: movieData1.original_name,
+          timestamp: new Date(),
+        };
+
+        if (existingIndex !== -1) {
+          // Movie already in the wishlist - Do nothing or update the timestamp
+          setIsWishlisted(false);
+          wishlist.splice(existingIndex, 1);
         } else {
-          // Add new movie data (with initial progress and timestamp)
-          wishlist.push({
-            ...movieData,
-            progress,
-            timestamp: new Date(),
-          });
+          // Add new movie data
+          setIsWishlisted(true);
+          wishlist.push(movieData);
         }
 
         await updateDoc(userRef, { wishlist });
-        console.log("Movie added to Continue Watching");
       } else {
         console.error("No user document found for this user ID:", user.uid);
         // Handle the case where the user document doesn't exist yet
@@ -132,6 +177,7 @@ const HeroTv = () => {
       console.error('Error adding to continue watching: ', error);
     }
   };
+
   const handleModalClick = (n) => {
     var x = document.getElementsByClassName("seasonmodalClick")[n];
     if (open) {
@@ -268,7 +314,7 @@ const HeroTv = () => {
                       className="ring-white hover:cursor-pointer gap-1 backdrop-blur group flex-shrink-0 text-sm md:text-base ring-1 p-2 rounded-md overflow-hidden hover:bg-white/10 justify-center items-center flex w-1/2 md:px-5 md:w-[12rem] !whitespace-nowrap"
                       onClick={()=>addToWishlist(info)}
                     >
-                      <span className="gap-1 flex text-white justify-center items-center smoothie !duration-500 origin-center">
+                      {(isWishlisted!=null) && !isWishlisted && <span class="gap-1 flex text-white justify-center items-center smoothie !duration-500 origin-center">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="18"
@@ -279,12 +325,20 @@ const HeroTv = () => {
                           stroke-width="2"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          className="lucide lucide-heart"
+                          class="lucide lucide-heart"
                         >
                           <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
                         </svg>
                         Add To List
-                      </span>
+                      </span>}
+                      {(isWishlisted!=null) && isWishlisted &&
+                        <span class="gap-1 text-white flex justify-center items-center smoothie !duration-500 origin-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart">
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                          </svg>
+                          Added
+                        </span>
+                      }
                     </div>
                   </div>
                   {/* Cast (with scrolling and lazy loading) */}

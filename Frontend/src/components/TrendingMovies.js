@@ -2,6 +2,8 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y, EffectFade, Mousewheel, Keyboard } from 'swiper';
 import { FreeMode } from 'swiper';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import "react-lazy-load-image-component/src/effects/blur.css";
 // Sample data (Replace this with your actual data or API fetch)
 const movies = [
   {
@@ -25,8 +27,8 @@ const movies = [
 
 const TrendingMovie = ({ movies }) => {
   return (
-    <div className="transition-all duration-150 w-full mb-2 md:mb-0 mx-auto flex flex-col gap-3 md:gap-4 z-30 -mt-2 md:mt-[-24vh] xl:max-w-[92%]">
-      <div className="font-medium flex items-center gap-2 tracking-wide w-full px-2 lg:px-3 text-white text-lg md:text-2xl py-1 z-50 flex-shrink-0">
+    <div className="transition-all duration-150 w-full mb-2 md:mb-0 mx-auto flex flex-col gap-3 md:gap-4  -mt-2 md:mt-[-24vh] xl:max-w-[92%]">
+      <div className="font-medium flex items-center gap-2 tracking-wide w-full px-2 lg:px-3 text-white text-lg md:text-2xl py-1 z-20 flex-shrink-0">
         <div className="h-[1.4rem] p-[3px] md:h-[1.5rem] flex items-center justify-center rounded bg-[#4f46e5]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -86,9 +88,10 @@ const TrendingMovie = ({ movies }) => {
                   <polygon points="10 8 16 12 10 16 10 8"></polygon>
                 </svg>
                 <div className="z-0">
-                  <img
+                  <LazyLoadImage
                     src={`https://image.tmdb.org/t/p/w1280${movie?.backdrop_path}`}
                     alt={movie.title}
+                    effect="blur"
                     className="w-full h-full object-cover object-center group-hover:scale-[1.03] smoothie !duration-300"
                   />
                 </div>

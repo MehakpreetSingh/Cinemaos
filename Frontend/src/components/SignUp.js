@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { auth, db } from '../Firebase/firebase';
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup , updateProfile} from "firebase/auth";
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import Spinner from './Spinner'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -43,10 +45,9 @@ const SignUp = () => {
                 signupcreds.email,
                 signupcreds.password
             );
-
             // User created successfully
             const user = userCredential.user;
-            console.log("User created:", user);
+                   
             await setDoc(doc(db, "users", user.uid), {
                 continueWatching: [],
                 wishlist: [],
@@ -54,11 +55,13 @@ const SignUp = () => {
             // (Optional) Send name to your backend for user profile
             // ... your code to interact with your backend API
             setLoading(false);
-            navigate("/home"); // Redirect after successful sign-up
+            navigate("/"); // Redirect after successful sign-up
         } catch (error) {
             // Handle errors (invalid credentials, etc.)
             console.error("Error creating user:", error.message);
             setError(error.message);
+            setLoading(false);
+            toast("Input a Valid Email and Password", { type: "error"});
         }
     }
     const handleLoginWithGoogle = async () => {
@@ -103,6 +106,7 @@ const SignUp = () => {
                     <Spinner />
                 </div>
             )}
+            <ToastContainer />
             {!loading && <div className="absolute mt-[30px] w-full min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
                     <div>

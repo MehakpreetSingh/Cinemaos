@@ -9,6 +9,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from '../Firebase/firebase';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -145,6 +147,7 @@ const SignIn = () => {
       // Handle errors (invalid credentials, etc.)
       console.error("Error logging in:", error.message);
       setError(error.message); // Set error state
+      toast.error("Incorrect email or password, please try again");
     }
     setLoading(false); // Always set loading back to false
   };
@@ -155,6 +158,7 @@ const SignIn = () => {
           <Spinner />
         </div>
       )}
+      <ToastContainer />
       {!loading && (
         <div className="absolute mt-[30px] w-full h-full flex bg-black items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-md w-full space-y-8">

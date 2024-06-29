@@ -12,7 +12,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import TrendingMovies from './TrendingMovies';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -84,6 +85,7 @@ const Home = () => {
             gettmdbtvData();
             fetchPopularMovie();
             fetchTrendingData();
+            
             // getData() ;
             var x = document.getElementById("loading-bar");
             for (let i = 0; i < 4; i++) {
@@ -145,6 +147,7 @@ const Home = () => {
                 <div id="loading-bar" className='transition-all w-[0%] h-full bg-red-800'>
                 </div>
             </div>
+            <ToastContainer />
             {/* <img className='absolute z-[999] transition-all duration-500 w-full h-96 object-cover  top-16' src={home} alt="" />
             <form onSubmit={handleSubmit} className='absolute z-[999] mt-[350px] w-full  '>
                 <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
