@@ -14,6 +14,7 @@ const TrendCard = (props) => {
         //     setInfo(data);
         // }
         // getMovieData();
+        console.log(props.movieData);
         setTimeout(() => {
             setLoading(false);
         }, 50);
@@ -21,37 +22,58 @@ const TrendCard = (props) => {
     }, [])
 
     return (
-        <div>
-            {!loading && <div className=" flex flex-col relative transition-all duration-500 justify-center items-center">
-
-                <div className="py-3 transition-all duration-500 sm:max-w-sm sm:mx-auto">
-                    <Link to={(props.movieData.media_type === "movie") ?
-                        `/movie/${props.movieData.id}` : `/tv/${props.movieData.id}`
-                    } className="h-48 relative overflow-visible w-1/2 hover:scale-[1.1] transition-transform duration-150">
-                        <LazyLoadImage effect='blur' alt="image" className="rounded-3xl block bg-transparent w-full transition-all h-full duration-500 shadow-lg" src={`https://image.tmdb.org/t/p/w500${props.movieData.poster_path}`} />
-                    
-                    </Link>
-
-                    {/* <div className="bg-white shadow-lg border-gray-100 max-h-80	 border sm:rounded-3xl p-8 flex space-x-8">
-                        <div className="flex flex-col w-1/2 space-y-4">
-                            <div className="flex justify-between items-start">
-                                <Link to={`/movie/${props.movieData.tmdb_id}`} className="text-3xl font-bold  hover:text-yellow-600">{info?.original_title}</Link>
-                                <div className="bg-yellow-400 font-bold rounded-xl p-2">{info?.vote_average}</div>
-                            </div>
+        <>
+            {!loading && (
+                <Link to={props.movieData.media_type === 'movie'
+                    ? `/movie/${props.movieData.id}`
+                    : `/tv/${props.movieData.id}`}
+                    className="group relative w-full flex-1 overflow-hidden rounded-2xl bg-black transition-all">
+                    <div className="relative w-full flex-1 overflow-hidden rounded-2xl bg-black transition-all">
+                        <LazyLoadImage
+                            className="w-full h-full object-cover"
+                            src={`https://image.tmdb.org/t/p/w500${props.movieData.poster_path}`}
+                            alt=""
+                            effect="blur"
+                            wrapperProps={{
+                                // If you need to, you can tweak the effect transition using the wrapper style.
+                                style: {height: "100%"  ,transition: "transform 0.3s ease-in" ,},
+                            }}
+                            visibleByDefault={true}
+                        />
+                        <div className="absolute inset-x-0 bottom-0 bg-white/20 backdrop-blur-sm rounded-2xl p-4">
                             <div>
-                                <div className="text-sm text-gray-400">Movie</div>
-                                <div className="text-sm text-gray-800">{info?.release_date}</div>
+                                <div className="flex flex-col justify-between items-start">
+                                    <h1 className="text-white w-[100%] text-[13px] font-bold whitespace-nowrap overflow-hidden overflow-ellipsis">
+                                        {props.movieData.title || props.movieData.original_name}
+                                    </h1>
+                                    <div className='flex flex-row justify-between w-full items-center'>
+                                        <div className="flex items-center text-[10px] w-full my-1 space-x-1">
+                                            <span className="text-yellow-400 text-xs">★</span>
+                                            <span className="text-white font-bold">{props?.movieData.vote_average.toFixed(1)}</span>
+                                            <span className="text-white font-bold">|</span>
+                                            <span className="text-white font-bold">HD</span>
+                                            <span className="text-white font-bold">•</span>
+                                            <span className="text-white font-bold">{props?.movieData.media_type === "movie" ? "Movie" : "TV"}</span>
+                                        </div>
+                                        <div className="text-gray-100 text-[10px]">
+                                            {props.movieData.release_date?.substring(0, 4) || props.movieData.first_air_date?.substring(0, 4)}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-rows-[0fr] transition-all group-hover:grid-rows-[1fr]">
+                                    <p className="overflow-hidden text-white/70 opacity-0 transition duration-500 group-hover:opacity-100 text-white text-sm text-[10px]">
+                                        {props.movieData.overview.substring(0, 200) + "..."}
+                                    </p>
+                                </div>
                             </div>
-                            <p className=" text-gray-400 max-h-40 overflow-y-hidden">{info?.overview}</p>
-
                         </div>
-                    </div> */}
+                    </div>
+                </Link>
 
-                </div>
-                <h1 className="bg-blue-700 text-white transition-all duration-500 text-sm absolute bottom-0 left-4 font-bold rounded-full inline-block p-2">{props.movieData?.vote_average.toFixed(1)}</h1>
+            )}
 
-            </div>}
-        </div>
+        </>
     )
 }
 

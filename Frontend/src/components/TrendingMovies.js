@@ -4,6 +4,7 @@ import { Navigation, Pagination, Scrollbar, A11y, EffectFade, Mousewheel, Keyboa
 import { FreeMode } from 'swiper';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { Link } from 'react-router-dom';
 // Sample data (Replace this with your actual data or API fetch)
 const movies = [
   {
@@ -29,14 +30,14 @@ const TrendingMovie = ({ movies }) => {
   return (
     <div className="transition-all duration-150 w-full mb-2 md:mb-0 mx-auto flex flex-col gap-3 md:gap-4  -mt-2 md:mt-[-24vh] xl:max-w-[92%]">
       <div className="font-medium flex items-center gap-2 tracking-wide w-full px-2 lg:px-3 text-white text-lg md:text-2xl py-1 z-20 flex-shrink-0">
-        <div className="h-[1.4rem] p-[3px] md:h-[1.5rem] flex items-center justify-center rounded bg-[#4f46e5]">
+        <div className="h-[1.4rem] p-[3px] md:h-[1.5rem] flex items-center justify-center rounded bg-[white]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
             height="18"
             viewBox="0 0 24 24"
-            fill="white"
-            stroke="white"
+            fill="black"
+            stroke="black"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -54,60 +55,66 @@ const TrendingMovie = ({ movies }) => {
           freeMode={true}
           className="xl:rounded-3xl"
           modules={[FreeMode, Navigation, Pagination, Mousewheel, Scrollbar, A11y, EffectFade, Keyboard]}
-            keyboard={true}
-            pagination
-            draggable
+          keyboard={true}
+          pagination
+          draggable
         >
-          {movies?.slice(0,50).map((movie) => (
+          {movies?.slice(0, 50).map((movie) => (
             <SwiperSlide
               key={movie.id}
-              className="aspect-[2/1] h-fit rounded-2xl lg:rounded-3xl overflow-hidden active:scale-[.98] transition-transform duration-300 ease-linear"
+              className="aspect-[2/1.15] h-full rounded-2xl lg:rounded-3xl overflow-hidden transition-transform duration-300 ease-linear"
               style={{ width: '347.714px' }}
             >
-              <a
-                className="relative h-full w-full flex flex-col gap-2 flex-shrink-0 bg-[var(--light)] group active:scale-100"
-                href={
-                    movie.media_type === 'movie'
-                        ? `/movie/${movie.id}`
-                        : `/tv/${movie.id}`
-                }
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#2cdfff"
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="absolute z-30 group-hover:opacity-100 opacity-0 top-2 right-2 smoothie"
-                >
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                </svg>
-                <div className="z-0">
-                  <LazyLoadImage
-                    src={`https://image.tmdb.org/t/p/w1280${movie?.backdrop_path}`}
-                    alt={movie.title}
-                    effect="blur"
-                    className="w-full h-full object-cover object-center group-hover:scale-[1.03] smoothie !duration-300"
-                  />
-                </div>
-                <div className="flex flex-col hover:ring-[2px] ring-[#2cd5ff] ring-inset gradient-opacity absolute w-full h-full gap-1 md:gap-2 justify-end bottom-0 right-0 left-0 pb-2 px-3 lg:px-5 lg:pb-3 smoothie rounded-2xl lg:rounded-3xl">
-                  <div className="line-clamp-2 uppercase tracking-wide text-white !leading-none text-sm md:text-base font-bold">
-                    {movie.original_name || movie.original_title}
+              <Link to={`/movie/${movie.id}`}
+                className="group relative w-full flex-1 overflow-hidden rounded-2xl transition-all  bg-white">
+                <LazyLoadImage
+                  src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+                  alt=""
+                  wrapperClassName="w-full h-full object-cover"
+                  wrapperProps={{
+                    // If you need to, you can tweak the effect transition using the wrapper style.
+                    style: {height: "100%"},
+                }}
+                visibleByDefault={true}
+                  effect='blur'
+                />
+                <div className="absolute  inset-x-0 bottom-0 bg-white/20 backdrop-blur-sm rounded-2xl p-2 pl-4">
+                  <div>
+                    <div className='flex flex-row items-center justify-between'>
+                      <div className="flex flex-col justify-between w-full items-start">
+                        <div className='flex items-center justify-between w-full'>
+                          <h1 className="text-white w-[100%] text-[13px] font-bold ">
+                            {movie.title || movie.original_name}
+                          </h1>
+                          <Link to={`/movie/watch/${movie.id}`} className='text-white px-2 opacity-0 group-hover:opacity-100 transform-all duration-300 hover:scale-[1.2] rounded-full'>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill='white' width="24" height="24" viewBox="0 0 24 24"><path d="M0 21v-18l15 9-15 9zm11-17v3.268l7.888 4.732-7.888 4.732v3.268l13-8-13-8z" /></svg>
+                          </Link>
+                        </div>
+                        <div className='flex items-center justify-center w-full'>
+                          <div className="flex items-center text-[10px] w-full my-1 space-x-1">
+                            <span className="text-yellow-400 text-xs">★</span>
+                            <span className="text-white font-bold">{movie.vote_average.toFixed(1)}</span>
+                            <span className="text-white font-bold">|</span>
+                            <span className="text-white font-bold">HD</span>
+                            <span className="text-white font-bold">•</span>
+                            <span className="text-white font-bold">{movie.media_type === "movie" ? "Movie" : "TV"}</span>
+                          </div>
+                          <div className="text-gray-100 text-[10px] pr-3">
+                            {movie.release_date?.substring(0, 4) || movie.first_air_date?.substring(0, 4)}
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div className="grid grid-rows-[0fr] transition-all group-hover:grid-rows-[1fr]">
+                      <p className="overflow-hidden text-white/70 opacity-0 transition duration-500 group-hover:opacity-100 text-white text-sm text-[10px]">
+                        {movie.overview.substring(0, 300) + "..."}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex flex-wrap text-xs !leading-tight text-[#2cdfff] font-normal tracking-wider gap-1">
-                    <span>Rating: {movie.vote_average.toFixed(1)}</span>
-                    <span>•</span>
-                    <span>{movie.release_date?.substring(0,4) || movie.first_air_date?.substring(0,4)}</span>
-                    <span>•</span>
-                    <span className="uppercase">{movie.language}</span>
-                  </div>
                 </div>
-              </a>
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>
@@ -118,7 +125,7 @@ const TrendingMovie = ({ movies }) => {
 
 const TrendingMovies = (props) => {
   return (
-      <TrendingMovie movies={props.trendingMovies} />
+    <TrendingMovie movies={props.trendingMovies} />
   );
 };
 

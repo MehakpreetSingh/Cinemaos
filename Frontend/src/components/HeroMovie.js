@@ -223,10 +223,11 @@ const HeroMovie = () => {
               <div class="flex-shrink-0 mx-auto md:mx-10 w-[180px] md:w-[30%] md:max-w-[275px] overflow-hidden">
                 <div class="rounded-lg md:rounded-xl overflow-hidden aspect-[1/1.5] flex-shrink-0 backdrop-blur bg-white/5">
                   <span class=" lazy-load-image-background blur lazy-load-image-loaded inline-block text-transparent w-full h-full">
-                    <img
+                    <LazyLoadImage
                       src={`https://image.tmdb.org/t/p/w780/${info.poster_path}`}
                       width="100%"
                       height="100%"
+                      effect="blur"
                       className="w-full h-full object-cover"
                     />
                   </span>
@@ -258,7 +259,7 @@ const HeroMovie = () => {
                         >
                           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                         </svg>
-                        <span class="!text-xs font-medium">
+                        <span class="!text-xs text-white font-medium">
                           {info?.vote_average?.toFixed(1)}{" "}
                         </span>
                       </div>
@@ -285,7 +286,7 @@ const HeroMovie = () => {
                   </div>
                   <div class="flex gap-3 w-full">
                     <a
-                      class="ring-white gap-2 min-w-fit text-sm md:text-base  p-2 font-semibold rounded-md overflow-hidden bg-blue-700 text-black justify-center hover:brightness-[.8] items-center flex w-1/2 md:w-[10rem] !whitespace-nowrap  "
+                      class="ring-white gap-2 min-w-fit text-sm md:text-base  p-2 font-semibold rounded-md overflow-hidden bg-white/80 text-black justify-center hover:brightness-[.8] items-center flex w-1/2 md:w-[10rem] !whitespace-nowrap  "
                       href={`/movie/watch/${info?.id}`}
                     >
                       <svg

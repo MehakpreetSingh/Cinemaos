@@ -3,7 +3,7 @@ import { doc, updateDoc, getDoc, } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-
+import bgHome from '../bg-home.png'
 
 const Userview = () => {
   const [activeTab, setActiveTab] = useState("continueWatching");
@@ -101,7 +101,7 @@ const Userview = () => {
   }
   return (
     <div class="pt-16 w-full mx-auto max-w-[1400px]">
-      <div class="h-60 w-full left-0 absolute z-0 top-0 opacity-60 overflow-hidden"><span class=" lazy-load-image-background blur lazy-load-image-loaded" ><LazyLoadImage effect='blur' src="https://waifugame.com/images/backgrounds/G-7570885.jpg" alt="" width="100%" height="100%" class="w-full h-full object-cover object-center blur-sm" /></span></div>
+      <div class="h-60 w-full left-0 absolute z-0 top-0 opacity-60 overflow-hidden"><span class=" lazy-load-image-background blur lazy-load-image-loaded" ><LazyLoadImage effect='blur' src={bgHome} alt="" width="100%" height="100%" class="w-full h-full object-cover object-center blur-sm" /></span></div>
       <div class="h-[176px] flex flex-col justify-end items-center relative">
         <div class="absolute top-1/2 -translate-y-1/2 text-2xl font-semibold text-white my-auto">Good Evening!</div>
         <div class="w-full p-3 flex justify-evenly sm:justify-center gap-5 flex-wrap sm:gap-12 z-10 text-white font-medium text-sm md:text-base">

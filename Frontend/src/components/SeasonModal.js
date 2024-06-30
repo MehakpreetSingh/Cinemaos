@@ -141,7 +141,7 @@ const SeasonModal = () => {
                                     title={element.name}
                                     onClick={() => handleEpisodeClick(element)}
                                     className={`w-full h-[3.3rem] relative justify-between rounded-sm px-3 py-2 flex items-center gap-1 flex-shrink-0 text-sm line-clamp-2 smoothie ${selectedEpisode?.episode_number === element.episode_number
-                                        ? 'text-[#00c1db] bg-white/20 brightness-105' // Selected style
+                                        ? 'text-[#00c1db] font-bold bg-white/20 backdrop-blur-md brightness-105' // Selected style
                                         : 'text-white' // Unselected style
                                         }`}
                                 >
@@ -178,7 +178,7 @@ const SeasonModal = () => {
 
                     </div>
                     <div class="w-full lg:w-[70%] xl:w-[75%] gap-1 flex flex-col shadow-md overflow-hidden lg:rounded-r-lg">
-                        <div class="w-full aspect-[16/11] sm:!aspect-video relative bg-white/5 overflow-hidden"><iframe title={id} src={videoUrl} width="100%" allowfullscreen="" height="100%" id="video-player" referrerpolicy="origin" class="size-full object-contain object-center"></iframe></div>
+                        <div class="w-full aspect-[16/11] sm:!aspect-video relative bg-white/5 overflow-hidden"><iframe title={id} src={videoUrl} width="100%" allowfullscreen="" height="100%" id="video-player" sandbox= 'allow-forms allow-pointer-lock allow-same-origin allow-downloads allow-top-navigation-by-user-activation allow-storage-access-by-user-activation  allow-top-navigation allow-scripts allow-navigation' referrerpolicy="origin" class="size-full object-contain object-center"></iframe></div>
                         <div class="bg-white/5 flex-grow w-full">
                             <div class="w-full p-2 py-3">
                                 <div class="w-full no-scrollbar-atAll relative rounded-xl overflow-hidden ">

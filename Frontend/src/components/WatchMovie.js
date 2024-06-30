@@ -190,7 +190,9 @@ const WatchMovie = () => {
                                 <div class="!hidden sm:!flex gap-2 w-full"><a class="hover:underline underline-offset-2 !line-clamp-1" href="/home">Home</a><span>/</span><a class="hover:underline capitalize underline-offset-2 !line-clamp-1" href={`/movie`}>movie</a><span>/</span><a class="text-[#00c1db] hover:underline underline-offset-2 !line-clamp-1 shrink-0" href={`/movie/${movieData?.id}`}>{movieData?.title}</a></div>
                             </div>
                             <div class="flex flex-col lg:flex-row w-full sm:px-2 flex-wrap">
-                                <div class="w-full max-w-7xl xl:rounded-lg relative aspect-[16/11] sm:!aspect-video bg-white/5 mx-auto shadow-xl overflow-hidden"><iframe src={`https://vidsrc.pro/embed/movie/${id}?&amp;theme=00c1db`} width="100%" allowfullscreen="" height="100%" id="video-player" referrerpolicy="origin" class="size-full object-contain object-center" __idm_id__="7979012"></iframe></div>
+                                <div class="w-full max-w-7xl xl:rounded-lg relative aspect-[16/11] sm:!aspect-video bg-white/5 mx-auto shadow-xl overflow-hidden"><iframe src={`https://vidsrc.pro/embed/movie/${id}?&amp;theme=00c1db`} width="100%" allowfullscreen="" height="100%" id="video-player" referrerpolicy="origin"
+                                sandbox= 'allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-storage-access-by-user-activation  allow-top-navigation allow-scripts allow-navigation'
+                                 class="size-full object-contain object-center" __idm_id__="7979012"></iframe></div>
                             </div>
                         </div>
                         <div class="w-full max-w-7xl mx-auto px-2 sm:px-3">

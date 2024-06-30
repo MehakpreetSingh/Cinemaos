@@ -187,6 +187,7 @@ const Home = () => {
                                         className="w-full h-full object-cover"
                                         alt="Background"
                                         effect="blur"
+                                        visibleByDefault={true}
                                     />
                                 </span>
                             </div>
@@ -196,7 +197,7 @@ const Home = () => {
                                 <div className="bg-gradient-to-t from-black/50 to-transparent h-[100%]"></div>
                             </div> */}
 
-                            <div className="absolute transition-all duration-200 flex flex-col gap-2 md:gap-4 tracking-wide w-[87%] sm:w-[70%] md:w-[45%] left-[5%] bottom-[8%] md:bottom-[28vh] xl:bottom-[30vh]">
+                            <div className="absolute transition-all duration-200 flex flex-col gap-2 md:gap-4 tracking-wide w-[87%] sm:w-[70%] md:w-[50%] left-[5%] bottom-[8%] md:bottom-[28vh] xl:bottom-[30vh]">
                                 <div className="flex flex-col gap-1 md:gap-2">
                                     <div className="line-clamp-2 text-white font-semibold leading-tight text-2xl md:text-3xl lg:text-4xl py-1 flex-shrink-0">{featuredMovie?.title}</div>
                                     <div className="text-xs 2xl:text-sm tracking-wider text-white/90 flex gap-3 ">
@@ -224,7 +225,7 @@ const Home = () => {
                                 </div>
                                 <div title={featuredMovie?.title} className="leading-tight text-md text-slate-200 line-clamp-2 md:line-clamp-3 lg:leading-snug overflow-hidden text-ellipsis whitespace-nowrap ">{`${featuredMovie?.overview}`}</div>
                                 <div className="flex gap-2 mt-2">
-                                    <a href={`movie/watch/${featuredMovie?.id}`} className="bg-[#4f46e5] gap-1 font-semibold flex-shrink-0 text-black text-sm md:text-base p-2 md:py-[.65rem] rounded-full lg:rounded-lg overflow-hidden hover:brightness-[.8] justify-center items-center flex w-[7rem] md:w-[10rem]" >
+                                    <a href={`movie/watch/${featuredMovie?.id}`} className="bg-white/80 backdrop-blur-md gap-1 font-semibold flex-shrink-0 text-black text-sm md:text-base p-2 md:py-[.65rem] rounded-full lg:rounded-lg overflow-hidden hover:brightness-[.8] justify-center items-center flex w-[7rem] md:w-[10rem]" >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="black" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-play">
                                             <polygon points="5 3 19 12 5 21 5 3"></polygon>
                                         </svg>
@@ -247,10 +248,10 @@ const Home = () => {
 
             {!loading && <TrendingMovies trendingMovies={trendingMovies} />}
 
-            {!loading && <div className='bg-[#000000]/90  mx-auto  pb-12 w-[100%] xl:max-w-[92%]'>
+            {!loading && <div className='bg-[#000000]/90 md:mt-28 xl:mt-0  mx-auto  pb-12 w-[100%] xl:max-w-[92%]'>
 
-                <h1 className='mt-10 mx-4 text-white font-medium md:text-xl'>Trending Movies</h1>
-                <div className='mx-2'>
+                <h1 className='mt-10 mx-4 z-50 text-white font-medium md:text-xl'>Trending Movies</h1>
+                <div className='mx-2 pt-2'>
                     <Swiper
                         freeMode={true}
                         grabCursor={true}
@@ -258,19 +259,19 @@ const Home = () => {
                         keyboard={true}
                         height={400}
                         draggable={true}
-                        className="mySwiper px-2"
+                        className="mySwiper px-2 "
                         breakpoints={{
                             320: {
                                 slidesPerView: 2,
-                                spaceBetween: 15
+                                spaceBetween: 10
                             },
                             480: {
                                 slidesPerView: 4,
-                                spaceBetween: 20
+                                spaceBetween: 10
                             },
                             768: {
                                 slidesPerView: 6,
-                                spaceBetween: 20
+                                spaceBetween: 10
                             },
 
                         }}
@@ -285,8 +286,11 @@ const Home = () => {
 
                             if (loading === false) {
                                 return (
-                                    <SwiperSlide key={index}>
-                                        <div className='transition-all duration-500' key={index}>
+                                    <SwiperSlide 
+                                    key={index}
+                                    
+                                    >
+                                        <div className='transition-all duration-500 rounded-3xl relative' key={index}>
                                             <TrendCard movieData={element} />
                                         </div>
                                     </SwiperSlide>
@@ -305,8 +309,8 @@ const Home = () => {
                     </Link>
                 </div>
 
-                <h1 className='mt-10 mx-4 font-medium text-white md:text-xl'>Trending TV Shows</h1>
-                <div className='mx-2'>
+                <h1 className='mt-10 mx-4 font-medium z-50 text-white md:text-xl'>Trending TV Shows</h1>
+                <div className='mx-2 pt-2'>
                     <Swiper
                         freeMode={true}
                         grabCursor={true}
@@ -321,15 +325,15 @@ const Home = () => {
                         breakpoints={{
                             320: {
                                 slidesPerView: 2,
-                                spaceBetween: 15
+                                spaceBetween: 10
                             },
                             480: {
                                 slidesPerView: 4,
-                                spaceBetween: 20
+                                spaceBetween: 10
                             },
                             768: {
                                 slidesPerView: 6,
-                                spaceBetween: 20
+                                spaceBetween: 10
                             },
 
                         }}

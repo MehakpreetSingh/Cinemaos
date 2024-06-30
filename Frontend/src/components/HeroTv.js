@@ -264,7 +264,7 @@ const HeroTv = () => {
                         >
                           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                         </svg>
-                        <span className="!text-xs font-medium">
+                        <span className="!text-xs text-white font-medium">
                           {info?.vote_average?.toFixed(1)}
                         </span>
                       </div>
@@ -291,7 +291,7 @@ const HeroTv = () => {
                   </div>
                   <div className="flex gap-3 w-full">
                     <a
-                      className="ring-white gap-2 min-w-fit text-sm md:text-base p-2 font-semibold rounded-md overflow-hidden bg-blue-700 text-black justify-center hover:brightness-[.8] items-center flex w-1/2 md:w-[10rem] whitespace-nowrap"
+                      className="ring-white gap-2 min-w-fit text-sm md:text-base p-2 font-semibold rounded-md overflow-hidden bg-white/80 text-black justify-center hover:brightness-[.8] items-center flex w-1/2 md:w-[10rem] whitespace-nowrap"
                       href={`/tv/${info?.id}/1/1`} // Update the link for watching
                     >
                       <svg
@@ -386,7 +386,7 @@ const HeroTv = () => {
                       className="w-1/2 sm:w-1/3 lg:w-1/4 h-fit group relative !aspect-[2/1] p-1 sm:p-2 cursor-pointer"
                       to={`/tv/${info.id}/${element.season_number}/1`}
                     >
-                      <div className="w-full h-full bg-white/10 group-hover:ring-2 ring-[#00c1db] rounded-lg shadow-xl overflow-hidden smoothie ">
+                      <div className="w-full h-full bg-white/10 group-hover:ring-2 ring-white/40 rounded-lg shadow-xl overflow-hidden smoothie ">
                         <span
                           className="text-transparent h-full w-full lazy-load-image-background blur lazy-load-image-loaded flex items-center justify-center"
                         >
@@ -399,13 +399,13 @@ const HeroTv = () => {
                         </span>
                       </div>
                       <div className="absolute flex flex-col h-full w-full top-0 left-0 px-3 py-2 sm:py-3 sm:px-4">
-                        <div className="!line-clamp-2 bg-black/60 !capitalize rounded-md px-2 w-fit !italic text-sm sm:text-base text-white font-medium">
+                        <div className="!line-clamp-2 bg-white/20 backdrop-blur-sm !capitalize rounded-md px-2 w-fit !italic text-sm sm:text-base text-white font-medium">
                           {element.name}
                         </div>
                         <div className="line-clamp-1 italic self-end mt-auto tracking-wider bg-black/60 text-white rounded-md px-2 text-xs sm:text-sm">
                           {element.episode_count}
                         </div>
-                        <div className="absolute p-2 bg-[#00c1db] shadow-lg opacity-0 group-hover:opacity-90 rounded-full top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] smoothie">
+                        <div className="absolute p-2 bg-white/60 backdrop-blur-md shadow-lg opacity-0 group-hover:opacity-90 hover:bg-white rounded-full top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] smoothie">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="14"
@@ -435,26 +435,47 @@ const HeroTv = () => {
                 {
                   similarMovies?.map((element , index) => {
                     return (<a key={element.name} class="relative transition-all ease-in duration-300 flex p-[.5rem] mb-2 flex-col group gap-2 w-1/2 sm:w-1/4 lg:w-1/6 rounded-lg flex-shrink-0" href={`/tv/${element.id}`}>
-                  <div class="w-full relative aspect-[1/1.5] rounded-lg overflow-hidden bg-[var(--light)] transition-all ease-in duration-300">
-                    <span class=" lazy-load-image-background blur lazy-load-image-loaded"><img width="100%" height="100%" src={`https://image.tmdb.org/t/p/w342/${element.poster_path}`} class="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-all ease-in duration-300" /></span>
-                    <div class="absolute top-1 right-0 gap-1 bg-[#00000098] py-1 px-[5px] rounded-l-md flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="gold" stroke="gold" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                      </svg>
-                      <span class="!text-xs text-white font-light">{element.vote_average.toFixed(1)}</span>
+                    <div className="relative w-full flex-1 overflow-hidden rounded-2xl bg-black transition-all">
+                        <LazyLoadImage
+                            className="w-full h-full object-cover"
+                            src={`https://image.tmdb.org/t/p/w500${element.poster_path}`}
+                            alt=""
+                            effect="blur"
+                            wrapperProps={{
+                                // If you need to, you can tweak the effect transition using the wrapper style.
+                                style: {height: "100%"  ,transition: "transform 0.3s ease-in" ,},
+                            }}
+                            visibleByDefault={true}
+                        />
+                        <div className="absolute inset-x-0 bottom-0 bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+                            <div>
+                                <div className="flex flex-col justify-between items-start">
+                                    <h1 className="text-white w-[100%] text-[13px] font-bold whitespace-nowrap overflow-hidden overflow-ellipsis">
+                                        {element.title || element.original_name}
+                                    </h1>
+                                    <div className='flex flex-row justify-between w-full items-center'>
+                                        <div className="flex items-center text-[10px] w-full my-1 space-x-1">
+                                            <span className="text-yellow-400 text-xs">★</span>
+                                            <span className="text-white font-bold">{element.vote_average.toFixed(1)}</span>
+                                            <span className="text-white font-bold">|</span>
+                                            <span className="text-white font-bold">HD</span>
+                                            <span className="text-white font-bold">•</span>
+                                            <span className="text-white font-bold">{element.media_type === "movie" ? "Movie" : "TV"}</span>
+                                        </div>
+                                        <div className="text-gray-100 text-[10px]">
+                                            {element.release_date?.substring(0, 4) || element.first_air_date?.substring(0, 4)}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-rows-[0fr] transition-all group-hover:grid-rows-[1fr]">
+                                    <p className="overflow-hidden text-white/70 opacity-0 transition duration-500 group-hover:opacity-100 text-white text-sm text-[10px]">
+                                        {element.overview.substring(0, 200) + "..."}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="absolute opacity-0 xl:group-hover:opacity-100 flex top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-20 smoothie">
-                      <span class=" p-[.6rem] hover:brightness-90 bg-[#00c1db] rounded-full flex items-center justify-center smoothie">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="#000000d5" stroke="#000000d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play">
-                          <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                        </svg>
-                      </span>
-                    </div>
-                    <div class="flex opacity-1 lg:group-hover:opacity-100 p-[.35rem] pb-2 tracking-wide flex-col gap-1 justify-end w-full h-full bg-gradient-to-t z-10 from-[#000000d0] absolute top-0 bottom-0 left-0 right-0 smoothie transition-all ease-in duration-300">
-                      <div class="flex md:items-center justify-center gap-1 flex-wrasp text-xs 2xl:text-sm text-[#d8d8d8] font-normal tracking-wide "><span>{element.first_air_date.substring(0,4)}</span>•<span class="whitespace-nowrap"><span class="uppercase">{element.original_language}</span></span>•<span>HD</span></div>
-                      <div class="line-clamp-2 text-center text-sm xl:text-base font-medium !leading-tight text-white tracking-wider">{element.original_name}</div>
-                    </div>
-                  </div>
                 </a>)
                   })
                 }

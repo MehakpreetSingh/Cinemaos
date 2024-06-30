@@ -80,7 +80,7 @@ export default function Example() {
       <Disclosure
         as="nav"
         className={`fixed w-full z-50 transition-all duration-300 ${
-          isScrolled ? "bg-black" : "bg-transparent"
+          isScrolled ? "bg-black/60" : "bg-transparent"
         }`}
       >
         {({ open }) => (
@@ -174,14 +174,14 @@ export default function Example() {
                       <Menu.Items className="origin-top-right text-white absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-black ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           {({ active }) => (
-                            <Link to="user">
+                            <Link to="/watchlist">
                               <h1
                                 className={classNames(
                                   active ? "bg-gray-800" : "",
                                   "block px-4 py-2 text-sm text-white"
                                 )}
                               >
-                                Your Profile
+                                Your Content
                               </h1>
                             </Link>
                           )}
@@ -189,13 +189,13 @@ export default function Example() {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="?"
+                              href="/profile"
                               className={classNames(
                                 active ? "bg-gray-800" : "",
                                 "block px-4 py-2 text-sm text-white"
                               )}
                             >
-                              Settings
+                              Profile
                             </a>
                           )}
                         </Menu.Item>
