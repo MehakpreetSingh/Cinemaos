@@ -48,10 +48,24 @@ const TrendingMovie = ({ movies }) => {
         </div>
         What's Trending Today
       </div>
-      <div className="pl-3 lg:pl-4 w-full relative overflow-hidden">
+      <div className="px-3 lg:px-4 w-full relative overflow-hidden">
         <Swiper
           spaceBetween={10}
-          slidesPerView="auto"
+          breakpoints={{
+            320: {
+                slidesPerView: 1,
+                spaceBetween: 10
+            },
+            480: {
+                slidesPerView: 2,
+                spaceBetween: 10
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 10
+            },
+
+        }}
           freeMode={true}
           className="xl:rounded-3xl"
           modules={[FreeMode, Navigation, Pagination, Mousewheel, Scrollbar, A11y, EffectFade, Keyboard]}
@@ -62,8 +76,7 @@ const TrendingMovie = ({ movies }) => {
           {movies?.slice(0, 50).map((movie) => (
             <SwiperSlide
               key={movie.id}
-              className="aspect-[2/1.15] h-full rounded-2xl lg:rounded-3xl overflow-hidden transition-transform duration-300 ease-linear"
-              style={{ width: '347.714px' }}
+              className="aspect-[2/1.15] h-full rounded-2xl overflow-hidden"
             >
               <Link to={`/movie/${movie.id}`}
                 className="group relative w-full flex-1 overflow-hidden rounded-2xl transition-all  bg-white">
