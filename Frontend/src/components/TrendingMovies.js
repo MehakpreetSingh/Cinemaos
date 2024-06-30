@@ -78,7 +78,7 @@ const TrendingMovie = ({ movies }) => {
                 visibleByDefault={true}
                   effect='blur'
                 />
-                <div className="absolute  inset-x-0 bottom-0 bg-white/20 backdrop-blur-sm rounded-2xl p-2 pl-4">
+                <div className="absolute w-full inset-x-0 bottom-0 bg-white/20 backdrop-blur-sm rounded-2xl p-2 pl-4">
                   <div>
                     <div className='flex flex-row items-center justify-between'>
                       <div className="flex flex-col justify-between w-full items-start">
