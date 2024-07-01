@@ -63,7 +63,7 @@ const TrailersBlock = () => {
                 </div>
                 <div className="w-full sm:hidden max-w-xs mx-auto">
                 <select
-                    className="focus:outline-none outline-none rounded-md bg-white/70 backdrop-blur-md px-2 py-1 border border-gray-300 shadow-md hover:bg-white/90 transition-all duration-300"
+                    className="focus:outline-none outline-none rounded-md bg-white bg-opacity-30 backdrop-blur-md px-2 py-1 border border-gray-300 shadow-md hover:bg-white/90 transition-all duration-300"
                     value={selectedOption}
                     onChange={(event)=>handleOptionChange(event.target.value)}
                 >
