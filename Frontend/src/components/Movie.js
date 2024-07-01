@@ -9,10 +9,10 @@ import Spinner from './Spinner';
 
 const Movie = (props) => {
     const [movies, setMovies] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(2);
     const [totalpages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [url, seturl] = useState(`https://api.themoviedb.org/3/movie/popular?api_key=748d8f1491929887f482d9767de12ea8&language=en-US&page=1`)
+    const [url, seturl] = useState(`https://api.themoviedb.org/3/movie/popular?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`)
     useEffect(() => {
         // const getData= async() => {
         //     const url = `${host}movies/allposts` ;
@@ -64,7 +64,9 @@ const Movie = (props) => {
         }
         let response = await fetch(url2);
         let data = await response.json();
-        setMovies(movies.concat(data.results));
+        const appendedData = movies.concat(data.results);
+        console.log(appendedData);
+        setMovies(appendedData);
         setPage(page + 1);
     };
 
