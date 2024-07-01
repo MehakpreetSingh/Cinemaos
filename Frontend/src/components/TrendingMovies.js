@@ -67,7 +67,7 @@ const TrendingMovie = ({ movies }) => {
 
         }}
           freeMode={true}
-          className="xl:rounded-3xl"
+          className=""
           modules={[FreeMode, Navigation, Pagination, Mousewheel, Scrollbar, A11y, EffectFade, Keyboard]}
           keyboard={true}
           pagination
@@ -76,22 +76,23 @@ const TrendingMovie = ({ movies }) => {
           {movies?.slice(0, 50).map((movie) => (
             <SwiperSlide
               key={movie.id}
-              className="aspect-[2/1.15] h-full rounded-2xl overflow-hidden"
+              className=""
             >
               <Link to={`/movie/${movie.id}`}
                 className="group relative w-full flex-1 overflow-hidden rounded-2xl transition-all  bg-white">
+                  <div className="relative w-full flex-1 overflow-hidden rounded-2xl bg-black transition-all">
                 <LazyLoadImage
                   src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
                   alt=""
-                  wrapperClassName="w-full h-full object-cover"
+                  wrapperClassName="w-full h-full object-cover rounded-2xl"
                   wrapperProps={{
                     // If you need to, you can tweak the effect transition using the wrapper style.
-                    style: {height: "100%"},
+                    style: {height: "100%", borderRadius: "1rem", },
                 }}
                 visibleByDefault={true}
                   effect='blur'
                 />
-                <div className="absolute w-full inset-x-0 bottom-0 bg-white/20 backdrop-blur-sm rounded-2xl p-2 pl-4">
+                <div className="absolute w-[100vx] inset-x-0 bottom-0 bg-white/20 backdrop-blur-sm rounded-2xl p-2 pl-4">
                   <div>
                     <div className='flex flex-row items-center justify-between'>
                       <div className="flex flex-col justify-between w-full items-start">
@@ -126,6 +127,7 @@ const TrendingMovie = ({ movies }) => {
                       </p>
                     </div>
                   </div>
+                </div>
                 </div>
               </Link>
             </SwiperSlide>
