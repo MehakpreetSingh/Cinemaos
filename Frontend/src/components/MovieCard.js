@@ -38,6 +38,8 @@ const MovieCard = (props) => {
                             }}
                             visibleByDefault={true}
                         />
+                        <div className="absolute opacity-0 group-hover:opacity-100 transition-all duration-300 inset-0 bg-gradient-to-t from-black to-[rgba(0,0,0,0.40)]"></div>
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.40)]"></div>
                         <div className="absolute inset-x-0  bottom-0 bg-white/20 backdrop-blur-sm rounded-2xl p-4">
                             <div>
                                 <div className="flex flex-col justify-between items-start">

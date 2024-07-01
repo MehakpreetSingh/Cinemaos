@@ -79,7 +79,6 @@ const WatchMovie = () => {
 
         const getMovieData = async (req, res) => {
             const url = `https://api.themoviedb.org/3/movie/${id}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
-            console.log(url);
             const response = await fetch(url);
             const data = await response.json();
             addToContinueWatching(data);
@@ -191,7 +190,6 @@ const WatchMovie = () => {
                             </div>
                             <div class="flex flex-col lg:flex-row w-full sm:px-2 flex-wrap">
                                 <div class="w-full max-w-7xl xl:rounded-lg relative aspect-[16/11] sm:!aspect-video bg-white/5 mx-auto shadow-xl overflow-hidden"><iframe src={`https://vidsrc.pro/embed/movie/${id}?&amp;theme=00c1db`} width="100%" allowfullscreen="" height="100%" id="video-player" referrerpolicy="origin"
-                                sandbox= 'allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-storage-access-by-user-activation  allow-top-navigation allow-scripts allow-navigation'
                                  class="size-full object-contain object-center" __idm_id__="7979012"></iframe></div>
                             </div>
                         </div>

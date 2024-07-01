@@ -68,7 +68,6 @@ const SignIn = () => {
           continueWatching: [],
           wishlist: [],
         });
-        console.log("Document written with ID: ", user.uid);
       } catch (e) {
         console.error("Error adding document: ", e);
       }
@@ -90,7 +89,6 @@ const SignIn = () => {
       }
       setLoading(false);
       navigate("/home");
-      console.log(user);
     } catch (error) {
       setError(error.message);
     }
@@ -132,12 +130,10 @@ const SignIn = () => {
       );
 
       const user = userCredential.user;
-      console.log("User logged in:", user);
 
       // Handle remember me
       if (rememberMe) {
         localStorage.setItem("user", JSON.stringify(user)); // Or store just the token
-        console.log("localStorage");
       } else {
         sessionStorage.setItem("user", JSON.stringify(user)); // Or store just the token
       }

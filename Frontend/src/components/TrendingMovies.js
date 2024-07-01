@@ -78,7 +78,9 @@ const TrendingMovie = ({ movies }) => {
               key={movie.id}
               className=""
             >
-              <Link to={`/movie/${movie.id}`}
+              <Link to={movie.media_type === 'movie'
+                    ? `/movie/${movie.id}`
+                    : `/tv/${movie.id}`}
                 className="group relative w-full flex-1 overflow-hidden rounded-2xl transition-all  bg-white">
                   <div className="relative w-full flex-1 overflow-hidden rounded-2xl bg-black transition-all">
                 <LazyLoadImage
@@ -92,6 +94,8 @@ const TrendingMovie = ({ movies }) => {
                 visibleByDefault={true}
                   effect='blur'
                 />
+                <div className="absolute opacity-0 group-hover:opacity-100 transition-all duration-300 inset-0 bg-gradient-to-t from-black to-[rgba(0,0,0,0.40)]"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.40)]"></div>
                 <div className="absolute w-[100vx] inset-x-0 bottom-0 bg-white/20 backdrop-blur-sm rounded-2xl p-2 pl-4">
                   <div>
                     <div className='flex flex-row items-center justify-between'>
@@ -100,7 +104,7 @@ const TrendingMovie = ({ movies }) => {
                           <h1 className="text-white w-[100%] text-[13px] font-bold ">
                             {movie.title || movie.original_name}
                           </h1>
-                          <Link to={`/movie/watch/${movie.id}`} className='text-white px-2 opacity-0 group-hover:opacity-100 transform-all duration-300 hover:scale-[1.2] rounded-full'>
+                          <Link to={movie.media_type === movie ? `/movie/watch/${movie.id}` : `/tv/${movie.id}/1/1`} className='text-white px-2 opacity-0 group-hover:opacity-100 transform-all duration-300 hover:scale-[1.2] rounded-full'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill='white' width="24" height="24" viewBox="0 0 24 24"><path d="M0 21v-18l15 9-15 9zm11-17v3.268l7.888 4.732-7.888 4.732v3.268l13-8-13-8z" /></svg>
                           </Link>
                         </div>

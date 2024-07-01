@@ -24,7 +24,6 @@ const SearchTab = () => {
             setMovies(data.results);
             setTotalPages(data.total_pages);
             setPage(page + 1) ;
-            console.log(data.results)
         }
         getData() ;
         var x = document.getElementById("loading-bar");
@@ -51,7 +50,6 @@ const SearchTab = () => {
         let data = await response.json();
         setMovies(movies.concat(data.results));
         setPage(page + 1);
-        console.log(data.results)
     };
     return (
             <div className='relative h-screen' >

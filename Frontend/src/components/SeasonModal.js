@@ -73,17 +73,14 @@ const SeasonModal = () => {
         };
         const getSeasonData = async (req, res) => {
             const url = `https://api.themoviedb.org/3/tv/${id}/season/${S}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
-            console.log(url);
             const response = await fetch(url);
             const data = await response.json();
-            console.log(data);
             setVideoUrl(`https://vidsrc.pro/embed/tv/${id}/${S}/${E}?&amp;theme=00c1db`)
             setSelectedEpisode(data.episodes[E - 1])
             setSeasonData(data);
         }
         const getShowData = async (req, res) => {
             const url = `https://api.themoviedb.org/3/tv/${id}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
-            console.log(url);
             const response = await fetch(url);
             const data = await response.json();
             addToContinueWatching(data);
@@ -178,7 +175,7 @@ const SeasonModal = () => {
 
                     </div>
                     <div class="w-full lg:w-[70%] xl:w-[75%] gap-1 flex flex-col shadow-md overflow-hidden lg:rounded-r-lg">
-                        <div class="w-full aspect-[16/11] sm:!aspect-video relative bg-white/5 overflow-hidden"><iframe title={id} src={videoUrl} width="100%" allowfullscreen="" height="100%" id="video-player" sandbox= 'allow-forms allow-pointer-lock allow-same-origin allow-downloads allow-top-navigation-by-user-activation allow-storage-access-by-user-activation  allow-top-navigation allow-scripts allow-navigation' referrerpolicy="origin" class="size-full object-contain object-center"></iframe></div>
+                        <div class="w-full aspect-[16/11] sm:!aspect-video relative bg-white/5 overflow-hidden"><iframe title={id} src={videoUrl} width="100%" allowfullscreen="" height="100%" id="video-player" referrerpolicy="origin" class="size-full object-contain object-center"></iframe></div>
                         <div class="bg-white/5 flex-grow w-full">
                             <div class="w-full p-2 py-3">
                                 <div class="w-full no-scrollbar-atAll relative rounded-xl overflow-hidden ">

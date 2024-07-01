@@ -27,7 +27,7 @@ function App() {
           <Route exact path="/watchlist" element={<ProtectedRoute><Userview/></ProtectedRoute>}/>
           <Route exact path="/movie/" element={<ProtectedRoute><Movie key="popular" category="popular"/></ProtectedRoute>}/> 
           <Route exact path="/movie/trending" element={<ProtectedRoute><Movie key="trending" category="trending"/></ProtectedRoute>}/> 
-          <Route exact path="/movie/:id" element={<ProtectedRoute><HeroMovie/></ProtectedRoute>}/>
+          <Route exact path="/movie/:id" element={<ProtectedRoute><HeroMovie key={`${useParams().id}`}/></ProtectedRoute>}/>
           <Route exact path="/movie/watch/:id" element={<ProtectedRoute><WatchMovie /></ProtectedRoute>}/>
           <Route exact path="/tv" element={<ProtectedRoute><Tv key="popular" category="popular"/></ProtectedRoute>}/>
           <Route exact path="/tv/trending" element={<ProtectedRoute><Tv key="trending" category="trending"/></ProtectedRoute>}/>

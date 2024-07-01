@@ -14,6 +14,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+import TrailersBlock from './TrailersBlock';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -61,7 +62,8 @@ const Home = () => {
                     `https://api.themoviedb.org/3/movie/popular?api_key=748d8f1491929887f482d9767de12ea8`
                 );
                 const data = await response.json();
-                setFeaturedMovies(data.results.slice(0, 6));
+                console.log(data.results.slice(0, 10));
+                setFeaturedMovies(data.results.slice(0, 10));
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -142,7 +144,12 @@ const Home = () => {
     }
 
     return (
-        <div className='relative h-screen' style={{ scrollbarWidth: "none" }} >
+        <div className='relative h-screen' style={{
+            scrollbarColor: "rgb(255 255 255 / 0.5) transparent",
+            scrollbarWidth: "thin",
+            msScrollbarArrowColor: "transparent",
+            scrollBehavior: "smooth",
+          }} >
             <div className='h-[2px]  w-full z-[99999999] absolute '>
                 <div id="loading-bar" className='transition-all w-[0%] h-full bg-red-800'>
                 </div>
@@ -165,6 +172,10 @@ const Home = () => {
                 modules={[FreeMode, Navigation, Pagination, Mousewheel, Scrollbar, A11y, EffectFade, Keyboard]}
                 keyboard={true}
                 pagination
+                style={{
+                    '--swiper-navigation-color': '#fff',
+                    '--swiper-pagination-color': '#fff',
+                  }}
                 className="mySwiper"
             >
                 {featuredMovies?.map((featuredMovie) => (
@@ -191,8 +202,8 @@ const Home = () => {
                                     />
                                 </span>
                             </div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[rgba(0,0,0,0.30)] to-[rgba(0,0,0,0.78)]"></div>
-                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[rgba(0,0,0,0.40)] to-[rgba(0,0,0,0.90)]"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-transparent  to-[rgba(0,0,0,0.30)]"></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[rgba(0,0,0,0.30)] to-[rgba(0,0,0,0.98)]"></div>
                             {/* <div className="absolute bottom-0 left-0 w-full h-full">
                                 <div className="bg-gradient-to-t from-black/50 to-transparent h-[100%]"></div>
                             </div> */}
@@ -248,7 +259,9 @@ const Home = () => {
 
             {!loading && <TrendingMovies trendingMovies={trendingMovies} />}
 
-            {!loading && <div className='bg-[#000000]/90 md:mt-28 xl:mt-0  mx-auto  pb-12 w-[100%] xl:max-w-[92%]'>
+            {!loading && <TrailersBlock />}
+
+            {!loading && <div className='bg-[#000000]/90 md:mt-20 xl:mt-0  mx-auto  pb-12 w-[100%] xl:max-w-[92%]'>
 
                 <h1 className='mt-10 mx-4 z-50 text-white font-medium md:text-xl'>Trending Movies</h1>
                 <div className='mx-2 pt-2'>
@@ -259,6 +272,10 @@ const Home = () => {
                         keyboard={true}
                         height={400}
                         draggable={true}
+                        style={{
+                            '--swiper-navigation-color': '#fff',
+                            '--swiper-pagination-color': '#fff',
+                          }}
                         className="mySwiper px-2 "
                         breakpoints={{
                             320: {
@@ -316,6 +333,10 @@ const Home = () => {
                         grabCursor={true}
                         modules={[FreeMode, Navigation, Pagination, Scrollbar, A11y, EffectFade]}
                         draggable={true}
+                        style={{
+                            '--swiper-navigation-color': '#fff',
+                            '--swiper-pagination-color': '#fff',
+                          }}
                         className="mySwiper px-2"
                         onReachEnd={() => {
                             if (tvpage < totaltvpages) {

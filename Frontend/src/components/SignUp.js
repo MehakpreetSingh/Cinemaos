@@ -71,7 +71,6 @@ const SignUp = () => {
                     continueWatching: [],
                     wishlist: [],
                 });
-                console.log("Document written with ID: ", user.uid);
             } catch (e) {
                 console.error("Error adding document: ", e);
             }
@@ -94,7 +93,6 @@ const SignUp = () => {
             }
             setLoading(false);
             navigate("/home");
-            console.log(user);
           } catch (error) {
             setError(error.message);
           }
