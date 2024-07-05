@@ -57,7 +57,9 @@ const SearchTab = () => {
                     <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
                     </div>
                 </div>
-                <InfiniteScroll
+                {loading && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
+            {loading && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
+                {!loading && <InfiniteScroll
                 dataLength={movies?.length}
                 next={fetchMoreData}
                 hasMore={page !== totalpages}
@@ -78,7 +80,7 @@ const SearchTab = () => {
                         })}
                     </div>}
                 </div>
-                </InfiniteScroll>
+                </InfiniteScroll>}
             </div>
     )
 }

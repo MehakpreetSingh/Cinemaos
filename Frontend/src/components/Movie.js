@@ -71,13 +71,13 @@ const Movie = (props) => {
     };
 
     return (
-        <div className=' relative h-screen ' style={{ scrollbarWidth: "none" }}>
+        <div className=' relative h-screen ' >
             <div className='h-[2px] w-full z-[99999999] absolute'>
                 <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
                 </div>
             </div>
-            
-            <InfiniteScroll
+            {loading && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
+            {!loading && <InfiniteScroll
                 dataLength={movies?.length}
                 next={fetchMoreData}
                 hasMore={page <= totalpages}
@@ -91,7 +91,7 @@ const Movie = (props) => {
                         })}
                     </div>}
                 </div>
-            </InfiniteScroll>
+            </InfiniteScroll>}
         </div>
     )
 }

@@ -102,7 +102,7 @@ const TrendingMovie = ({ movies }) => {
                       <div className="flex flex-col justify-between w-full items-start">
                         <div className='flex items-center justify-between w-full'>
                           <h1 className="text-white w-[100%] text-[13px] font-bold ">
-                            {movie.title || movie.original_name}
+                            {movie.title || movie.name || movie.original_name}
                           </h1>
                           <Link to={movie.media_type === movie ? `/movie/watch/${movie.id}` : `/tv/${movie.id}/1/1`} className='text-white px-2 opacity-0 group-hover:opacity-100 transform-all duration-300 hover:scale-[1.2] rounded-full'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill='white' width="24" height="24" viewBox="0 0 24 24"><path d="M0 21v-18l15 9-15 9zm11-17v3.268l7.888 4.732-7.888 4.732v3.268l13-8-13-8z" /></svg>

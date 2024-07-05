@@ -15,6 +15,9 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 import TrailersBlock from './TrailersBlock';
+import Spinner from './Spinner';
+import TopRated from './TopRated';
+import MovieHoverEffect from './MovieHoverEffect';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -40,6 +43,7 @@ const Home = () => {
     };
 
     useEffect(() => {
+        setLoading(true)
         const gettmdbData = async () => {
             const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=748d8f1491929887f482d9767de12ea8`;
             const response = await fetch(url);
@@ -62,7 +66,6 @@ const Home = () => {
                     `https://api.themoviedb.org/3/movie/popular?api_key=748d8f1491929887f482d9767de12ea8`
                 );
                 const data = await response.json();
-                console.log(data.results.slice(0, 10));
                 setFeaturedMovies(data.results.slice(0, 10));
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -144,12 +147,7 @@ const Home = () => {
     }
 
     return (
-        <div className='relative h-screen' style={{
-            scrollbarColor: "rgb(255 255 255 / 0.5) transparent",
-            scrollbarWidth: "thin",
-            msScrollbarArrowColor: "transparent",
-            scrollBehavior: "smooth",
-          }} >
+        <div className='relative h-screen' >
             <div className='h-[2px]  w-full z-[99999999] absolute '>
                 <div id="loading-bar" className='transition-all w-[0%] h-full bg-red-800'>
                 </div>
@@ -168,7 +166,8 @@ const Home = () => {
                     
                 </div>
             </form> */}
-            <Swiper
+            {loading && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
+            {!loading && <Swiper
                 modules={[FreeMode, Navigation, Pagination, Mousewheel, Scrollbar, A11y, EffectFade, Keyboard]}
                 keyboard={true}
                 pagination
@@ -255,11 +254,11 @@ const Home = () => {
                         </div>
                     </SwiperSlide>
                 ))}
-            </Swiper>
+            </Swiper>}
 
             {!loading && <TrendingMovies trendingMovies={trendingMovies} />}
 
-            {!loading && <TrailersBlock />}
+            
 
             {!loading && <div className='bg-[#000000]/90 md:mt-20 xl:mt-0  mx-auto  pb-12 w-[100%] xl:max-w-[92%]'>
 
@@ -320,7 +319,7 @@ const Home = () => {
                     </Swiper>
                 </div>
                 <div className='w-full flex justify-end'>
-                    <Link to="/movie/trending" className="m-4 place-content-end text-white bg-white/50 backdrop-blur-md hover:brightness-[.8] font-medium rounded-lg md:text-sm px-3 text-[12px] py-1 md:px-5 md:py-2.5 text-center inline-flex items-center">
+                    <Link to="/movie/trending" className="m-4 place-content-end text-white bg-[#e6e5eb33] backdrop-blur-md hover:bg-white/10 font-medium rounded-lg md:text-sm px-3 text-[12px] py-1 md:px-5 md:py-2.5 text-center inline-flex items-center">
                         Show More
                         <svg className="w-3 h-3 md:w-5 md:h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                     </Link>
@@ -379,11 +378,13 @@ const Home = () => {
                     </Swiper>
                 </div>
                 <div className='w-full flex justify-end'>
-                    <Link to="/tv/trending" className="m-4 place-content-end text-white font-medium rounded-lg md:text-sm px-3 text-6[12px] py-1 md:px-5 md:py-2.5 text-center inline-flex items-center bg-white/50 backdrop-blur-md hover:brightness-[.8] ">
+                    <Link to="/tv/trending" className="m-4 place-content-end text-white bg-[#e6e5eb33] backdrop-blur-md hover:bg-white/10 font-medium rounded-lg md:text-sm px-3 text-[12px] py-1 md:px-5 md:py-2.5 text-center inline-flex items-center">
                         Show More
                         <svg className="w-3 h-3 md:w-5 md:h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                     </Link>
                 </div>
+                {!loading && <TopRated/>}
+                
             </div>}
         </div>
     )

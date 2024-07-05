@@ -21,6 +21,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { doc, updateDoc, getDoc,  } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
+import Spinner from "./Spinner";
 
 
 const HeroTv = () => {
@@ -199,6 +200,7 @@ const HeroTv = () => {
           className="transition-all w-[0%] h-[2px] bg-red-800"
         ></div>
       </div>
+      {loading && <div className="h-full w-full flex justify-center items-center"><Spinner/></div>}
       {!loading && (
         <div className="relative flex flex-col gap-9 md:gap-16 h-screen  ">
           <div className="fixed bottom-0 left-0 w-full h-screen">

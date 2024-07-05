@@ -13,10 +13,11 @@ const TrailersBlock = () => {
     const latestMovies = "https://api.themoviedb.org/3/movie/top_rated?api_key=748d8f1491929887f482d9767de12ea8&language=en-US";
     const nowplaying = "https://api.themoviedb.org/3/movie/now_playing?api_key=748d8f1491929887f482d9767de12ea8&language=en-US";
     const upcoming = "https://api.themoviedb.org/3/movie/upcoming?api_key=748d8f1491929887f482d9767de12ea8&language=en-US";
-
+    const [divImage, setDivImage] = useState('url(https://image.tmdb.org/t/p/original/6MKr3KgOLmzOP6MSuZERO41Lpkt.jpg)');
     useEffect(() => {
         axios.get(latestMovies)
             .then((res) => {
+                setDivImage(`url(https://image.tmdb.org/t/p/original${res.data.results[0].backdrop_path})`)
                 setTrailers(res.data.results);
                 setlatestTrailers(res.data.results)
             })
@@ -25,7 +26,6 @@ const TrailersBlock = () => {
             })
         axios.get(nowplaying)
             .then((res) => {
-                
                 setNowplayingTrailers(res.data.results)
             }).catch((err) => {
                 console.log(err)
@@ -42,6 +42,7 @@ const TrailersBlock = () => {
     const handleOptionChange = (type) => {
         setSelectedOption(type);
     };
+
     const gettrailers = () => {
         if (selectedOption === 'popular') {
             return latesttrailers;
@@ -53,29 +54,30 @@ const TrailersBlock = () => {
     }
 
     return (
-        <div className='flex flex-col bg-white/10 backdrop-blur-md w-full transition-all ease-in duration-500 px-4 pt-6 mt-4 h-[350px] md:px-16 justify-center overflow-hidden '>
-            <div className='flex justify-end items-center space-x-6 w-full '>
-                <h1 className='text-2xl w-full flex text-white font-bold'>Latest Trailers</h1>
+        <div className='flex relative flex-col w-full transition-all ease-in duration-500 pt-6 mt-4 justify-center overflow-hidden '>
+            <div className="absolute inset-0" ><LazyLoadImage/></div>
+            <div className='flex justify-end items-center space-x-6 w-full ' >
+                <h1 className='text-2xl w-full flex px-4  text-white font-bold'>Latest Trailers</h1>
                 <div className='focus:outline-none outline-none rounded-xl text-white bg-transparent backdrop-blur-md  border border-gray-300 shadow-md space-x-2 transition-all duration-300 hidden sm:flex flex-row'>
-                    <button onClick={() => handleOptionChange("popular")}  className={selectedOption !== 'popular' ? `py-1 px-4 rounded-xl w-max hover:bg-white/90 hover:text-black transition-all cursor-pointer duration-300` : `py-1 px-4 w-max cursor-pointer rounded-xl hover:bg-white/90 bg-white/90 text-black hover:text-black transition-all duration-300`} value='popular'>Top Rated</button>
+                    <button onClick={() => handleOptionChange("popular")} className={selectedOption !== 'popular' ? `py-1 px-4 rounded-xl w-max hover:bg-white/90 hover:text-black transition-all cursor-pointer duration-300` : `py-1 px-4 w-max cursor-pointer rounded-xl hover:bg-white/90 bg-white/90 text-black hover:text-black transition-all duration-300`} value='popular'>Top Rated</button>
                     <button onClick={() => handleOptionChange("now_playing")} className={selectedOption !== 'now_playing' ? `py-1 px-4 rounded-xl w-max hover:bg-white/90 hover:text-black transition-all cursor-pointer duration-300` : `py-1 px-4 w-max cursor-pointer rounded-xl hover:bg-white/90 bg-white/90 text-black hover:text-black transition-all duration-300`} value='now_playing'>Now Playing</button>
                     <button onClick={() => handleOptionChange("upcoming")} className={selectedOption !== 'upcoming' ? `py-1 px-4 rounded-xl w-max hover:bg-white/90 hover:text-black transition-all cursor-pointer duration-300` : `py-1 px-4 w-max cursor-pointer rounded-xl hover:bg-white/90 bg-white/90 text-black hover:text-black transition-all duration-300`} value='upcoming'>Upcoming</button>
                 </div>
                 <div className="w-full sm:hidden max-w-xs mx-auto">
-                <select
-                    className="focus:outline-none outline-none rounded-md bg-white bg-opacity-30 backdrop-blur-md px-2 py-1 border border-gray-300 shadow-md hover:bg-white/90 transition-all duration-300"
-                    value={selectedOption}
-                    onChange={(event)=>handleOptionChange(event.target.value)}
-                >
-                    <option onChange={() => handleOptionChange("popular")} className="text-xs" value="popular">Top Rated</option>
-                    <option onChange={() => handleOptionChange("now_playing")} className="text-xs" value="now_playing">Now Playing</option>
-                    <option onChange={() => handleOptionChange("upcoming")} className="text-xs" value="upcoming">Upcoming</option>
-                </select>
+                    <select
+                        className="focus:outline-none outline-none rounded-md bg-white bg-opacity-30 backdrop-blur-md px-2 py-1 border border-gray-300 shadow-md hover:bg-white/90 transition-all duration-300"
+                        value={selectedOption}
+                        onChange={(event) => handleOptionChange(event.target.value)}
+                    >
+                        <option onChange={() => handleOptionChange("popular")} className="text-xs" value="popular">Top Rated</option>
+                        <option onChange={() => handleOptionChange("now_playing")} className="text-xs" value="now_playing">Now Playing</option>
+                        <option onChange={() => handleOptionChange("upcoming")} className="text-xs" value="upcoming">Upcoming</option>
+                    </select>
+                </div>
             </div>
-            </div>
-            
+
             <div
-                className="flex gap-3 py-5 overflow-x-auto w-[95vx] "
+                className="flex gap-3 py-5 h-[50vh] sm:h-[35vh] md:h-[60vh] overflow-x-auto"
                 style={{
                     overflowX: "auto",
                     WebkitOverflowScrolling: "touch",
@@ -85,14 +87,17 @@ const TrailersBlock = () => {
                     msScrollbarArrowColor: "transparent",
                     scrollBehavior: "smooth",
                     msScrollLimitXMin: '10',
+                    backgroundImage:`url(${divImage})`,
+
                 }}
             >
+                <main class="page-content">
                 {gettrailers()?.map(
                     (actor) =>
                         actor.id && (
-                            <TrailersCard  key={actor.id} actor={actor} />
-                        )
+                    <TrailersCard  key={actor.id} actor={actor} />)
                 )}
+                </main>
             </div>
         </div>
     );
