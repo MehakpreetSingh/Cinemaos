@@ -8,7 +8,7 @@ import Spinner from './Spinner';
 
 const Tv = (props) => {
     const host = `https://cinemaos-backend.onrender.com/`;
-    const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState(null);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [totalpages, setTotalPages] = useState(0);
@@ -75,8 +75,8 @@ const Tv = (props) => {
                 <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
                 </div>
             </div>
-            {loading && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
-            {!loading && <InfiniteScroll
+            {loading && (movies===null) &&<div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
+            {!loading && movies && <InfiniteScroll
                 dataLength={movies?.length}
                 next={fetchMoreData}
                 hasMore={page <= totalpages}

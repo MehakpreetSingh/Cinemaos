@@ -23,6 +23,7 @@ import { db } from '../Firebase/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MovieCard from "./MovieCard";
+import Spinner from "./Spinner";
 
 const HeroMovie = () => {
   const [info, setInfo] = useState(null);
@@ -176,7 +177,7 @@ const HeroMovie = () => {
   };
 
   return (
-    <>
+    <div className="relative h-screen">
       <div className="h-[2px] w-full z-50 absolute">
         <div
           id="loading-bar"
@@ -184,6 +185,7 @@ const HeroMovie = () => {
         ></div>
       </div>
       <ToastContainer />
+      {!info && loading && <div className="flex h-full w-full justify-center items-center"><Spinner/></div>}
       {info && <div>
         {!loading && (
           <div
@@ -484,7 +486,7 @@ const HeroMovie = () => {
           </div>
         )}
       </div>}
-    </>
+    </div>
   );
 };
 

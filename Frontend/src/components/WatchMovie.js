@@ -4,9 +4,10 @@ import ReactPlayer from 'react-player'
 import { useParams } from 'react-router-dom';
 import { doc, updateDoc, getDoc,  } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
+import Spinner from './Spinner';
 
 const WatchMovie = () => {
-    const [movieData, setMovieData] = useState({});
+    const [movieData, setMovieData] = useState(null);
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
 
@@ -160,11 +161,14 @@ const WatchMovie = () => {
     //     }
     // }
     return (
-        <>
+        <div className='relative h-screen'>
             <div className='h-[2px] w-full z-[99999999] absolute top-[63px]'>
                 <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
                 </div>
             </div>
+            {loading && (movieData===null) && <div className='w-full h-full flex justify-center items-center '>
+                <Spinner/>
+                </div>}
             {/* !loading &&
                 <div className='w-screen h-screen flex justify-center items-center '>
 
@@ -180,8 +184,9 @@ const WatchMovie = () => {
             {/* </div> */}
             {/* </div> */}
             {
-                !loading &&
+                !loading && movieData && 
                 <div class="min-h-screen overflow-auto">
+
                     <div class="fixed top-0 left-0 blur-3xl h-screen w-full bg-white/5"><span class=" lazy-load-image-background blur lazy-load-image-loaded" ><LazyLoadImage effect="blur" src={`https://image.tmdb.org/t/p/w1280/${movieData?.backdrop_path}`} width="100%" height="100%" class="w-full h-full object-cover !opacity-40" /></span></div>
                     <div>
                         <div class="pt-16 lg:pb-8 xl:pb-14 w-full relative align-left overflow-hidden flex flex-wrap xl:flex-col">
@@ -241,7 +246,7 @@ const WatchMovie = () => {
                     </div>
                 </div>
             }
-        </>
+        </div>
     )
 }
 

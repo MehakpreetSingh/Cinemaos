@@ -11,7 +11,7 @@ import MovieCard from './MovieCard';
 
 const SearchTab = () => {
     const { query } = useParams();
-    const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState(null);
     const [page, setPage] = useState(1);
     const [totalpages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -57,8 +57,8 @@ const SearchTab = () => {
                     <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
                     </div>
                 </div>
-                {loading && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
-            {loading && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
+                {loading && (movies===null) && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
+            {loading &&  <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
                 {!loading && <InfiniteScroll
                 dataLength={movies?.length}
                 next={fetchMoreData}

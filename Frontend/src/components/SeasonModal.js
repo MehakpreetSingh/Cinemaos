@@ -6,11 +6,12 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { doc, updateDoc, getDoc, } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
+import Spinner from "./Spinner";
 
 const SeasonModal = () => {
     const { id, S, E } = useParams()
-    const [showData, setShowData] = useState({});
-    const [seasonData, setSeasonData] = useState({})
+    const [showData, setShowData] = useState(null);
+    const [seasonData, setSeasonData] = useState(null)
     const [selectedEpisode, setSelectedEpisode] = useState(null);
     const handleEpisodeClick = (episode) => {
         setSelectedEpisode(episode);
@@ -98,7 +99,8 @@ const SeasonModal = () => {
     return (
         <>
             <div className="fixed w-full h-full "><LazyLoadImage effect="blur" src={`https://image.tmdb.org/t/p/w1280/${seasonData?.poster_path}`} style={{ position: "fixed" }} width="100%" height="100%" className="fixed top-0 left-0 w-full h-full object-cover  blur-3xl !opacity-40" /></div>
-            {!loading && <div class="pt-16 lg:pb-16 w-full relative align-left overflow-hidden flex flex-wrap xl:flex-col">
+            {loading && (showData===null) && (seasonData===null) &&  <div className="flex w-screen h-screen justify-center items-center"><Spinner/></div>}
+            {!loading && showData && seasonData && <div class="pt-16 lg:pb-16 w-full relative align-left overflow-hidden flex flex-wrap xl:flex-col">
                 <div class="w-full max-w-7xl 2xl:max-w-[113rem] line-clamp-1 mx-auto text-gray-300 p-2 sm:p-3 flex justify-between">
                     <div class="!hidden sm:!flex gap-2 w-full"><Link class="hover:underline underline-offset-2 shrink-0 !line-clamp-1" to="/home">Home</Link><span>/</span><Link class="hover:underline capitalize underline-offset-2 shrink-0 !line-clamp-1" to="/tv">show</Link><span>/</span><Link class="text-[#00c1db] hover:underline underline-offset-2 !line-clamp-1" to={`/tv/${showData?.id}`}>{showData?.name || showData?.original_name}</Link></div>
                 </div>

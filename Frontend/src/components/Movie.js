@@ -8,7 +8,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from './Spinner';
 
 const Movie = (props) => {
-    const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState(null);
     const [page, setPage] = useState(2);
     const [totalpages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -76,8 +76,8 @@ const Movie = (props) => {
                 <div id="loading-bar" className='transition-all w-[0%] h-[2px] bg-red-800'>
                 </div>
             </div>
-            {loading && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
-            {!loading && <InfiniteScroll
+            {loading && (movies===null) && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
+            {!loading && movies && <InfiniteScroll
                 dataLength={movies?.length}
                 next={fetchMoreData}
                 hasMore={page <= totalpages}

@@ -1,4 +1,5 @@
 import React from 'react'
+import './moviehovereffect.scss'
 
 const MovieHoverEffect = (props) => {
     return (

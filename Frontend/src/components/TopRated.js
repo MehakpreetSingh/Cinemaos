@@ -14,8 +14,8 @@ import 'swiper/css/scrollbar';
 
 
 const TopRated = () => {
-    const [latesttrailers, setlatestTrailers] = useState([]);
-    const [latesttvtrailers, setlatestTvTrailers] = useState([]);
+    const [latesttrailers, setlatestTrailers] = useState(null);
+    const [latesttvtrailers, setlatestTvTrailers] = useState(null);
     const latestMovies = "https://api.themoviedb.org/3/movie/top_rated?api_key=748d8f1491929887f482d9767de12ea8&language=en-US";
     const latesttv = "https://api.themoviedb.org/3/tv/top_rated?api_key=748d8f1491929887f482d9767de12ea8&language=en-US";
     const [selectedTab, setSelectedTab] = useState('movie');
@@ -46,7 +46,7 @@ const TopRated = () => {
     }
     return (
         <div>
-            <div className="w-full mt-10 mx-auto xl:max-w-[100%]">
+            {latesttrailers && latesttvtrailers && <div className="w-full mt-10 mx-auto xl:max-w-[100%]">
                 <div className="w-full">
                     <div className="flex items-center gap-5 justify-between px-2 md:px-5 mb-4 md:mb-3">
                         <div className="flex flex-col gap-1 tracking-wide">
@@ -194,8 +194,7 @@ const TopRated = () => {
                         </Swiper>
                     </div>
                 </div>
-            </div>
-
+            </div>}
         </div>
     )
 }

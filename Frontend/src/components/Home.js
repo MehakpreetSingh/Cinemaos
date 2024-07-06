@@ -21,8 +21,8 @@ import MovieHoverEffect from './MovieHoverEffect';
 
 const Home = () => {
     const navigate = useNavigate();
-    const [movies, setMovies] = useState([]);
-    const [tvshows, setTvShows] = useState([]);
+    const [movies, setMovies] = useState(null);
+    const [tvshows, setTvShows] = useState(null);
     const [page, setPage] = useState(1);
     const [tvpage, setTvPage] = useState(1);
     const [totaltvpages, setTotalTvPages] = useState(0);
@@ -30,7 +30,6 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
     const [searchquery, setSearchQuery] = useState("");
     const [featuredMovies, setFeaturedMovies] = useState(null);
-    const [trendingMovies, setTrendingMovies] = useState(null);
     let user = '';
     const settings = {
         dots: true,
@@ -71,25 +70,12 @@ const Home = () => {
                 console.error('Error fetching data:', error);
             }
         };
-        const fetchTrendingData = async () => {
-            try {
-                const response = await fetch(
-                    `https://api.themoviedb.org/3/trending/all/day?api_key=748d8f1491929887f482d9767de12ea8`
-                );
-                const data = await response.json();
-                setTrendingMovies(data.results.slice(0, 6));
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
 
         if (localStorage.getItem('user') || sessionStorage.getItem('user')) {
             user = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user'));
             gettmdbData();
             gettmdbtvData();
             fetchPopularMovie();
-            fetchTrendingData();
             
             // getData() ;
             var x = document.getElementById("loading-bar");
@@ -153,21 +139,8 @@ const Home = () => {
                 </div>
             </div>
             <ToastContainer />
-            {/* <img className='absolute z-[999] transition-all duration-500 w-full h-96 object-cover  top-16' src={home} alt="" />
-            <form onSubmit={handleSubmit} className='absolute z-[999] mt-[350px] w-full  '>
-                <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
-                <div className="relative mx-4 md:w-4/6 md:mx-auto">
-                    <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    </div>
-                    <input type="search" id="default-search" className="block p-1.5 pl-10 md:p-3 md:pl-10 w-full text-base text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:shadow-lg outline-none" onChange={(e) => { setSearchQuery(e.target.value) }} placeholder="Search Movies & TV Shows" required />
-                    <Link to={`search/${searchquery}`}>
-                    <button disabled={searchquery.length ===0}  type="submit" onClick={handleSubmit} className="text-white absolute md:right-[7px] md:bottom-[7px] bottom-[7px] right-[7px] bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg md:text-sm text-[13px] px-2 py-[2px] md:px-4 md:py-2 ">Search</button></Link>
-                    
-                </div>
-            </form> */}
-            {loading && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
-            {!loading && <Swiper
+            {loading &&(movies===null) && (tvshows===null) && (featuredMovies===null) && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
+            {!loading && movies && tvshows && featuredMovies && <Swiper
                 modules={[FreeMode, Navigation, Pagination, Mousewheel, Scrollbar, A11y, EffectFade, Keyboard]}
                 keyboard={true}
                 pagination
@@ -176,20 +149,12 @@ const Home = () => {
                     '--swiper-pagination-color': '#fff',
                   }}
                 className="mySwiper"
-            >
+            >   
                 {featuredMovies?.map((featuredMovie) => (
                     <SwiperSlide key={featuredMovie.id}>
                         <div key={featuredMovie?.id} className="transition-all duration-200 bg-cover bg-center h-[60vh] md:h-[70vh] lg:h-screen " >
                             <div className="w-full h-[60vh] md:h-[60vh] lg:h-screen">
-                                <span
-                                    className="lazy-load-image-background opacity lazy-load-image-loaded"
-                                    style={{
-                                        color: "transparent",
-                                        display: "inline-block",
-                                        height: "100%",
-                                        width: "100%",
-                                    }}
-                                >
+                                
                                     <LazyLoadImage
                                         src={`https://image.tmdb.org/t/p/w1280/${featuredMovie?.backdrop_path}`}
                                         width="100%"
@@ -199,7 +164,6 @@ const Home = () => {
                                         effect="blur"
                                         visibleByDefault={true}
                                     />
-                                </span>
                             </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-transparent  to-[rgba(0,0,0,0.30)]"></div>
                             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[rgba(0,0,0,0.30)] to-[rgba(0,0,0,0.98)]"></div>
@@ -256,11 +220,11 @@ const Home = () => {
                 ))}
             </Swiper>}
 
-            {!loading && <TrendingMovies trendingMovies={trendingMovies} />}
+            {!loading && <TrendingMovies />}
 
             
 
-            {!loading && <div className='bg-[#000000]/90 md:mt-20 xl:mt-0  mx-auto  pb-12 w-[100%] xl:max-w-[92%]'>
+            {!loading && <div className='bg-[#000000]/90 md:mt-20 xl:mt-24  mx-auto  pb-12 w-[100%] xl:max-w-[92%]'>
 
                 <h1 className='mt-10 mx-4 z-50 text-white font-medium md:text-xl'>Trending Movies</h1>
                 <div className='mx-2 pt-2'>

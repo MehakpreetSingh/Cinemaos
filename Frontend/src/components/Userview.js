@@ -4,11 +4,12 @@ import { db } from '../Firebase/firebase';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import bgHome from '../bg-home.png'
+import Spinner from './Spinner';
 
 const Userview = () => {
   const [activeTab, setActiveTab] = useState("continueWatching");
-  const [wishlist, setWishlist] = useState([]);
-  const [movies, setMovies] = useState([]);
+  const [wishlist, setWishlist] = useState(null);
+  const [movies, setMovies] = useState(null);
   const [sortOrder, setSortOrder] = useState('recent'); // Default to 'recent'
 
   const handleSortChange = (e) => {
@@ -127,7 +128,8 @@ const Userview = () => {
           </a>
         </div>
       </div>
-      <div class="w-full my-2 px-2 max-w-6xl mx-auto smoothie min-h-screen">
+      {(movies===null) && (wishlist===null) && <div className='flex justify-center items-center'><Spinner/></div>}
+      {wishlist && movies && <div class="w-full my-2 px-2 max-w-6xl mx-auto smoothie min-h-screen">
         <div class="flex justify-between items-center my-4 mt-5">
           {(activeTab === "continueWatching") && <div class="flex items-center gap-2 text-2xl font-medium">
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="white" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock">
@@ -187,7 +189,7 @@ const Userview = () => {
           })}
           {!(getMediaData().length === 0) && <div onClick={handleClear} class="flex justify-end my-3 w-full"><button class="bg-white/10 rounded-lg text-white p-2 px-4">Clear</button></div>}
         </div>
-      </div>
+      </div>}
     </div>
   )
 }
