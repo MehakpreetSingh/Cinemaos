@@ -29,22 +29,10 @@ const movies = [
   // Add more movies as needed
 ];
 
-const TrendingMovie = () => {
-  const [movies, setMovies] = useState(null);
+const TrendingMovie = ({movies}) => {
   useEffect(() => {
-    const fetchTrendingData = async () => {
-      try {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/trending/all/day?api_key=748d8f1491929887f482d9767de12ea8`
-        );
-        const data = await response.json();
-        setMovies(data.results.slice(0, 6));
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchTrendingData();
-  }, [movies]);
+    
+  }, []);
   return (
     <div className="transition-all duration-150 w-full mb-2 md:mb-0 mx-auto flex flex-col gap-3 md:gap-4  -mt-2 md:mt-[-24vh] xl:max-w-[92%]">
       <div className="font-medium flex items-center gap-2 tracking-wide w-full px-2 lg:px-3 text-white text-lg md:text-2xl py-1 z-20 flex-shrink-0">
@@ -122,7 +110,7 @@ const TrendingMovie = () => {
                               <h1 className="text-white w-[100%] text-[13px] font-bold ">
                                 {movie.title || movie.name || movie.original_name}
                               </h1>
-                              <Link to={movie.media_type === movie ? `/movie/watch/${movie.id}` : `/tv/${movie.id}/1/1`} className='text-white px-2 opacity-0 group-hover:opacity-100 transform-all duration-300 hover:scale-[1.2] rounded-full'>
+                              <Link to={movie.media_type === "movie" ? `/movie/watch/${movie.id}` : `/tv/${movie.id}/1/1`} className='text-white px-2 opacity-0 group-hover:opacity-100 transform-all duration-300 hover:scale-[1.2] rounded-full'>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill='white' width="24" height="24" viewBox="0 0 24 24"><path d="M0 21v-18l15 9-15 9zm11-17v3.268l7.888 4.732-7.888 4.732v3.268l13-8-13-8z" /></svg>
                               </Link>
                             </div>

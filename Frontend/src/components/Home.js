@@ -30,6 +30,7 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
     const [searchquery, setSearchQuery] = useState("");
     const [featuredMovies, setFeaturedMovies] = useState(null);
+    const [trendingMovies, setTrendingMovies] = useState(null);
     let user = '';
     const settings = {
         dots: true,
@@ -70,13 +71,24 @@ const Home = () => {
                 console.error('Error fetching data:', error);
             }
         };
+        const fetchTrendingData = async () => {
+            try {
+              const response = await fetch(
+                `https://api.themoviedb.org/3/trending/all/day?api_key=748d8f1491929887f482d9767de12ea8`
+              );
+              const data = await response.json();
+              setTrendingMovies(data.results.slice(0, 6));
+            } catch (error) {
+              console.error('Error fetching data:', error);
+            }
+          };
 
         if (localStorage.getItem('user') || sessionStorage.getItem('user')) {
             user = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user'));
             gettmdbData();
             gettmdbtvData();
             fetchPopularMovie();
-            
+            fetchTrendingData();
             // getData() ;
             var x = document.getElementById("loading-bar");
             for (let i = 0; i < 4; i++) {
@@ -220,7 +232,7 @@ const Home = () => {
                 ))}
             </Swiper>}
 
-            {!loading && <TrendingMovies />}
+            {!loading && <TrendingMovies movies={trendingMovies}/>}
 
             
 
