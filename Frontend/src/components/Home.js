@@ -77,7 +77,8 @@ const Home = () => {
                 `https://api.themoviedb.org/3/trending/all/day?api_key=748d8f1491929887f482d9767de12ea8`
               );
               const data = await response.json();
-              setTrendingMovies(data.results.slice(0, 6));
+              console.log(data.results.slice(0, 10));
+              setTrendingMovies(data.results.slice(0, 10));
             } catch (error) {
               console.error('Error fetching data:', error);
             }
@@ -151,8 +152,8 @@ const Home = () => {
                 </div>
             </div>
             <ToastContainer />
-            {loading &&(movies===null) && (tvshows===null) && (featuredMovies===null) && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
-            {!loading && movies && tvshows && featuredMovies && <Swiper
+            {loading &&(movies===null) && (tvshows===null) && (featuredMovies===null) && (trendingMovies === null) && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
+            {!loading && movies && tvshows && featuredMovies && trendingMovies && <Swiper
                 modules={[FreeMode, Navigation, Pagination, Mousewheel, Scrollbar, A11y, EffectFade, Keyboard]}
                 keyboard={true}
                 pagination
@@ -232,7 +233,7 @@ const Home = () => {
                 ))}
             </Swiper>}
 
-            {!loading && <TrendingMovies movies={trendingMovies}/>}
+            {!loading && trendingMovies && <TrendingMovies movies={trendingMovies}/>}
 
             
 

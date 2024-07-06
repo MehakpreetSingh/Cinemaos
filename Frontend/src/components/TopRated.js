@@ -75,7 +75,7 @@ const TopRated = () => {
                             className="mySwiper  w-full h-full rounded-xl md:rounded-none xl:rounded-2xl overflow-hidden"
                         >
                             {latesttrailers && gettrailers()?.map((elements) => (
-                                <SwiperSlide>
+                                <SwiperSlide key={elements.id}>
                                     <div className="swiper-slide flex flex-col md:flex-row w-full relative md:p-10 xl:p-16" style={{ width: "100%", marginRight: "10px" }}>
                                         <div className="!absolute top-0 left-0 z-[-1] blur-3xl overflow-hidden w-full h-full lg:h-[700px] object-cover opacity-50">
                                             <LazyLoadImage
@@ -179,7 +179,7 @@ const TopRated = () => {
                             className="mySwiper smalll hidden md:block select-none w-full mt-[-140px] lg:mt-[-200px] pl-5 2xl:pl-0 2xl:w-[98%]"
                         >
                             {latesttrailers && gettrailers()?.map((elements) => (
-                            <SwiperSlide>
+                            <SwiperSlide key={elements.id}>
                                 <div
                                     className="swiper-slide rounded-lg bg-white/5 aspect-[1/1.5] overflow-hidden select-none brightness-50 cursor-pointer active:scale-95 smoothie swiper-slide-visible swiper-slide-active"
                                     style={{ width: "100%", marginRight: "10px" }}
