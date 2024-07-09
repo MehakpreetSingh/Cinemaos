@@ -2,8 +2,6 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import MovieCard from './MovieCard';
 import MovieCard2 from './MovieCard2';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from './Spinner';
 

@@ -2,21 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import play from "../play.png";
 import SeasonModal from "./SeasonModal";
-import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Navigation,
-  Pagination,
-  Scrollbar,
-  A11y,
-  EffectFade,
-  Mousewheel,
-  Keyboard,
-} from "swiper";
-import { FreeMode } from "swiper";
-import "swiper/css/free-mode";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/scrollbar";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { doc, updateDoc, getDoc,  } from 'firebase/firestore';

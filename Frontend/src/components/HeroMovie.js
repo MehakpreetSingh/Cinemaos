@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import play from "../play.png";
-import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Navigation,
-  Pagination,
-  Scrollbar,
-  A11y,
-  EffectFade,
-  Mousewheel,
-  Keyboard,
-} from "swiper";
 import { FreeMode } from "swiper";
 import "swiper/css/free-mode";
 import "swiper/css";
