@@ -1,37 +1,17 @@
 import React, { useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y, EffectFade, Mousewheel, Keyboard } from 'swiper';
+import {  Pagination,  Keyboard } from 'swiper';
 import { FreeMode } from 'swiper';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from 'react-router-dom';
-// Sample data (Replace this with your actual data or API fetch)
-const movies = [
-  {
-    id: 1296838,
-    title: "Die Hart 2: Die Harter",
-    rating: 6.9,
-    year: 2024,
-    language: "en",
-    img: "https://image.tmdb.org/t/p/w780/kVwgVQQO331jdUdOBYffGC2QjEp.jpg"
-  },
-  {
-    id: 1077280,
-    title: "Die Hart",
-    rating: 5.9,
-    year: 2023,
-    language: "en",
-    img: "https://image.tmdb.org/t/p/w780/path/to/image.jpg"
-  }
-  // Add more movies as needed
-];
+
 
 const TrendingMovies = ({ movies }) => {
   useEffect(() => { 
-    console.log(movies);
-  },[movies]) 
+  },[]) 
   return (
-    <div className="transition-all duration-150 w-full mb-2 md:mb-0 mx-auto flex flex-col gap-3 md:gap-4  -mt-2 md:mt-[-24vh] xl:max-w-[92%]">
+    <div className=" w-full mb-2 md:mb-0 mx-auto flex flex-col gap-3 md:gap-4  -mt-2 md:mt-[-24vh] xl:max-w-[92%]">
       <div className="font-medium flex items-center gap-2 tracking-wide w-full px-2 lg:px-3 text-white text-lg md:text-2xl py-1 z-20 flex-shrink-0">
         <div className="h-[1.4rem] p-[3px] md:h-[1.5rem] flex items-center justify-center rounded bg-[white]">
           <svg
@@ -71,7 +51,7 @@ const TrendingMovies = ({ movies }) => {
         }}
           freeMode={true}
           className=""
-          modules={[FreeMode, Navigation, Pagination, Mousewheel, Scrollbar, A11y, EffectFade, Keyboard]}
+          modules={[FreeMode, Pagination, Keyboard]}
           keyboard={true}
           pagination
           draggable

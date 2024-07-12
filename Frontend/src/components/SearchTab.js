@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { useParams , Link } from 'react-router-dom';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import { useParams  } from 'react-router-dom';
 
 import 'swiper/css';
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -58,8 +56,7 @@ const SearchTab = () => {
                     </div>
                 </div>
                 {loading && (movies===null) && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
-            {loading &&  <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
-                {!loading && <InfiniteScroll
+                {!loading && movies && <InfiniteScroll
                 dataLength={movies?.length}
                 next={fetchMoreData}
                 hasMore={page !== totalpages}
@@ -71,11 +68,13 @@ const SearchTab = () => {
 
                     {!loading && <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4'>
                         {movies?.map((element, index) => {
-                            if (element.media_type != "person") {
+                            if (element.media_type !== "person") {
 
                                 return (
                                     <MovieCard key={index} movieData={element}/>
                                 )
+                            }else {
+                                return null;
                             }
                         })}
                     </div>}

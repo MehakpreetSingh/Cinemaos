@@ -1,23 +1,17 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y, EffectFade, Mousewheel, Keyboard } from 'swiper';
+import { Pagination, Keyboard } from 'swiper';
 import { FreeMode } from 'swiper';
-import 'swiper/css/free-mode';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/scrollbar';
 import TrendCard from './TrendCard';
 import { Link, useNavigate } from 'react-router-dom';
 import TrendingMovies from './TrendingMovies';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
-import TrailersBlock from './TrailersBlock';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Spinner from './Spinner';
 import TopRated from './TopRated';
-import MovieHoverEffect from './MovieHoverEffect';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -28,19 +22,8 @@ const Home = () => {
     const [totaltvpages, setTotalTvPages] = useState(0);
     const [totalpages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [searchquery, setSearchQuery] = useState("");
     const [featuredMovies, setFeaturedMovies] = useState(null);
     const [trendingMovies, setTrendingMovies] = useState(null);
-    let user = '';
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1, // Adjust number of slides based on screen size
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 5000,
-    };
 
     useEffect(() => {
         setLoading(true)
@@ -85,12 +68,13 @@ const Home = () => {
           };
 
         if (localStorage.getItem('user') || sessionStorage.getItem('user')) {
-            user = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user'));
+            // let user = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user'));
             gettmdbData();
             gettmdbtvData();
             fetchPopularMovie();
             fetchTrendingData();
             // getData() ;
+            setLoading(false);
             var x = document.getElementById("loading-bar");
             for (let i = 0; i < 4; i++) {
                 setTimeout(() => {
@@ -100,31 +84,12 @@ const Home = () => {
             }
             x.classList.remove("w-[100%]");
             setTimeout(() => {
-                setLoading(false);
-            }, 350);
-            setTimeout(() => {
                 x.classList.add("w-0")
             }, 400);
         }
         else {
             navigate("/");
         }
-
-        // const getData= async() => {
-        //     const url = `${host}movies/allposts` ;
-        //     const response = await fetch(url , {
-        //         method: 'GET', 
-        //         headers: {
-        //             'Content-Type': 'application/json' ,
-        //         },
-        //     });
-        //     const data = await response.json() ;
-
-        //     setMovies(data) ; 
-
-        // }
-
-        // eslint-disable-next-line
     }, [])
     const fetchMoreData = async () => {
         const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=748d8f1491929887f482d9767de12ea8&page=${page}`;
@@ -140,10 +105,6 @@ const Home = () => {
         setTvShows(tvshows.concat(data.results));
         setTvPage(tvpage + 1);
     };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        navigate(`/search/${searchquery}`);
-    }
 
     return (
         <div className='relative h-screen' >
@@ -152,22 +113,19 @@ const Home = () => {
                 </div>
             </div>
             <ToastContainer />
-            {loading &&(movies===null) && (tvshows===null) && (featuredMovies===null) && (trendingMovies === null) && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
-            {!loading && movies && tvshows && featuredMovies && trendingMovies && <Swiper
-                modules={[FreeMode, Navigation, Pagination, Mousewheel, Scrollbar, A11y, EffectFade, Keyboard]}
+            {loading && <div className='flex h-full w-full justify-center items-center'><Spinner/></div>}
+            {!loading&& <Swiper
+                modules={[FreeMode, Pagination, Keyboard]}
                 keyboard={true}
                 pagination
-                style={{
-                    '--swiper-navigation-color': '#fff',
-                    '--swiper-pagination-color': '#fff',
-                  }}
+                grabCursor={true}
                 className="mySwiper"
             >   
                 {featuredMovies?.map((featuredMovie) => (
                     <SwiperSlide key={featuredMovie.id}>
-                        <div key={featuredMovie?.id} className="transition-all duration-200 bg-cover bg-center h-[60vh] md:h-[70vh] lg:h-screen " >
+                        <div key={featuredMovie?.id} className=" bg-cover bg-center h-[60vh] md:h-[70vh] lg:h-screen " >
                             <div className="w-full h-[60vh] md:h-[60vh] lg:h-screen">
-                                
+
                                     <LazyLoadImage
                                         src={`https://image.tmdb.org/t/p/w1280/${featuredMovie?.backdrop_path}`}
                                         width="100%"
@@ -184,7 +142,7 @@ const Home = () => {
                                 <div className="bg-gradient-to-t from-black/50 to-transparent h-[100%]"></div>
                             </div> */}
 
-                            <div className="absolute transition-all duration-200 flex flex-col gap-2 md:gap-4 tracking-wide w-[87%] sm:w-[70%] md:w-[50%] left-[5%] bottom-[8%] md:bottom-[28vh] xl:bottom-[30vh]">
+                            <div className="absolute flex flex-col gap-2 md:gap-4 tracking-wide w-[87%] sm:w-[70%] md:w-[50%] left-[5%] bottom-[8%] md:bottom-[28vh] xl:bottom-[30vh]">
                                 <div className="flex flex-col gap-1 md:gap-2">
                                     <div className="line-clamp-2 text-white font-semibold leading-tight text-2xl md:text-3xl lg:text-4xl py-1 flex-shrink-0">{featuredMovie?.title}</div>
                                     <div className="text-xs 2xl:text-sm tracking-wider text-white/90 flex gap-3 ">
@@ -237,21 +195,16 @@ const Home = () => {
 
             
 
-            {!loading && <div className='bg-[#000000]/90 md:mt-20 xl:mt-24  mx-auto  pb-12 w-[100%] xl:max-w-[92%]'>
+            {!loading && trendingMovies && featuredMovies&&  <div className='bg-[#000000]/90 md:mt-20 xl:mt-24  mx-auto  pb-12 w-[100%] xl:max-w-[92%]'>
 
                 <h1 className='mt-10 mx-4 z-50 text-white font-medium md:text-xl'>Trending Movies</h1>
                 <div className='mx-2 pt-2'>
                     <Swiper
                         freeMode={true}
                         grabCursor={true}
-                        modules={[FreeMode, Navigation, Pagination, Mousewheel, Scrollbar, A11y, EffectFade, Keyboard]}
-                        keyboard={true}
+                        modules={[FreeMode, Pagination, Keyboard]}
                         height={400}
                         draggable={true}
-                        style={{
-                            '--swiper-navigation-color': '#fff',
-                            '--swiper-pagination-color': '#fff',
-                          }}
                         className="mySwiper px-2 "
                         breakpoints={{
                             320: {
@@ -307,12 +260,8 @@ const Home = () => {
                     <Swiper
                         freeMode={true}
                         grabCursor={true}
-                        modules={[FreeMode, Navigation, Pagination, Scrollbar, A11y, EffectFade]}
+                        modules={[FreeMode, Keyboard]}
                         draggable={true}
-                        style={{
-                            '--swiper-navigation-color': '#fff',
-                            '--swiper-pagination-color': '#fff',
-                          }}
                         className="mySwiper px-2"
                         onReachEnd={() => {
                             if (tvpage < totaltvpages) {

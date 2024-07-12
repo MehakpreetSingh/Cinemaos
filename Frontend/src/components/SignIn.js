@@ -3,7 +3,6 @@ import cinemaos from "../image.png";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Disclosure } from "@headlessui/react";
 import Spinner from "./Spinner";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from '../Firebase/firebase';
@@ -30,7 +29,7 @@ const SignIn = () => {
     if (localStorage.getItem("user") || sessionStorage.getItem("user")) {
       navigate("/home");
     }
-  }, []);
+  }, [navigate]);
   // const handleSubmit = async(e) => {
   //     e.preventDefault() ;
   //     setLoading(true) ;
@@ -68,6 +67,8 @@ const SignIn = () => {
           continueWatching: [],
           wishlist: [],
         });
+        localStorage.setItem("continueWatching", JSON.stringify([]));
+        localStorage.setItem("wishlist", JSON.stringify([]));
       } catch (e) {
         console.error("Error adding document: ", e);
       }
@@ -83,6 +84,8 @@ const SignIn = () => {
 
       if (userSnapshot.exists()) {
         sessionStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("continueWatching", JSON.stringify(userSnapshot.data().continueWatching));
+        localStorage.setItem("wishlist", JSON.stringify(userSnapshot.data().wishlist));
       } else {
         await createUserDocument(user);
         sessionStorage.setItem("user", JSON.stringify(user));
@@ -120,7 +123,6 @@ const SignIn = () => {
     e.preventDefault();
     setLoading(true);
     setError(null); // Clear previous errors
-
     try {
       // Firebase sign-in logic
       const userCredential = await signInWithEmailAndPassword(
@@ -130,13 +132,18 @@ const SignIn = () => {
       );
 
       const user = userCredential.user;
-
+      const userSnapshot = await getDoc(doc(db, 'users', user.uid));
       // Handle remember me
       if (rememberMe) {
         localStorage.setItem("user", JSON.stringify(user)); // Or store just the token
+        localStorage.setItem("continueWatching", JSON.stringify(userSnapshot.data().continueWatching));
+        localStorage.setItem("wishlist", JSON.stringify(userSnapshot.data().wishlist));
       } else {
         sessionStorage.setItem("user", JSON.stringify(user)); // Or store just the token
+        sessionStorage.setItem("continueWatching", JSON.stringify(userSnapshot.data().continueWatching));
+        sessionStorage.setItem("wishlist", JSON.stringify(userSnapshot.data().wishlist));
       }
+      
 
       navigate("/home");
     } catch (error) {

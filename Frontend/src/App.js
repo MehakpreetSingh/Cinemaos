@@ -5,7 +5,6 @@ import {BrowserRouter as Router , Routes, Route, useParams} from 'react-router-d
 import HeroMovie from './components/HeroMovie';
 import Tv from './components/Tv';
 import HeroTv from './components/HeroTv';
-import WatchTv from './components/WatchTv';
 import WatchMovie from './components/WatchMovie';
 import SearchTab from './components/SearchTab';
 import SignIn from './components/SignIn';

@@ -52,7 +52,7 @@ const WatchTv = () => {
         setTimeout(() => {
             x.classList.add("w-0")
         }, 1200);
-    }, [])
+    }, [E,S,id])
     return (
         <>
             <div className='h-[2px] w-full z-[99999999] absolute top-[63px]'>

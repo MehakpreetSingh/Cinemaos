@@ -1,9 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import axios from 'axios';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import "react-lazy-load-image-component/src/effects/blur.css";
-import close from '../close.png'
 
 const TrailersCard = (props) => {
     const [videos, setVideos] = useState([])
@@ -17,7 +14,7 @@ const TrailersCard = (props) => {
             .catch((err) => {
                 console.log(err)
             })
-    }, [])
+    }, [actor.id])
     return (
         <>
             <div key={actor.id} class="card" style={{ '--background-image': `url(${`https://image.tmdb.org/t/p/w780${actor.backdrop_path}`})` }}>

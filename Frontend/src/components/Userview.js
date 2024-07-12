@@ -26,8 +26,20 @@ const Userview = () => {
       array.splice(existingIndex, 1);
       if(activeTab === 'wishlist') {
         setWishlist(array);
+        if(sessionStorage.getItem('user') !== null) {
+          sessionStorage.setItem('wishlist', JSON.stringify(array));
+        }
+        else if(localStorage.getItem('user') !== null) {
+          localStorage.setItem('wishlist', JSON.stringify(array));
+        }
       }else {
         setMovies(array)
+        if(sessionStorage.getItem('user') !== null) {
+          sessionStorage.setItem('continueWatching', JSON.stringify(array));
+        }
+        else if(localStorage.getItem('user') !== null) {
+          localStorage.setItem('continueWatching', JSON.stringify(array));
+        }
       }
     }
     try {
@@ -85,7 +97,7 @@ const Userview = () => {
 
   }
   const getMediaData = () => {
-    if (activeTab == "continueWatching") {
+    if (activeTab === "continueWatching") {
       if (sortOrder === 'recent') {
         return movies
       } else {
@@ -106,7 +118,7 @@ const Userview = () => {
       <div class="h-[176px] flex flex-col justify-end items-center relative">
         <div class="absolute top-1/2 -translate-y-1/2 text-2xl font-semibold text-white my-auto">Good Evening!</div>
         <div class="w-full p-3 flex justify-evenly sm:justify-center gap-5 flex-wrap sm:gap-12 z-10 text-white font-medium text-sm md:text-base">
-          <a onClick={() => handleTabClick("continueWatching")} style={{
+          <button onClick={() => handleTabClick("continueWatching")} style={{
             borderBottom: activeTab === "continueWatching" ? "2px solid white" : "none",
             transition: "border-bottom 0.3s ease-in-out"
           }} class="tabs hover:cursor-pointer smoothie flex gap-1 items-center relative" >
@@ -116,8 +128,8 @@ const Userview = () => {
               <path d="M12 7v5l4 2"></path>
             </svg>
             <span class="hidden text-white sm:flex">Continue Watching</span>
-          </a>
-          <a onClick={() => handleTabClick("wishlist")} style={{
+          </button>
+          <button onClick={() => handleTabClick("wishlist")} style={{
             borderBottom: activeTab === "wishlist" ? "2px solid white" : "none",
             transition: "border-bottom 0.3s ease-in-out"
           }} class="false hover:cursor-pointer smoothie flex gap-1 items-center relative" >
@@ -125,7 +137,7 @@ const Userview = () => {
               <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
             </svg>
             <span class="hidden text-white sm:flex">Watchlist</span>
-          </a>
+          </button>
         </div>
       </div>
       {(movies===null) && (wishlist===null) && <div className='flex justify-center items-center'><Spinner/></div>}
@@ -174,14 +186,14 @@ const Userview = () => {
                   </span>
                   <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black" ></div>
                   <div class="absolute p-3 px-4 flex flex-col gap-1 z-20 w-full bottom-0 left-0 tracking-wide">
-                    <a class="flex justify-between items-center flex-grow" href={`/${element.media_type}/watch/${element.id}`}>
+                    <button class="flex justify-between items-center flex-grow" href={`/${element.media_type}/watch/${element.id}`}>
                       <div class="flex gap-1 h-fit flex-col tracking-wide"><span class="line-clamp-2 text-white !leading-tight text-sm font-medium !capitalize">{element.title}</span></div>
                       <span class="flex-shrink-0 smoothie bg-whites/20 backdrop-blur-sm group-hover:bg-white/20 group-active:bg-[#00c1dbef] p-2 items-center flex justify-center rounded-full h-fit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="black" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play">
                           <polygon points="5 3 19 12 5 21 5 3"></polygon>
                         </svg>
                       </span>
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>

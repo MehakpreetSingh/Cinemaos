@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import ReactPlayer from 'react-player'
 import { useParams } from 'react-router-dom';
 import { doc, updateDoc, getDoc,  } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
@@ -64,19 +63,6 @@ const WatchMovie = () => {
                 console.error('Error adding to continue watching: ', error);
             }
         };
-        // const host = `https://cinemaos-backend.onrender.com/`;
-        // const dbData = async () => {
-        //     const url = `${host}movies/getmovie/${id}`;
-        //     const response = await fetch(url, {
-        //         method: "GET",
-        //         header: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //     });
-        //     const data = await response.json();
-        //     setDbinfo(data);
-        // }
-        // dbData();
 
         const getMovieData = async (req, res) => {
             const url = `https://api.themoviedb.org/3/movie/${id}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
@@ -102,64 +88,8 @@ const WatchMovie = () => {
         setTimeout(() => {
             x.classList.add("w-0")
         }, 1200);
-    }, [])
-    // const plyrProps = {
-    //     source: undefined, // https://github.com/sampotts/plyr#the-source-setter
-    //     options: {
-    //         enabled: true,
-    //         controls: [
-    //             'play-large', // The large play button in the center
-    //              // Restart playback
-    //             'rewind', // Rewind by the seek time (default 10 seconds)
-    //             'play', // Play/pause playback
-    //             'fast-forward', // Fast forward by the seek time (default 10 seconds)
-    //             'progress', // The progress bar and scrubber for playback and buffering
-    //             'current-time', // The current time of playback
-    //             'duration', // The full duration of the media
-    //             'mute', // Toggle mute
-    //             'volume', // Volume control
-    //             'captions', // Toggle captions
-    //             'settings', // Settings menu
-    //             'pip', // Picture-in-picture (currently Safari only)
-    //             'airplay', // Airplay (currently Safari only)
-    //             'download', // Show a download button with a link to either the current source or a custom URL you specify in your options
-    //             'fullscreen', // Toggle fullscreen
-    //         ],
-    //         settings: [
-    //             'captions', 'quality', 'speed', 'loop'
-    //         ],
-    //         quality: {
-    //             default: 576,
-    //             // The options to display in the UI, if available for the source media
-    //             options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240],
-    //             forced: false,
-    //             onChange: null,
-    //           },
-
-    //     }, // https://github.com/sampotts/plyr#options
-    //     // Direct props for inner video tag (mdn.io/video)
-    // }
-    // function MyPlyrVideo(url) {
-    //     if(dbinfo !== null) {
-    //         plyrProps.source = {
-    //             type: 'video',
-    //             sources: [
-    //                 {
-    //                     src: `${dbinfo?.url}`,
-    //                     type: 'video/mp4',
-    //                 },]
-    //         };
-    //     }else {
-    //         plyrProps.source = {
-    //             type: 'video',
-    //             sources: [
-    //                 {
-    //                     src: "https://cdn.plyr.io/static/blank.mp4",
-    //                     type: 'video/mp4',
-    //                 },]
-    //         };
-    //     }
-    // }
+    }, [id])
+    
     return (
         <div className='relative h-screen'>
             <div className='h-[2px] w-full z-[99999999] absolute top-[63px]'>
@@ -169,20 +99,6 @@ const WatchMovie = () => {
             {loading && (movieData===null) && <div className='w-full h-full flex justify-center items-center '>
                 <Spinner/>
                 </div>}
-            {/* !loading &&
-                <div className='w-screen h-screen flex justify-center items-center '>
-
-                    <div class="w-full md:m-64 lg:w-[70%] xl:w-[75%] gap-1 flex flex-col shadow-md overflow-hidden lg:rounded-r-lg">
-                        <div class="w-full aspect-[16/11] sm:!aspect-video relative bg-white/5 overflow-hidden"><iframe src={`https://vidsrc.pro/embed/movie/${id}?&amp;theme=00c1db`} width="100%" allowfullscreen="" height="100%" id="video-player" referrerpolicy="origin" class="size-full object-contain object-center"></iframe></div>
-                        <div class="bg-white/5 flex-grow w-full"></div>
-                    </div>
-                    
-                    {/* <a className='px-4 py-2 m-4 bg-amber-500 text-white rounded-lg' href={`${dbinfo?.url}`} download>Download</a> */}
-            {/* <div className='w-[75%] mt-10'>
-                    {MyPlyrVideo(dbinfo?.url)}
-                    <Plyr {...plyrProps} /> */}
-            {/* </div> */}
-            {/* </div> */}
             {
                 !loading && movieData && 
                 <div class="min-h-screen overflow-auto">
@@ -194,7 +110,7 @@ const WatchMovie = () => {
                                 <div class="!hidden sm:!flex gap-2 w-full"><a class="hover:underline underline-offset-2 !line-clamp-1" href="/home">Home</a><span>/</span><a class="hover:underline capitalize underline-offset-2 !line-clamp-1" href={`/movie`}>movie</a><span>/</span><a class="text-[#00c1db] hover:underline underline-offset-2 !line-clamp-1 shrink-0" href={`/movie/${movieData?.id}`}>{movieData?.title}</a></div>
                             </div>
                             <div class="flex flex-col lg:flex-row w-full sm:px-2 flex-wrap">
-                                <div class="w-full max-w-7xl xl:rounded-lg relative aspect-[16/11] sm:!aspect-video bg-white/5 mx-auto shadow-xl overflow-hidden"><iframe src={`https://vidsrc.pro/embed/movie/${id}?&amp;theme=00c1db`} width="100%" allowfullscreen="" height="100%" id="video-player" referrerpolicy="origin"
+                                <div class="w-full max-w-7xl xl:rounded-lg relative aspect-[16/11] sm:!aspect-video bg-white/5 mx-auto shadow-xl overflow-hidden"><iframe title={`movie-${id}`} src={`https://vidsrc.pro/embed/movie/${id}?&amp;theme=00c1db`} width="100%" allowfullscreen="" height="100%" id="video-player" referrerpolicy="origin"
                                  class="size-full object-contain object-center" __idm_id__="7979012"></iframe></div>
                             </div>
                         </div>
@@ -213,36 +129,6 @@ const WatchMovie = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* <div class="w-[95%] bg-white/10 h-[1px] mt-10 mx-auto max-w-7xl"></div>
-                        <div class="w-full max-w-7xl mx-auto px-2 2xl:px-1">
-                            <div class="w-full flex flex-col gap-2 my-8 mx-auto">
-                                <div class="text-xl md:text-2xl px-1 font-medium">You may also Like</div>
-                                <div class="flex flex-wrap w-full">
-                                    <a class="relative flex p-[.5rem] mb-2 flex-col group gap-2 w-1/2 sm:w-1/4 lg:w-1/6 rounded-lg flex-shrink-0" href="/info/movie/786892">
-                                        <div class="w-full relative aspect-[1/1.5] rounded-lg overflow-hidden bg-[var(--light)] smoothie">
-                                            <span class=" lazy-load-image-background blur lazy-load-image-loaded" ><img width="100%" height="100%" src="https://image.tmdb.org/t/p/w342/iADOJ8Zymht2JPMoy3R7xceZprc.jpg" class="w-full h-full object-cover object-center group-hover:scale-[1.04] smoothie" /></span>
-                                            <div class="absolute top-1 right-0 gap-1 bg-[#00000098] py-1 px-[5px] rounded-l-md flex items-center justify-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="gold" stroke="gold" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star">
-                                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                                </svg>
-                                                <span class="!text-xs font-light">7.7 </span>
-                                            </div>
-                                            <div class="absolute opacity-0 xl:group-hover:opacity-100 flex top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-20 smoothie">
-                                                <span class=" p-[.6rem] hover:brightness-90 bg-[#00c1db] rounded-full flex items-center justify-center smoothie">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="#000000d5" stroke="#000000d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play">
-                                                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                                                    </svg>
-                                                </span>
-                                            </div>
-                                            <div class="flex opacity-1 lg:group-hover:opacity-100 p-[.35rem] pb-2 tracking-wide flex-col gap-1 justify-end w-full h-full bg-gradient-to-t z-10 from-[#000000d0] absolute top-0 bottom-0 left-0 right-0 smoothie">
-                                                <div class="flex md:items-center justify-center gap-1 flex-wrasp text-xs 2xl:text-sm text-[#d8d8d8] font-normal tracking-wide "><span>2024</span>•<span class="whitespace-nowrap"><span class="uppercase">en</span></span>•<span>HD</span></div>
-                                                <div class="line-clamp-2 text-center text-sm xl:text-base font-medium !leading-tight tracking-wider">Furiosa: A Mad Max Saga</div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             }

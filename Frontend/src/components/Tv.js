@@ -1,34 +1,16 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import ReactPlayer from 'react-player'
 import MovieCard from './MovieCard';
-import MovieCard2 from './MovieCard2';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from './Spinner';
 
 const Tv = (props) => {
-    const host = `https://cinemaos-backend.onrender.com/`;
     const [movies, setMovies] = useState(null);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [totalpages, setTotalPages] = useState(0);
-    const [url, setUrl] = useState(`https://api.themoviedb.org/3/tv/popular?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`) ;
+    const url= `https://api.themoviedb.org/3/tv/popular?api_key=748d8f1491929887f482d9767de12ea8&language=en-US` ;
     useEffect(() => {
-        
-        // const getData = async () => {
-        //     const url = `${host}series/allseries`;
-        //     const response = await fetch(url, {
-        //         method: 'GET',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //     });
-        //     const data = await response.json();
-
-        //     setMovies(data);
-
-        // }
-        // getData();
         const getPopulartv = async() => {
             
             let url2 = url;
@@ -57,7 +39,7 @@ const Tv = (props) => {
         setTimeout(() => {
             x.classList.add("w-0")
         }, 450);
-    }, [])
+    }, [page, props.category,url])
     const fetchMoreData = async () => {
         let url2 = url.concat(`&page=${page}`);
         if(props.category === "trending") {
@@ -94,6 +76,8 @@ const Tv = (props) => {
                                     <MovieCard movieData={element} />
                                 </div>
                             )
+                        }else {
+                            return <></>
                         }
 
                     })}

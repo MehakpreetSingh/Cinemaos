@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import play from "../play.png";
-import SeasonModal from "./SeasonModal";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { doc, updateDoc, getDoc,  } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
 import Spinner from "./Spinner";
+import { toast, ToastContainer } from "react-toastify";
 
 
 const HeroTv = () => {
@@ -38,35 +37,45 @@ const HeroTv = () => {
           console.error("User is not logged in or user ID not found.");
           return; // or handle the login/signup flow
         }
-
-        const userRef = doc(db, "users", user.uid);
-
-        // Fetch the user's document to get the current wishlist data
-        const userSnapshot = await getDoc(userRef);
-
-        if (userSnapshot.exists()) {
-          const userData = userSnapshot.data();
-          let wishlist = userData.wishlist || [];
-  
-          if (!Array.isArray(wishlist)) {
-            wishlist = [];
-          }
-  
-          const existingIndex = wishlist.findIndex(
-            (movie) => movie.id === movieData1.id
-          );
-  
-          if (existingIndex !== -1) {
-            // Movie already in the wishlist - Do nothing or update the timestamp
-            setIsWishlisted(true);
-          } else {
-            // Add new movie data
-            setIsWishlisted(false);
-          }
+        const userWishlist = JSON.parse(sessionStorage.getItem('wishlist') || localStorage.getItem('wishlist') || '[]');
+        console.log(userWishlist, movieData1.id)
+        if (userWishlist && userWishlist.some(movie => movie.id === movieData1.id)) {
+          console.log(true)
+          setIsWishlisted(true);
         } else {
-          console.error("No user document found for this user ID:", user.uid);
-          // Handle the case where the user document doesn't exist yet
+          console.log(false)
+          setIsWishlisted(false);
         }
+
+
+        // const userRef = doc(db, "users", user.uid);
+
+        // // Fetch the user's document to get the current wishlist data
+        // const userSnapshot = await getDoc(userRef);
+
+        // if (userSnapshot.exists()) {
+        //   const userData = userSnapshot.data();
+        //   let wishlist = userData.wishlist || [];
+  
+        //   if (!Array.isArray(wishlist)) {
+        //     wishlist = [];
+        //   }
+  
+        //   const existingIndex = wishlist.findIndex(
+        //     (movie) => movie.id === movieData1.id
+        //   );
+  
+        //   if (existingIndex !== -1) {
+        //     // Movie already in the wishlist - Do nothing or update the timestamp
+        //     setIsWishlisted(true);
+        //   } else {
+        //     // Add new movie data
+        //     setIsWishlisted(false);
+        //   }
+        // } else {
+        //   console.error("No user document found for this user ID:", user.uid);
+        //   // Handle the case where the user document doesn't exist yet
+        // }
       } catch {
 
       }
@@ -109,7 +118,7 @@ const HeroTv = () => {
       x.classList.add("w-0");
     }, 400);
     // eslint-disable-next-line
-  }, []);
+  }, [isWishlisted, id]);
   const addToWishlist = async (movieData1) => {
     try {
       let user = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user'));
@@ -147,12 +156,19 @@ const HeroTv = () => {
           // Movie already in the wishlist - Do nothing or update the timestamp
           setIsWishlisted(false);
           wishlist.splice(existingIndex, 1);
+          
         } else {
           // Add new movie data
           setIsWishlisted(true);
           wishlist.push(movieData);
         }
-
+        if(sessionStorage.getItem('user') !== null) {
+          sessionStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
+        else if(localStorage.getItem('user') !== null) {
+          localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
+        toast.success(`Movie ${existingIndex !== -1 ? 'removed from' : 'added to'} wishlist`)
         await updateDoc(userRef, { wishlist });
       } else {
         console.error("No user document found for this user ID:", user.uid);
@@ -185,6 +201,7 @@ const HeroTv = () => {
           className="transition-all w-[0%] h-[2px] bg-red-800"
         ></div>
       </div>
+      <ToastContainer/>
       {loading && <div className="h-full w-full flex justify-center items-center"><Spinner/></div>}
       {!loading && (
         <div className="relative flex flex-col gap-9 md:gap-16 h-screen  ">
@@ -264,7 +281,7 @@ const HeroTv = () => {
                     {info.genres?.map((genre) => (
                       <a
                         key={genre.id}
-                        to={`/explore?type=tv&genre=${genre.id}`}
+                        href={`/explore?type=tv&genre=${genre.id}`}
                         className="py-[6px] flex justify-center items-center text-center px-3 text-sm font-medium bg-[#00c1db33] rounded-md text-[#00c1db]"
                       >
                         {genre.name}

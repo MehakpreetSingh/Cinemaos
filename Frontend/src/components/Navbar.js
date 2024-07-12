@@ -74,7 +74,7 @@ export default function Example() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [open]);
   return (
     <>
       <Disclosure

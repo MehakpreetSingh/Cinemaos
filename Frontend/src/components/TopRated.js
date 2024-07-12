@@ -5,7 +5,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import MovieHoverEffect from './MovieHoverEffect';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y, EffectFade, Mousewheel, Keyboard } from 'swiper';
+import {  Pagination, Keyboard, Autoplay } from 'swiper';
 import { FreeMode } from 'swiper';
 import 'swiper/css/free-mode';
 import 'swiper/css';
@@ -68,10 +68,12 @@ const TopRated = () => {
                     </div>
                     <div className="w-full md:h-[480px] lg:h-[700px] 2xl:h-[750px] 3xl:h-[800px] relative rounded-2xl md:rounded-none xl:rounded-2xl bg-white/5">
                         <Swiper
-                            modules={[FreeMode, Navigation, Pagination, Mousewheel, Scrollbar, A11y, EffectFade, Keyboard]}
+                            modules={[FreeMode, Pagination,Autoplay , Keyboard]}
                             keyboard={true}
                             pagination
-                            autoplay={{ delay: 2000 }}
+                            autoplay={{ delay: 4000,
+                                disableOnInteraction: false,
+                             }}
                             className="mySwiper  w-full h-full rounded-xl md:rounded-none xl:rounded-2xl overflow-hidden"
                         >
                             {latesttrailers && gettrailers()?.map((elements) => (
@@ -158,9 +160,12 @@ const TopRated = () => {
 
                         </Swiper>
                         <Swiper
-                            modules={[FreeMode, Navigation, Pagination, Mousewheel, Scrollbar, A11y, EffectFade, Keyboard]}
+                            modules={[FreeMode, Autoplay, Pagination, Keyboard]}
                             keyboard={true}
                             pagination
+                            autoplay={{ delay: 4000,
+                                disableOnInteraction: false,
+                             }}
                             breakpoints={{
                                 320: {
                                     slidesPerView: 2,

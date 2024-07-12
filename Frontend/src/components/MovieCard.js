@@ -4,7 +4,6 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const MovieCard = (props) => {
-    const [info, setInfo] = useState({});
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         //   const getMovieData=async()=> {
@@ -14,7 +13,6 @@ const MovieCard = (props) => {
         //     setInfo(data) ;
         //   }
         //   getMovieData();
-        setInfo(props.movieData);
         setTimeout(() => {
             setLoading(false);
         }, 20);

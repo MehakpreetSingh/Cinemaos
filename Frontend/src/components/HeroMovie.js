@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import play from "../play.png";
-import { FreeMode } from "swiper";
-import "swiper/css/free-mode";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/scrollbar";
+import { useParams } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { doc, updateDoc, getDoc, } from 'firebase/firestore';
 import { db } from '../Firebase/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import MovieCard from "./MovieCard";
 import Spinner from "./Spinner";
 
 const HeroMovie = () => {
@@ -23,6 +16,56 @@ const HeroMovie = () => {
   const [isWishlisted, setIsWishlisted] = useState(null)
   const { id } = useParams();
   useEffect(() => {
+    const CheckWishlist = async (movieData1) => {
+      try {
+        let user = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user'));
+        if (!user || !user.uid) {
+          console.error("User is not logged in or user ID not found.");
+          return; // or handle the login/signup flow
+        }
+        const userWishlist = JSON.parse(sessionStorage.getItem('wishlist') || localStorage.getItem('wishlist') || '[]');
+
+        if (userWishlist && userWishlist.some(movie => movie.id === movieData1.id)) {
+          
+          setIsWishlisted(true);
+        } else {
+          
+          setIsWishlisted(false);
+        }
+
+        // const userRef = doc(db, "users", user.uid);
+
+        // // Fetch the user's document to get the current wishlist data
+        // const userSnapshot = await getDoc(userRef);
+
+        // if (userSnapshot.exists()) {
+        //   const userData = userSnapshot.data();
+        //   let wishlist = userData.wishlist || [];
+
+        //   if (!Array.isArray(wishlist)) {
+        //     wishlist = [];
+        //   }
+
+        //   const existingIndex = wishlist.findIndex(
+        //     (movie) => movie.id === movieData1.id
+        //   );
+
+        //   if (existingIndex !== -1) {
+        //     // Movie already in the wishlist - Do nothing or update the timestamp
+        //     setIsWishlisted(true);
+        //   } else {
+        //     // Add new movie data
+        //     setIsWishlisted(false);
+        //   }
+        //   console.log("Movie added to Wishlist");
+        // } else {
+        //   console.error("No user document found for this user ID:", user.uid);
+        //   // Handle the case where the user document doesn't exist yet
+        // }
+      } catch {
+
+      }
+    }
     const getMovieData = async () => {
       const url = `https://api.themoviedb.org/3/movie/${id}?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
       const response = await fetch(url);
@@ -39,47 +82,7 @@ const HeroMovie = () => {
       setSimilarMovies(data3.results);
     };
     getMovieData();
-    const CheckWishlist = async (movieData1) => {
-      try {
-        let user = JSON.parse(sessionStorage.getItem('user') || localStorage.getItem('user'));
-        if (!user || !user.uid) {
-          console.error("User is not logged in or user ID not found.");
-          return; // or handle the login/signup flow
-        }
-
-        const userRef = doc(db, "users", user.uid);
-
-        // Fetch the user's document to get the current wishlist data
-        const userSnapshot = await getDoc(userRef);
-
-        if (userSnapshot.exists()) {
-          const userData = userSnapshot.data();
-          let wishlist = userData.wishlist || [];
-
-          if (!Array.isArray(wishlist)) {
-            wishlist = [];
-          }
-
-          const existingIndex = wishlist.findIndex(
-            (movie) => movie.id === movieData1.id
-          );
-
-          if (existingIndex !== -1) {
-            // Movie already in the wishlist - Do nothing or update the timestamp
-            setIsWishlisted(true);
-          } else {
-            // Add new movie data
-            setIsWishlisted(false);
-          }
-          console.log("Movie added to Wishlist");
-        } else {
-          console.error("No user document found for this user ID:", user.uid);
-          // Handle the case where the user document doesn't exist yet
-        }
-      } catch {
-
-      }
-    }
+    
     // const getColor = async() => {
     //     const uri = `https://image.tmdb.org/t/p/original${info.poster_path}`
     //     const result = await ImageColors.getColors(uri, {
@@ -108,7 +111,7 @@ const HeroMovie = () => {
     setTimeout(() => {
       x.classList.add("w-0");
     }, 300);
-  }, []);
+  }, [isWishlisted, id]);
 
   const addToWishlist = async (movieData1) => {
     try {
@@ -153,7 +156,12 @@ const HeroMovie = () => {
           setIsWishlisted(true);
           wishlist.push(movieData);
         }
-
+        if(sessionStorage.getItem('user') !== null) {
+          sessionStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
+        else if(localStorage.getItem('user') !== null) {
+          localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
         toast.success(`Movie ${existingIndex !== -1 ? 'removed from' : 'added to'} wishlist`)
         await updateDoc(userRef, { wishlist });
       } else {
@@ -370,7 +378,7 @@ const HeroMovie = () => {
                   {
                     similarMovies?.map((element, index) => {
                       return (
-                        <a key={element.name} class="relative transition-all ease-in duration-300 flex p-[.5rem] mb-2 flex-col group gap-2 w-1/2 sm:w-1/4 lg:w-1/6 rounded-lg flex-shrink-0" href={`/movie/${element.id}`}>
+                        <a key={element.id} class="relative transition-all ease-in duration-300 flex p-[.5rem] mb-2 flex-col group gap-2 w-1/2 sm:w-1/4 lg:w-1/6 rounded-lg flex-shrink-0" href={`/movie/${element.id}`}>
                           <div className="relative w-full flex-1 overflow-hidden rounded-2xl bg-black transition-all">
                             <LazyLoadImage
                               className="w-full h-full object-cover"

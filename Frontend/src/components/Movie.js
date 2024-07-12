@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import MovieCard from './MovieCard';
 import MovieCard2 from './MovieCard2';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from './Spinner';
@@ -10,7 +9,7 @@ const Movie = (props) => {
     const [page, setPage] = useState(2);
     const [totalpages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [url, seturl] = useState(`https://api.themoviedb.org/3/movie/popular?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`)
+    const url = `https://api.themoviedb.org/3/movie/popular?api_key=748d8f1491929887f482d9767de12ea8&language=en-US`;
     useEffect(() => {
         // const getData= async() => {
         //     const url = `${host}movies/allposts` ;
@@ -53,7 +52,7 @@ const Movie = (props) => {
         setTimeout(() => {
             x.classList.add("w-0")
         }, 450);
-    }, [])
+    }, [page, props.category, url])
     const fetchMoreData = async () => {
         console.log("More printed")
         let url2 = url.concat(`&page=${page}`);

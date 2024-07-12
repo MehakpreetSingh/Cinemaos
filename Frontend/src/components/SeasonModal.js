@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import React from 'react'
-import close from '../close.png'
 import { Link, useParams } from "react-router-dom";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
